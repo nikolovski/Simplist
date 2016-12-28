@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.ehcache.org/ehcache.xml -->
+<ehcache>
+    <defaultCache timeToLiveSeconds="600"
+                  eternal="false"
+                  overflowToDisk="false"
+                  maxElementsInMemory="100" />
+</ehcache>
