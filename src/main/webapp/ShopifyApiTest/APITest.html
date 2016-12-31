@@ -26,7 +26,6 @@ look in console
         .done(function(result) {
             result.get('https://paperss.myshopify.com/admin/products.json')
                 .done(function (response) {
-                    //this will display "John Doe" in the console
                     console.log('All items--------');
                     console.log(response);
                 })
@@ -43,7 +42,6 @@ look in console
         .done(function(result) {
             result.get('https://paperss.myshopify.com/admin/products.json?ids=9786893386')
                 .done(function (response) {
-                    //this will display "John Doe" in the console
                     console.log('Item by id of the item');
                     console.log(response);
                 })
