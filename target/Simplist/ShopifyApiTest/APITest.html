@@ -1,0 +1,102 @@
+<html>
+<head>
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="oauth.js"></script>
+</head>
+<body>
+look in console
+
+<input id='get-data' type="submit" value="submit">
+</body>
+
+<script type="text/javascript">
+
+    //auth  test , get token
+    OAuth.initialize('b2G1NlLrb4QnCWRz4oETlou-_Ag')
+    OAuth.popup('shopify').done(function(result) {
+        console.log(result)
+
+    })
+
+    //get all items
+    OAuth.popup('shopify')
+        .done(function(result) {
+            result.get('https://paperss.myshopify.com/admin/products.json')
+                .done(function (response) {
+                    console.log('All items--------');
+                    console.log(response);
+                })
+                .fail(function (err) {
+                    //handle error with err
+                });
+        })
+        .fail(function (err) {
+            //handle error with err
+        });
+
+    //get item by item number , ids=813193193,13813818,113813831
+    OAuth.popup('shopify')
+        .done(function(result) {
+            result.get('https://paperss.myshopify.com/admin/products.json?ids=9786893386')
+                .done(function (response) {
+                    console.log('Item by id of the item');
+                    console.log(response);
+                })
+                .fail(function (err) {
+                    //handle error with err
+                });
+        })
+        .fail(function (err) {
+            //handle error with err
+        });
+
+    //add product
+    OAuth.popup('shopify')
+        .done(function(result) {
+            result.post('https://paperss.myshopify.com/admin/products.json', {
+                data: {
+                    "product": {
+                        "title": "Burton Custom Freestyle 151",
+                        "body_html": "<strong>Good snowboard!<\/strong>",
+                        "vendor": "Burton",
+                        "product_type": "Snowboard",
+                        "tags": "Barnes & Noble, John's Fav, \"Big Air\""
+                    }
+                }
+            })
+                .done(function (response) {
+                    console.log('PRODUCT ADDED');
+                    console.log(response);
+                })
+                .fail(function (err) {
+                    //handle error with err
+                });
+        })
+        .fail(function (err) {
+            //handle error with err
+        });
+
+    //delete item by its id
+    OAuth.popup('shopify')
+        .done(function(result) {
+            result.del('/admin/products/9786893386.json')
+                .done(function (response) {
+                    console.log('Item Deleted')
+                    console.log(response);
+                })
+                .fail(function (err) {
+                    //handle error with err
+                });
+        })
+        .fail(function (err) {
+            //handle error with err
+        });
+
+
+</script>
+
+
+</html>
