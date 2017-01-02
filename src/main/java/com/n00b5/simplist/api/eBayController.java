@@ -25,7 +25,7 @@ public class eBayController {
     private String clientSecret;
     @Value("${RuName}")
     private String redirectURI;
-    @Value("${signInURL}")
+    @Value("${signinURL}")
     private String signInURL;
     @Value("${Base64String}")
     private String base64String;
@@ -33,7 +33,7 @@ public class eBayController {
     private String scope;
     private String responseType = "code";
 
-    @RequestMapping(value = "/oAuth/eBay")
+    @RequestMapping(value = "/ebay/oauth")
     public ModelAndView getCode() throws IOException {
         String getCodeURL = signInURL + "?client_id=" +
                 clientID + "&response_type=" +
