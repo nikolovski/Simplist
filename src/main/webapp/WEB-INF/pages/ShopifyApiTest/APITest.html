@@ -14,13 +14,36 @@ look in console
 
 <script type="text/javascript">
 
+
+
+
     //auth  test , get token
     OAuth.initialize('b2G1NlLrb4QnCWRz4oETlou-_Ag')
     OAuth.popup('shopify').done(function(result) {
         console.log(result)
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : "localhost:8080/hello",
+            data : JSON.stringify(result),
+            dataType : 'json',
+            timeout : 100000,
+            success : function(data) {
+                console.log("SUCCESS: ", data);
+                display(data);
+            },
+            error : function(e) {
+                console.log("ERROR: ", e);
+                display(e);
+            },
+            done : function(e) {
+                console.log("DONE");
+                enableSearchButton(true);
+            }
+        });
 
     })
-
+/*
     //get all items
     OAuth.popup('shopify')
         .done(function(result) {
@@ -95,7 +118,7 @@ look in console
             //handle error with err
         });
 
-
+*/
 </script>
 
 
