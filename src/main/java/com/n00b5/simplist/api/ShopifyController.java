@@ -41,7 +41,7 @@ public class ShopifyController{
     private String signInURL;
 
 
-    @RequestMapping(value = "/oAuth/oShopify",method= RequestMethod.GET)
+    @RequestMapping(value = "/shopify/oAuth",method= RequestMethod.GET)
     public ModelAndView openAuth() throws IOException {
         System.out.println("in openAuth");
         String getCodeURL = "http://"+shop+signInURL+
@@ -55,14 +55,14 @@ public class ShopifyController{
 
 
     @ResponseBody
-    @RequestMapping(value="/authorize",
+    @RequestMapping(value="/shopify/authorize",
             method=RequestMethod.GET
     )
     public ModelAndView authorize(@RequestParam(value="code") String code,@RequestParam(value="hmac") String hmac,@RequestParam(value="timestamp") String timestamp){
         System.out.println("in authorize");
         this.code = code;
         System.out.println("CODE" + this.code);
-        return new ModelAndView("redirect:http://localhost:8080/token");
+        return new ModelAndView("redirect:http://localhost:8080/shopify/token");
     }
 
 
@@ -83,7 +83,7 @@ public class ShopifyController{
 
 
 
-    @RequestMapping(value="/token")
+    @RequestMapping(value="/shopify/token")
     public void getToken() throws IOException { // BResult holds errors
         System.out.println("In token");
         String tokenURL = "https://"+shop+".myshopify.com/admin/oauth/access_token";
