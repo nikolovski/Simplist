@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -32,7 +31,7 @@ public class eBayController{
     private String scope;
     private String responseType = "code";
 
-    @RequestMapping(value = "/oAuth/eBay", method = RequestMethod.POST)
+    @RequestMapping(value = "/oAuth/eBay", method = RequestMethod.GET)
     @ResponseBody
     public void getToken() throws IOException {
         String code = null;

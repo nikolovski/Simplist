@@ -73,6 +73,12 @@ public class ShopifyController{
        // return new ModelAndView("redirect:https://"+shop+".myshopify.com/admin/products/"+itemId+".json");
     }
 
+    @ResponseBody
+    @RequestMapping(value="shopify/getAll", method=RequestMethod.GET)
+    public ModelAndView getAll(){
+        return new ModelAndView("redirect:https://"+shop+".myshopify.com/admin/products.json");
+    }
+
 
 
 
@@ -85,7 +91,7 @@ public class ShopifyController{
         HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        //con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
         String urlParameters = "client_id="+api_key+"&"+"client_secret="+secret+"&"+"code="+code;
         con.setDoOutput(true);
