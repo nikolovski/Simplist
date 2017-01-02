@@ -45,11 +45,11 @@ public class ShopifyController{
     public ModelAndView openAuth() throws IOException {
         System.out.println("in openAuth");
         String getCodeURL = "http://"+shop+signInURL+
-                            "client_id="+api_key+
-                            "&scope="+scopes+
-                            "&redirect_uri="+redirect_uri+
-                            "&state="+nonce+
-                            "&grant_options[]="+option;
+                "client_id="+api_key+
+                "&scope="+scopes+
+                "&redirect_uri="+redirect_uri+
+                "&state="+nonce+
+                "&grant_options[]="+option;
         return new ModelAndView("redirect:"+getCodeURL);
     }
 
@@ -70,7 +70,7 @@ public class ShopifyController{
     @RequestMapping(value = "shopify/delete/{id}", method = RequestMethod.GET)
     public void delete(@RequestParam(value="id") String id){
         System.out.println("ItemDeleted:" +  id);
-       // return new ModelAndView("redirect:https://"+shop+".myshopify.com/admin/products/"+itemId+".json");
+        // return new ModelAndView("redirect:https://"+shop+".myshopify.com/admin/products/"+itemId+".json");
     }
 
     @ResponseBody
