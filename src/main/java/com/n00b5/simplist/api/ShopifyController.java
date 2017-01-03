@@ -82,7 +82,7 @@ public class ShopifyController{
     public ModelAndView getAll(){
 
 
-        return new ModelAndView("redirect:http://"+shop+".myshopify.com/admin/products.json");
+        return new ModelAndView("redirect:https://paperss.myshopify.com/admin/products.json");
     }
 
 
