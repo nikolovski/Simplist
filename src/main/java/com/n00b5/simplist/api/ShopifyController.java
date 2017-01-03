@@ -39,12 +39,16 @@ public class ShopifyController{
     private String option;
     @Value("${signInURL}")
     private String signInURL;
+    @Value("${tokenURL}")
+    private String tokenURL;
+    @Value("${accessToken}")
+    private String accessTokenURL;
 
 
     @RequestMapping(value = "/shopify/oauth",method= RequestMethod.GET)
     public ModelAndView openAuth() throws IOException {
         System.out.println("in openAuth");
-        String getCodeURL = "http://"+shop+signInURL+
+        String getCodeURL = shop+signInURL+
                 "client_id="+api_key+
                 "&scope="+scopes+
                 "&redirect_uri="+redirect_uri+
@@ -62,7 +66,7 @@ public class ShopifyController{
         System.out.println("in authorize");
         this.code = code;
         System.out.println("CODE" + this.code);
-        return new ModelAndView("redirect:http://localhost:8080/shopify/token");
+        return new ModelAndView("redirect:" + tokenURL);
     }
 
 
@@ -70,8 +74,8 @@ public class ShopifyController{
     @RequestMapping(value = "shopify/delete/{id}", method = RequestMethod.GET)
     public void delete(@RequestParam(value="id") String id){
         System.out.println("ItemDeleted:" +  id);
-        // return new ModelAndView("redirect:https://"+shop+".myshopify.com/admin/products/"+itemId+".json");
     }
+
 
     @ResponseBody
     @RequestMapping(value="shopify/getAll", method=RequestMethod.GET)
@@ -86,9 +90,10 @@ public class ShopifyController{
 
 
     @RequestMapping(value="/shopify/token")
-    public void getToken() throws IOException { // BResult holds errors
+    @ResponseBody
+    public String getToken() throws IOException { // BResult holds errors
         System.out.println("In token");
-        String tokenURL = "https://"+shop+".myshopify.com/admin/oauth/access_token";
+        String tokenURL = accessTokenURL;
         URL obj = new URL(tokenURL);
         HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
@@ -115,6 +120,8 @@ public class ShopifyController{
         }
         in.close();
         System.out.println(response.toString());
+
+        return response.toString();
     }
 
     @Bean
