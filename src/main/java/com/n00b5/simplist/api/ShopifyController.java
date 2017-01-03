@@ -44,7 +44,7 @@ public class ShopifyController{
     @RequestMapping(value = "/shopify/oauth",method= RequestMethod.GET)
     public ModelAndView openAuth() throws IOException {
         System.out.println("in openAuth");
-        String getCodeURL = "http://"+shop+signInURL+
+        String getCodeURL = "https://"+shop+signInURL+
                 "client_id="+api_key+
                 "&scope="+scopes+
                 "&redirect_uri="+redirect_uri+
