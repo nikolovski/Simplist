@@ -76,7 +76,9 @@ public class ShopifyController{
     @ResponseBody
     @RequestMapping(value="shopify/getAll", method=RequestMethod.GET)
     public ModelAndView getAll(){
-        return new ModelAndView("redirect:https://"+shop+".myshopify.com/admin/products.json");
+
+
+        return new ModelAndView("redirect:http://"+shop+".myshopify.com/admin/products.json");
     }
 
 
