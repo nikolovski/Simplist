@@ -44,7 +44,7 @@ public class ShopifyController{
     @RequestMapping(value = "/shopify/oauth",method= RequestMethod.GET)
     public ModelAndView openAuth() throws IOException {
         System.out.println("in openAuth");
-        String getCodeURL = "https://"+shop+signInURL+
+        String getCodeURL = "http://"+shop+signInURL+
                 "client_id="+api_key+
                 "&scope="+scopes+
                 "&redirect_uri="+redirect_uri+
@@ -62,7 +62,7 @@ public class ShopifyController{
         System.out.println("in authorize");
         this.code = code;
         System.out.println("CODE" + this.code);
-        return new ModelAndView("redirect:https://localhost:8443/shopify/token");
+        return new ModelAndView("redirect:http://localhost:8080/shopify/token");
     }
 
 
@@ -78,7 +78,7 @@ public class ShopifyController{
     public ModelAndView getAll(){
 
 
-        return new ModelAndView("redirect:https://"+shop+".myshopify.com/admin/products.json");
+        return new ModelAndView("redirect:http://"+shop+".myshopify.com/admin/products.json");
     }
 
 
