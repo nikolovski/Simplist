@@ -17,23 +17,25 @@ import java.net.URLEncoder;
  * Created by d4k1d23 on 12/30/16.
  */
 @Controller
+@RequestMapping("/ebay")
 @PropertySource("classpath:dev_ebay.properties")
 public class eBayController {
-    @Value("${appID}")
+    @Value("${appId}")
     private String clientID;
-    @Value("${certID}")
+    @Value("${certId}")
     private String clientSecret;
     @Value("${RuName}")
     private String redirectURI;
-    @Value("${signinURL}")
+    @Value("${signInUrl}")
     private String signInURL;
+    @Value("${tokenUrl}")
+    private String tokenUrl;
     @Value("${Base64String}")
     private String base64String;
     @Value("${scope}")
     private String scope;
     private String responseType = "code";
-
-    @RequestMapping(value = "/ebay/oauth")
+    @RequestMapping(value = "/oauth")
     public ModelAndView getCode() throws IOException {
         String getCodeURL = signInURL + "?client_id=" +
                 clientID + "&response_type=" +
@@ -43,9 +45,9 @@ public class eBayController {
         return new ModelAndView("redirect:" + getCodeURL);
     }
 
-    @RequestMapping(value = "/eBay/authorize", params = {"state", "code"})
+    @RequestMapping(value = "/authorize", params = {"state", "code"})
     public void getToken(String state, String code) throws IOException {
-        URL obj = new URL("https://api.sandbox.ebay.com/identity/v1/oauth2/token");
+        URL obj = new URL(tokenUrl);
         String parameters = "grant_type=authorization_code&" +
                 "&code=" + URLEncoder.encode(code, "UTF-8") +
                 "&redirect_uri=" + redirectURI;
@@ -67,10 +69,8 @@ public class eBayController {
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
-        System.out.println(response.toString());
         in.close();
     }
-
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
         return new PropertySourcesPlaceholderConfigurer();

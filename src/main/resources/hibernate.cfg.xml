@@ -3,6 +3,18 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        <property name="hibernate.connection.driver_class">
+            oracle.jdbc.OracleDriver
+        </property>
+        <property name="hibernate.connection.url">
+            jdbc:oracle:thin:@oracl.chjd8x3btonj.us-west-2.rds.amazonaws.com:1521:ORCL
+        </property>
+        <property name="hibernate.connection.username">nikolovski23</property>
+        <property name="hibernate.connection.password">road8=cake==</property>
+        <property name="hibernate.connection.pool_size">20</property>
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.Oracle10gDialect
+        </property>
         <property name="show_sql">true</property>
         <property name="net.sf.ehcache.configurationResourceName">/ehcache.xml</property>
         <property name="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</property>
