@@ -11,14 +11,15 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 
 public class EtsyApi extends DefaultApi10a {
 
-    protected EtsyApi(){}
+    protected EtsyApi() {
+    }
 
     //Singleton
-    private static class InstanceHolder{
+    private static class InstanceHolder {
         private static final EtsyApi INSTANCE = new EtsyApi();
     }
 
-    public static EtsyApi instance(){
+    public static EtsyApi instance() {
         return InstanceHolder.INSTANCE;
     }
 
@@ -28,7 +29,7 @@ public class EtsyApi extends DefaultApi10a {
     }
 
     @Override
-    public String getAuthorizationUrl(OAuth1RequestToken requestToken){
+    public String getAuthorizationUrl(OAuth1RequestToken requestToken) {
         return "http://www.etsy.com/oauth/signin?oauth_token=" + requestToken.getToken();
     }
 
