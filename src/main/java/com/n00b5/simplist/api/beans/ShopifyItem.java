@@ -3,7 +3,7 @@ package com.n00b5.simplist.api.beans;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
+/**#
  * Created by Shehar on 1/3/2017.
  */
 public class ShopifyItem {
