@@ -47,6 +47,8 @@ public class ShopifyCRUD{
         } catch (Exception ex) {
             // handle exception here
         } finally {
+
+
             httpClient.close();
         }
         return new ShopifyItem();
