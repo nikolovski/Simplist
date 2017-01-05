@@ -3,6 +3,9 @@ package com.n00b5.simplist.api.beans;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**#
  * Created by Shehar on 1/3/2017.
  */
@@ -16,6 +19,7 @@ public class ShopifyItem {
     private String vendor;
     private String product_type;
     private String tags;
+    Map<String, String> variants = new HashMap<String, String>();
 
     public ShopifyItem(){
 
