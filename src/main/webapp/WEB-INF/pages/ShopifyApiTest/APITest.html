@@ -83,7 +83,7 @@ Delete:          <input id="deleteID" type="text" name="Title"><br>
             type: "POST",
             contentType : 'application/json; charset=utf-8',
             dataType : 'json',
-            url: "http://localhost:8080/shopify/createItem",
+            url: "http://localhost:8080/shopify/update/",
             data: JSON.stringify(obj), // Note it is important
             success :function(result) {
                 console.log("MAYBE ")

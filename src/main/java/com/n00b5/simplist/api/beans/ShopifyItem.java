@@ -88,8 +88,23 @@ public class ShopifyItem {
     }
 
     public JSONObject getJSONItem() throws JSONException {
-        JSONObject test = new JSONObject("{\n  \"product\": {\n    \"title\": \""+this.getTitle()+"\",\n    \"body_html\": \"<strong>"+this.getBody_html()+"<\\/strong>\",\n    \"vendor\": \""+this.getVendor()+"\",\n    \"product_type\": \""+this.getProduct_type()+"\",\n    \"tags\": \""+this.getTags()+"\"\n  }\n}");
-        return test;
+        JSONObject createItem = new JSONObject("{\n  \"product\": " +
+                                                "{\n    \"title\": \""+this.getTitle()+"\"," +
+                                                "\n    \"body_html\": \"<strong>"+this.getBody_html()+"<\\/strong>\"," +
+                                                "\n    \"vendor\": \""+this.getVendor()+"\"," +
+                                                "\n    \"product_type\": \""+this.getProduct_type()+"\"," +
+                                                "\n    \"tags\": \""+this.getTags()+"\"\n  }\n}");
+        return createItem;
     }
 
+    public JSONObject getUpdateJSONItem() throws JSONException {
+        JSONObject updateItem = new JSONObject("{\n  \"product\": " +
+                "{\n    \"id\": \""+this.getId()+"\"," +
+                "\n    \"title\": \""+this.getTitle()+"\"," +
+                "\n    \"body_html\": \"<strong>"+this.getBody_html()+"<\\/strong>\"," +
+                "\n    \"vendor\": \""+this.getVendor()+"\"," +
+                "\n    \"product_type\": \""+this.getProduct_type()+"\"," +
+                "\n    \"tags\": \""+this.getTags()+"\"\n  }\n}");
+        return updateItem;
+    }
 }

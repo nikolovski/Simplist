@@ -149,12 +149,15 @@ public class ShopifyController{
     }
 
     @ResponseBody
-    @RequestMapping(value = "shopify/update/{id}", method = RequestMethod.GET)
-    public void updateItem(@PathVariable(value="id") String id){
-        System.out.println("IN Update ITEM " + id);
+    @RequestMapping(value = "shopify/update/", method = RequestMethod.POST)
+    public void updateItem(@RequestBody ShopifyItem item){
+        System.out.println("IN Update ITEM " + item.getId());
         HttpClient httpClient = new DefaultHttpClient();
         try {
-            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+id+".json?access_token="+tokenKey);
+            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+item.getId()+".json?access_token="+tokenKey);
+            StringEntity params = new StringEntity(item.getUpdateJSONItem().toString());
+            putRequest.addHeader("Content-Type", "application/json;; charset=UTF-8");putRequest.addHeader("Accept", "application/json;; charset=UTF-8");
+            putRequest.setEntity(params);
             HttpResponse response = httpClient.execute(putRequest);
             System.out.println(response.toString());
         } catch (Exception e) {
