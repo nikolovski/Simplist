@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -14,8 +13,8 @@ import java.net.URLEncoder;
  * @author d4k1d23
  * @date 1/4/17
  */
-public abstract class eBayAPI {
-    static String generateURL(String clientID,
+public class eBayAPI {
+    String generateURL(String clientID,
                               String redirectURI,
                               String signInURL,
                               String scope,
@@ -27,7 +26,7 @@ public abstract class eBayAPI {
                 URLEncoder.encode(scope, "UTF-8");
     }
 
-    static String getToken(String tokenUrl, String redirectURI, String base64String, String code) throws IOException {
+    String getToken(String tokenUrl, String redirectURI, String base64String, String code) throws IOException {
         URL obj = new URL(tokenUrl);
         String parameters = "grant_type=authorization_code&" +
                 "&code=" + URLEncoder.encode(code, "UTF-8") +
@@ -35,20 +34,45 @@ public abstract class eBayAPI {
         TokenResponse tokenResponse = new ObjectMapper()
                 .readValue(getResponse(obj,
                         parameters, "application/x-www-form-urlencoded",
+                        "en-US",
                         "Basic " + base64String,
                         "POST"), TokenResponse.class);
         System.out.println(tokenResponse);
         return tokenResponse.getAccessToken();
     }
 
-    static InputStream getResponse(URL url,
+    String createOrReplaceInventoryItem(InventoryItem item, String token) throws IOException {
+        URL url = new URL("https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/"+item.getSku());
+        String itemJSON = new ObjectMapper().writeValueAsString(item);
+        System.err.println(itemJSON);
+        InputStream response = getResponse(url,itemJSON,"application/json",
+                "en-US", "Bearer "+token,"PUT"
+                );
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(response));
+        String inputLine;
+        StringBuffer buffer = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            buffer.append(inputLine);
+        }
+        in.close();
+        return inputLine;
+    }
+
+
+
+    InputStream getResponse(URL url,
                                    String parameters,
                                    String contentType,
+                                   String contentLanguage,
                                    String authorization,
                                    String method) throws IOException {
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestProperty("Content-Type", contentType);
+        conn.setRequestProperty("Content-Language", contentLanguage);
         conn.setRequestProperty("Authorization", authorization);
+        conn.setRequestProperty("Accept", "application/json");
         conn.setRequestMethod(method);
         conn.setDoOutput(true);
         conn.setDoInput(true);

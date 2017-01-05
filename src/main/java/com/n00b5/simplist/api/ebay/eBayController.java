@@ -34,13 +34,13 @@ public class eBayController {
 
     @RequestMapping(value = "/oauth")
     public ModelAndView getCode() throws IOException {
-        String url = eBayAPI.generateURL(clientID,redirectURI,signInURL,scope,responseType);
+        String url = new eBayAPI().generateURL(clientID,redirectURI,signInURL,scope,responseType);
         return new ModelAndView("redirect:" + url);
     }
 
     @RequestMapping(value = "/authorize", params = {"state", "code"})
     @ResponseBody
     public String getToken(String state, String code) throws IOException {
-        return eBayAPI.getToken(tokenUrl,redirectURI,base64String,code);
+        return new eBayAPI().getToken(tokenUrl,redirectURI,base64String,code);
     }
 }
