@@ -14,15 +14,15 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Availability {
     @JsonProperty
-    private Set<PickupAtLocationAvailability> pickupAtLocationAvailability;
+    private PickupAtLocationAvailability [] pickupAtLocationAvailability;
     @JsonProperty
     private ShipToLocationAvailability shipToLocationAvailability;
 
-    public Set<PickupAtLocationAvailability> getPickupAtLocationAvailability() {
+    public PickupAtLocationAvailability[] getPickupAtLocationAvailability() {
         return pickupAtLocationAvailability;
     }
 
-    public void setPickupAtLocationAvailability(Set<PickupAtLocationAvailability> pickupAtLocationAvailability) {
+    public void setPickupAtLocationAvailability(PickupAtLocationAvailability[] pickupAtLocationAvailability) {
         this.pickupAtLocationAvailability = pickupAtLocationAvailability;
     }
 

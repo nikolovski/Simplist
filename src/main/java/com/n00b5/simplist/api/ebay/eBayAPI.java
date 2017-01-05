@@ -44,7 +44,6 @@ public class eBayAPI {
     String createOrReplaceInventoryItem(InventoryItem item, String token) throws IOException {
         URL url = new URL("https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/"+item.getSku());
         String itemJSON = new ObjectMapper().writeValueAsString(item);
-        System.err.println(itemJSON);
         InputStream response = getResponse(url,itemJSON,"application/json",
                 "en-US", "Bearer "+token,"PUT"
                 );
@@ -52,7 +51,7 @@ public class eBayAPI {
                 new InputStreamReader(response));
         String inputLine;
         StringBuffer buffer = new StringBuffer();
-
+        System.out.println(in.readLine());
         while ((inputLine = in.readLine()) != null) {
             buffer.append(inputLine);
         }

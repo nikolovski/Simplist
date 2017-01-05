@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -18,13 +19,14 @@ import static org.junit.Assert.assertNotNull;
  * @date 1/4/17
  */
 public class extractToken {
-    String PATH_TO_CHROME_DRIVER="/usr/local/Cellar/chromedriver/2.27/bin/chromedriver";
+    ResourceBundle bundle = ResourceBundle.getBundle("ebay_login");
+    String PATH_TO_CHROME_DRIVER=bundle.getString("chromedriver");
     WebDriver driver;
     String username, password, signinURL, accessToken;
     @Before
     public void setUp() throws Exception {
-        username = "testuser_sethcollins";
-        password = "sail3@Dear@@";
+        username = bundle.getString("username");
+        password = bundle.getString("password");
         System.setProperty("webdriver.chrome.driver",PATH_TO_CHROME_DRIVER);
         driver = new ChromeDriver();
     }

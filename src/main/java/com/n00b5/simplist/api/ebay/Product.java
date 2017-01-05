@@ -15,19 +15,19 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
     @JsonProperty
-    private Map<String,String> aspects;
+    private Map<String,String[]> aspects;
     @JsonProperty
     private String brand;
     @JsonProperty
     private String description;
     @JsonProperty
-    private Set<String> ean;
+    private String[] ean;
     @JsonProperty
-    private Set<String> imageUrls;
+    private String[] imageUrls;
     @JsonProperty
-    private Map<String,String> isbn;
+    private String isbn;
     @JsonProperty
-    private Map<String,String> upc;
+    private String[] upc;
     @JsonProperty
     private String mpn;
     @JsonProperty
@@ -38,11 +38,11 @@ public class Product {
     public Product() {
     }
 
-    public Map<String,String> getAspects() {
+    public Map<String,String[]> getAspects() {
         return aspects;
     }
 
-    public void setAspects(Map<String,String> aspects) {
+    public void setAspects(Map<String,String[]> aspects) {
         this.aspects = aspects;
     }
 
@@ -62,35 +62,35 @@ public class Product {
         this.description = description;
     }
 
-    public Set<String> getEan() {
+    public String[] getEan() {
         return ean;
     }
 
-    public void setEan(Set<String> ean) {
+    public void setEan(String [] ean) {
         this.ean = ean;
     }
 
-    public Set<String> getImageUrls() {
+    public String [] getImageUrls() {
         return imageUrls;
     }
 
-    public void setImageUrls(Set<String> imageUrls) {
+    public void setImageUrls(String [] imageUrls) {
         this.imageUrls = imageUrls;
     }
 
-    public Map<String,String> getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Map<String,String> isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-    public Map<String,String> getUpc() {
+    public String[] getUpc() {
         return upc;
     }
 
-    public void setUpc(Map<String,String> upc) {
+    public void setUpc(String[] upc) {
         this.upc = upc;
     }
 
