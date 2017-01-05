@@ -7,14 +7,89 @@
 </head>
 <body>
 <h3> Shopify API test </h3>
-
-
 </body>
 
+    <br>
+<h3>ADD ITEM</h3>
+Title:          <input id="title" type="text" name="Title"><br>
+Description:    <input id="desc" type="text" name="Description"><br>
+Company:        <input id="company" type="text" name="Company"><br>
+Type:           <input id="type" type="text" name="Product Type"><br>
+tags:      <input id="tag" type="text" name="tags"><br>
+<button id="add">Add</button>
 
 
+
+<h3>Update ITEM</h3>
+ID of product:          <input id="idU" type="text" name="id"><br>
+Title:          <input id="titleU" type="text" name="Title"><br>
+Description:    <input id="descU" type="text" name="Description"><br>
+Company:        <input id="companyU" type="text" name="Company"><br>
+Type:           <input id="typeU" type="text" name="Product Type"><br>
+tags:      <input id="tagU" type="text" name="tags"><br>
+<button id="update">Update</button>
 
 <script type="text/javascript">
+    //ADD ITEM -------------------------------------------------------------------------------
+    $("#add").click(function(){
+        var title = $("#title").val();
+        var description = $("#desc").val();
+        var company = $("#company").val();
+        var type = $("#type").val();
+        var tag = $("#tag").val();
+        var obj = {
+                title: title,
+                body_html: description,
+                vendor: company,
+                product_type: type,
+                tags: tag
+             }
+        ;
+        $.ajax({
+            type: "POST",
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+            url: "http://localhost:8080/shopify/createItem",
+            data: JSON.stringify(obj), // Note it is important
+            success :function(result) {
+                console.log("MAYBE ")
+            }
+        });
+    });
+
+    //update ITEM -------------------------------------------------------------------------------
+    $("#update").click(function(){
+        var id = $("#idU").val();
+        var title = $("#titleU").val();
+        var description = $("#descU").val();
+        var company = $("#companyU").val();
+        var type = $("#typeU").val();
+        var tag = $("#tagU").val();
+        var obj = {
+                id: id,
+                title: title,
+                body_html: description,
+                vendor: company,
+                product_type: type,
+                tags: tag
+            }
+            ;
+        $.ajax({
+            type: "POST",
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+            url: "http://localhost:8080/shopify/createItem",
+            data: JSON.stringify(obj), // Note it is important
+            success :function(result) {
+                console.log("MAYBE ")
+            }
+        });
+    });
+
+
+
+
+
 
 
 </script>

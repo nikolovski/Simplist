@@ -35,6 +35,7 @@ public class eBayController {
     @Value("${scope}")
     private String scope;
     private String responseType = "code";
+
     @RequestMapping(value = "/oauth")
     public ModelAndView getCode() throws IOException {
         String getCodeURL = signInURL + "?client_id=" +
@@ -46,7 +47,8 @@ public class eBayController {
     }
 
     @RequestMapping(value = "/authorize", params = {"state", "code"})
-    public void getToken(String state, String code) throws IOException {
+    @ResponseBody
+    public String getToken(String state, String code) throws IOException {
         URL obj = new URL(tokenUrl);
         String parameters = "grant_type=authorization_code&" +
                 "&code=" + URLEncoder.encode(code, "UTF-8") +
@@ -70,7 +72,9 @@ public class eBayController {
             response.append(inputLine);
         }
         in.close();
+        return response.toString();
     }
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
         return new PropertySourcesPlaceholderConfigurer();
