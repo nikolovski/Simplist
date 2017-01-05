@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -163,13 +164,12 @@ public class ShopifyController{
 
 
     @ResponseBody
-    @RequestMapping(value = "shopify/delete/{id}", method = RequestMethod.GET)
-    public void deleteItem(@PathVariable(value="id") String id){
-        System.out.println("IN DELETE ITEM");
-        System.out.println("TEsting delete:" +  id);
+    @RequestMapping(value = "shopify/delete/", method = RequestMethod.POST)
+    public void deleteItem(@RequestBody String id) throws JSONException {
+        JSONObject deleteID = new JSONObject(id);
         HttpClient httpClient = new DefaultHttpClient();
         try {
-            HttpDelete deleteRequest = new HttpDelete("https://paperss.myshopify.com/admin/products/"+id+".json?access_token="+tokenKey);
+            HttpDelete deleteRequest = new HttpDelete("https://paperss.myshopify.com/admin/products/"+deleteID.getString("id")+".json?access_token="+tokenKey);
             HttpResponse response = httpClient.execute(deleteRequest);
             System.out.println(response.toString());
         } catch (Exception e) {

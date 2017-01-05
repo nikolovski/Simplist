@@ -29,6 +29,11 @@ Type:           <input id="typeU" type="text" name="Product Type"><br>
 tags:      <input id="tagU" type="text" name="tags"><br>
 <button id="update">Update</button>
 
+
+<h3>Delete ITEM</h3>
+Delete:          <input id="deleteID" type="text" name="Title"><br>
+<button id="delete">Delete</button>
+
 <script type="text/javascript">
     //ADD ITEM -------------------------------------------------------------------------------
     $("#add").click(function(){
@@ -87,7 +92,24 @@ tags:      <input id="tagU" type="text" name="tags"><br>
     });
 
 
-
+    //Delete ITEM -------------------------------------------------------------------------------
+    $("#delete").click(function(){
+        var id = $("#deleteID").val();
+        var obj = {
+                id: id,
+            }
+            ;
+        $.ajax({
+            type: "POST",
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+            url: "http://localhost:8080/shopify/delete/",
+            data: JSON.stringify(obj), // Note it is important
+            success :function(result) {
+                console.log("MAYBE ")
+            }
+        });
+    });
 
 
 
