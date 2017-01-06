@@ -1,5 +1,10 @@
 package com.n00b5.simplist.api.ebay;
 
+import com.n00b5.simplist.api.ebay.enums.ConditionEnum;
+import com.n00b5.simplist.api.ebay.enums.LengthUnitOfMeasureEnum;
+import com.n00b5.simplist.api.ebay.enums.PackageTypeEnum;
+import com.n00b5.simplist.api.ebay.enums.WeightUnitOfMeasureEnum;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.io.IOException;
@@ -13,8 +18,13 @@ import java.util.Map;
  * @date 1/5/17
  */
 public class CRUDTest {
+    String token;
+    @Before
+    public void setup(){
+        token = "v^1.1#i^1#p^3#I^3#r^0#f^0#t^H4sIAAAAAAAAAOVXW2wUVRjutl1IQagkXEQw2Yx4qWV2z8zOzu4O7Or2QroJLYUt5RKgnJ05uz12dmYz50zbVQJNH5qYmPhkghGkImIxhCBGFC+YCEoDvBAVFCmJ0UQfjIrh8qLGM9sL26rQC4lN3JfNOee/ff///f+cA7pmlD3RU9dza45rZnFvF+gqdrmE2aBshrtybknxg+4iUCDg6u1a1lXaXfLjSgIzelZZh0jWNAjydGZ0gyj5zQhnW4ZiQoKJYsAMIgpVlUSsfrUieoGStUxqqqbOeeI1EU4LiMgvqgKSkRYWhBTbNYZtNpkRLhQCIAyDQPbDQCApBNk5ITaKG4RCg0Y4EQhBHgg8kJuAoIiiIoS8QRDazHmakUWwaTARL+Ci+XCVvK5VEOudQ4WEIIsyI1w0HluVWBOL19Q2NK30FdiKDuUhQSG1yehVtakhTzPUbXRnNyQvrSRsVUWEcL7ooIfRRpXYcDCTCD+falEUgkFBDUtaKhzwi8l7kspVppWB9M5xODtY41N5UQUZFNPc3TLKspF8Gql0aNXATMRrPM7fWhvqOIWRFeFqq2Kb1idq13GeRGOjZbZjDWkOUsHv94shfyDARSkiLIXIaiGItjLW6dggQ+4GbQ4le4y/atPQsJM64mkwaRVisaOxGRIKMsSE1hhrrFiKOnEVyvmHMimHpc1OaQdradNWw6kuyrB0ePLLu9dhmBi3qXCvqCELASkIwlIYin45BaUCaji9Pml6RJ0KxRobfSgJc3wGWm2IZnWoIl5lqbUzyMKaIklJSYZqimc1U3lJC6h8OBxAvMhmgixCvwRS0v+PIZRaOGlTNMKSsQd5qBEuoZpZ1GjqWM1xY0Xys2eIE50kwrVSmlV8vo6ODm+H32taaZ8IgODbWL86obaiDORGZPHdhXmcJ6yKmBbBCs1lWTSdjHzMuZHmon5La4QWzVXZObZOICex6WECj4owOnb3X6ASB+r0AunoE2YAZrHX4bhXNTM+E7J+drZa8hF7xiPkS9o55l9DltdCUDMNPTd+vbTNODyoPT4lwqrhHWxHBmPEo9PrkzEwAR1stDMum1ZugjBHK09AB6qqaRt0Mu6GVCegkbL1FNZ1p10n47BAfSJhGlDPUaySEZdT6rJYNhvXpleX1bM5gg2zgU/gTFbHhPKJqo08lAIpWZIklQ8kNSmkAnFKuDXUjlXUgqcZdsPW9Snhqk//IyTW66/9h7AafLEpoapB7dONpYKkCbIsJXkYEJO8BANBRlEQ5kOQXXjkUFAOB+GUMFfrmE2Gptx0+wjWmYQibWrQ2G10eoFyJszwgIGyCHgtHGRVlUKAD6X8Ks/mTXK8kMdsFFzp/naf941+VkeL8j+h2/UR6HadYC9zEAS8UAkqZpSsLy25jyOYIi+BhpY0O70YprwEpw32arSQtw3lshBbxTNc9d89v2lXwYO+dyt4YORJX1YizC5434Olt0/cQvmiOUIQCEAGAns+hjaDh2+flgoLS+f3fP7h/ph7h9FCSyNXK3yHj7+/dweYMyLkcrmLSrtdRVqsvKm7b1u0/8kjnwzsPNXvaqu8vsW6WA66nrm46Fd86MWBb5u3n6/p4PWPYWT5sg2Xi75smH8hXHyga0n3Yz/XLtjgy/YdS7f17d8R7M0pj8670dN47Ifiq8utFf3H62/sennlLGnWZ3teHzgt/3LtzPfzzp6kq2qPLDkfOrdr56f9WzyhzuRTr6zd3USu775Z/ufp7SsOz92659WZzVLlF1cunSuuGHjOezJdd3+ZdP1s/OAfb19zq0teevOho/HHb37Q9vuZC669fb2JJq4MH/jp2DfvNaw+heeG37ky82Jv1eKKfQvc1e7Lp+u+JouXvnHpDN4GDh18d/8jL9yqhG/tW7bw+NFnD3114rfBMv4FoGyWKmoRAAA=";
+    }
     @Test
-    public void createItem() throws IOException {
+    public void createOrReplaceInventoryItem() throws IOException {
         InventoryItem inventoryItem =
                 new InventoryItem();
         Product product =
@@ -31,7 +41,7 @@ public class CRUDTest {
         String brand[] = new String[1];
         brand[0] = "Rolex";
         String material []= new String[1];
-        material[0] = "Steel";
+        material[0] = "18K gold";
 
         aspects.put("Brand",brand);
         aspects.put("Material",material);
@@ -65,12 +75,12 @@ public class CRUDTest {
         inventoryItem.setCondition(ConditionEnum.NEW_OTHER.toString());
         inventoryItem.setConditionDescription("Deskdjfksjdfklsjdflkadf");
         inventoryItem.setPackageWeightAndSize(packageWeightAndSize);
-        inventoryItem.setSku("ROlexSKU123");
+        inventoryItem.setSku("Rolex123");
 
-        System.out.println(inventoryItem);
-        assertEquals(204,new eBayAPI().createOrReplaceInventoryItem(inventoryItem,
-                "v^1.1#i^1#r^0#p^3#I^3#f^0#t^H4sIAAAAAAAAAOVXW2wUVRju9iYNtoRKrBEl60BAILN7ZndmLwO7ZHtB1tDrFihEKWdnzrRDZ2fGOWfarqI2VQgqStREggZBiAqChidRQ3kgRC2BqIkYNUbBG3h9QA360OiZ7bZsq0IvJDZxXzbnnP/2/f/3/3MO6CkuWbRlxZZLpa7r8vf0gJ58l4ubDkqKixaXFeTfXJQHcgRce3rm9RT2FlxYimFKM8UmhE1Dx8jdndJ0LGY2I4xt6aIBsYpFHaYQFokkJmK1K0WfB4imZRBDMjTGHa+OMLySROGALxRGPIS8X6C7+pDNZiPChJL+YDgkBwTA85DzyfQcYxvFdUygTiKMD3BBFnAsEJp9nCgERRD2UNl1jHs1srBq6FTEA5hoJlwxo2vlxHrlUCHGyCLUCBONx5Yn6mPx6pq65qXeHFvRbB4SBBIbj1xVGTJyr4aaja7sBmekxYQtSQhjxhsd9DDSqBgbCmYC4WdSLShhJAMByoIsJXkBXpNULjesFCRXjsPZUWVWyYiKSCcqSV8tozQbyY1IItlVHTURr3Y7f4021FRFRVaEqamMrV2VqGli3ImGBsvoVGUkO0g5v9/vC/kFgYkShGkKkdWKEWmnrNNUHWfdDdrMJnuUvypDl1UnddhdZ5BKRGNHozPE52SICtXr9VZMIU5cuXL+bCb5UHidU9rBWtqkXXeqi1I0He7M8up1GCLGZSpcK2qEBIgA7TMlKXOhAOByqOH0+oTpEXUqFGto8KIkTLMpaHUgYmpQQqxEU2unkKXKIs8n+QCUFJbWTGJ5WZDYcFhArA8FUMAH/TxQ+P8fQwix1KRN0DBLRh9koEaYhGSYqMHQVCnNjBbJzJ4sJ7pxhGknxBS93q6uLk+X32NYbV4fAJy3pXZlQmpHKToRhmTVqwuzaoawEqJaWBVJ2qTRdFPyUed6GxP1W3IDtEi60k7TdQI5iW0bIvCICKOjd/8FKnagTi2Qjj6mBqCpehyOeyQj5TUg7WdnqzUTsXssQt6knab+ZWR5LARlQ9fSY9drsymHB7XHpoRpNTyD7UhhDHt0en0iBsaho+qdlMuGlR4nzJHK49CBkmTYOpmIu6zqODQUW1NUTXPadSIOc9THE6YOtTRRJTzsclJdFjPNuDy1uqyWzhFVN+rYhJoyNRUTNlHZwkJeUAI8z0uskJT5kAR8k8Ito05VQq3qFMOu25o2KVy1bf8Iifb6vv8QVp03NilU1ahzqrGU42UuEOCTLBR8SZaHQpBSFITZEKQXnkAoGAgH4aQwV2kqnQzN6an2EVxhYILkyUGjt9GpBcqZMEMDBgZ8gJXDQVpVPgTYkOKXWDpvkmOFPGoj50r3t/u8d+SzOpqX+XG9rj7Q63qTvsxBELDcYrCwuGBVYcH1DFYJ8mCoy0mj26NCxYPVNp2+Gi3k6UBpE6pWfrGr9qttax/MedDvuRvcNPykLyngpue878Etl0+KuBkVpVwQcEDwcUIQhNeBuZdPC7kbC2cd2dJ3/FWu/NnG90/O4CpPlpC9JZ+A0mEhl6sor7DXlbc9/IOS+GX2/ucjB6t79vYfrLpN/3brQ2sq+u/LO33x3G+zzA63948ZRtUzC1p+emf/d8qB9NP87PWp7cayTeL300Jb718Tqjr7sLb8x/hOJbCxP/7FY1+vWHKiTJmzZOa+9bvuKG967UB59fGj783T0q+/XLHt0dipO0+c2fXkp30lh4tvFYW8011vdwe+vH2+d5P3fHwR2v5Zx5HQ511vDZz7ZqCvpjxRsWPnBxtKGs9zjxwuPfPG5pYPN889tmPapd/LXti9a+ErW8UXTx2tX7ByYNkTFU9tuOfPX88emXXvQNnHF1vn7H7cVVXf+G7TMXNuw+L5Zo1x6FBh/3PzXloWf2DHhTmtM+/6OV7w0Q3gzGAZ/wIHH7NZahEAAA=="));
-
-
+        assertEquals(204,new eBayAPI().createOrReplaceInventoryItem(inventoryItem, token));
+    }
+    @Test
+    public void getInventoryItem() throws IOException {
+        assertEquals(200, new eBayAPI().getInventoryItem("Rolex123",token));
     }
 }

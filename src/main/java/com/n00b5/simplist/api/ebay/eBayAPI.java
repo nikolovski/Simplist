@@ -1,9 +1,18 @@
 package com.n00b5.simplist.api.ebay;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -36,32 +45,43 @@ public class eBayAPI {
                         parameters, "application/x-www-form-urlencoded",
                         "en-US",
                         "Basic " + base64String,
-                        "POST"), TokenResponse.class);
+                        "POST").getInputStream(), TokenResponse.class);
         System.out.println(tokenResponse);
         return tokenResponse.getAccessToken();
     }
 
-    String createOrReplaceInventoryItem(InventoryItem item, String token) throws IOException {
+    int createOrReplaceInventoryItem(InventoryItem item, String token) throws IOException {
         URL url = new URL("https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/"+item.getSku());
         String itemJSON = new ObjectMapper().writeValueAsString(item);
-        InputStream response = getResponse(url,itemJSON,"application/json",
+        HttpsURLConnection response = getResponse(url,itemJSON,"application/json",
                 "en-US", "Bearer "+token,"PUT"
                 );
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(response));
+        return response.getResponseCode();
+    }
+
+    int getInventoryItem(String inventoryItemSKU, String token) throws IOException {
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet("https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/"+inventoryItemSKU);
+        request.addHeader("Content-Type", "application/json");
+        request.addHeader("Authorization","Bearer "+token);
+        request.addHeader("Accept","application/json");
+        HttpResponse response = httpClient.execute(request);
+        System.out.println(response.getStatusLine());
+        BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
         String inputLine;
-        StringBuffer buffer = new StringBuffer();
-        System.out.println(in.readLine());
+        StringBuffer stringBuffer = new StringBuffer();
+
         while ((inputLine = in.readLine()) != null) {
-            buffer.append(inputLine);
+            stringBuffer.append(inputLine);
         }
         in.close();
-        return inputLine;
+        System.out.println(stringBuffer);
+        return 200;
     }
 
 
 
-    InputStream getResponse(URL url,
+    HttpsURLConnection getResponse(URL url,
                                    String parameters,
                                    String contentType,
                                    String contentLanguage,
@@ -76,9 +96,9 @@ public class eBayAPI {
         conn.setDoOutput(true);
         conn.setDoInput(true);
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-        wr.writeBytes(parameters);
+        if(parameters!=null) wr.writeBytes(parameters);
         wr.flush();
         wr.close();
-        return conn.getInputStream();
+        return conn;
     }
 }
