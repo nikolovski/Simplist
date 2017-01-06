@@ -12,18 +12,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PackageWeightAndSize {
     @JsonProperty
-    private Dimension dimension;
+    private Dimension dimensions;
     @JsonProperty
     private String packageType;
     @JsonProperty
     private Weight weight;
 
     public Dimension getDimension() {
-        return dimension;
+        return dimensions;
     }
 
     public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
+        this.dimensions = dimension;
     }
 
     public String getPackageType() {
@@ -44,7 +44,7 @@ public class PackageWeightAndSize {
     @Override
     public String toString() {
         return "PackageWeightAndSize{" +
-                "dimension=" + dimension +
+                "dimensions=" + dimensions +
                 ", packageType='" + packageType + '\'' +
                 ", weight=" + weight +
                 '}';
