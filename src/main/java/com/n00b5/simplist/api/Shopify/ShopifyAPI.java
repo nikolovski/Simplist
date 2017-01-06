@@ -50,6 +50,7 @@ public class ShopifyAPI{
     private static String tokenKey;
 
     public static String getTokenKey() {
+
         return tokenKey;
     }
 
@@ -121,10 +122,6 @@ public class ShopifyAPI{
 
         return response.toString();
     }
-
-
-
-
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
