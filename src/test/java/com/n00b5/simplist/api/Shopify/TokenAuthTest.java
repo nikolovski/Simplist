@@ -37,10 +37,9 @@ public class TokenAuthTest {
     public void createItem(){
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-        page.setPassword("Aa0607645");
+        page.setPassword("");
+        sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
-        //findAuthPage = page.clickLoginButton();
-        //driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         org.junit.Assert.assertEquals("",
                 findAuthPage.getPageTitle());
         String token = "";
@@ -70,7 +69,8 @@ public class TokenAuthTest {
     public void updateItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-        page.setPassword("Aa0607645");
+        page.setPassword("");
+        sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
         List<WebElement> getToken = driver.findElements(By.tagName("body"));
@@ -103,7 +103,8 @@ public class TokenAuthTest {
     public void deleteItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-        page.setPassword("Aa0607645");
+        page.setPassword("");
+        sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
         List<WebElement> getToken = driver.findElements(By.tagName("body"));
