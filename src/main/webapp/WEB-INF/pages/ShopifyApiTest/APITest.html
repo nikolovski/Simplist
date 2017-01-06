@@ -16,6 +16,7 @@ Description:    <input id="desc" type="text" name="Description"><br>
 Company:        <input id="company" type="text" name="Company"><br>
 Type:           <input id="type" type="text" name="Product Type"><br>
 tags:      <input id="tag" type="text" name="tags"><br>
+price:      <input id="price" type="text" name="price"><br>
 <button id="add" name="add">Add</button>
 
 
@@ -27,6 +28,7 @@ Description:    <input id="descU" type="text" name="DescriptionU"><br>
 Company:        <input id="companyU" type="text" name="CompanyU"><br>
 Type:           <input id="typeU" type="text" name="Product TypeU"><br>
 tags:      <input id="tagU" type="text" name="tagsU"><br>
+price:      <input id="priceU" type="text" name="priceU"><br>
 <button id="update" name="update">Update</button>
 
 
@@ -42,12 +44,16 @@ Delete:          <input id="deleteID" type="text" name="deleteID"><br>
         var company = $("#company").val();
         var type = $("#type").val();
         var tag = $("#tag").val();
+        var price = $("#price").val();
         var obj = {
                 title: title,
                 body_html: description,
                 vendor: company,
                 product_type: type,
-                tags: tag
+                tags: tag,
+                variants:[{
+                    price: price
+                }]
              }
 
         ;
@@ -71,13 +77,17 @@ Delete:          <input id="deleteID" type="text" name="deleteID"><br>
         var company = $("#companyU").val();
         var type = $("#typeU").val();
         var tag = $("#tagU").val();
+        var price = $("#priceU").val();
         var obj = {
                 id: id,
                 title: title,
                 body_html: description,
                 vendor: company,
                 product_type: type,
-                tags: tag
+                tags: tag,
+                variants:[{
+                    price: price
+                }]
             }
             ;
         $.ajax({

@@ -37,7 +37,7 @@ public class TokenAuthTest {
     public void createItem(){
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-        page.setPassword("");
+                                                                                                                                                                                                        page.setPassword("");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         org.junit.Assert.assertEquals("",
@@ -53,7 +53,7 @@ public class TokenAuthTest {
         driver.get("https://paperss.myshopify.com/admin/products");
         sleep();
         SeleniumCRUD crud = new SeleniumCRUD(driver);
-        crud.setCreate("Test","Test","Test","Test","Test");
+        crud.setCreate("Test","Test","Test","Test","Test","12.99");
         crud.clickAddButton();
         sleep();
         driver.get("https://paperss.myshopify.com/admin/products");
@@ -69,7 +69,7 @@ public class TokenAuthTest {
     public void updateItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-        page.setPassword("");
+                                                                                                                                                                                                             page.setPassword("");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
@@ -91,7 +91,7 @@ public class TokenAuthTest {
         updateID = updateID.substring(19,29);
         System.out.println(updateID);
         SeleniumCRUD crud = new SeleniumCRUD(driver);
-        crud.setUpdate(updateID,"UPDATE","UPDATE","UPDATE","UPDATE","UPDATE");
+        crud.setUpdate(updateID,"UPDATE","UPDATE","UPDATE","UPDATE","UPDATE","11.99");
         crud.clickUpdateButton();
         sleep();
         driver.get("https://paperss.myshopify.com/admin/products");
@@ -103,7 +103,7 @@ public class TokenAuthTest {
     public void deleteItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-        page.setPassword("");
+                                                                                                                                                                                                             page.setPassword("");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
