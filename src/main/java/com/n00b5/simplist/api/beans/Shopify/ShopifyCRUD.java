@@ -1,6 +1,5 @@
-package com.n00b5.simplist.api.Shopify;
+package com.n00b5.simplist.api.beans.Shopify;
 
-import com.n00b5.simplist.api.beans.Shopify.ShopifyItem;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
