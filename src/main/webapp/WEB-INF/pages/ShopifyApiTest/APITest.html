@@ -16,18 +16,23 @@ Description:    <input id="desc" type="text" name="Description"><br>
 Company:        <input id="company" type="text" name="Company"><br>
 Type:           <input id="type" type="text" name="Product Type"><br>
 tags:      <input id="tag" type="text" name="tags"><br>
-<button id="add">Add</button>
+<button id="add" name="add">Add</button>
 
 
 
 <h3>Update ITEM</h3>
 ID of product:          <input id="idU" type="text" name="id"><br>
-Title:          <input id="titleU" type="text" name="Title"><br>
-Description:    <input id="descU" type="text" name="Description"><br>
-Company:        <input id="companyU" type="text" name="Company"><br>
-Type:           <input id="typeU" type="text" name="Product Type"><br>
-tags:      <input id="tagU" type="text" name="tags"><br>
-<button id="update">Update</button>
+Title:          <input id="titleU" type="text" name="TitleU"><br>
+Description:    <input id="descU" type="text" name="DescriptionU"><br>
+Company:        <input id="companyU" type="text" name="CompanyU"><br>
+Type:           <input id="typeU" type="text" name="Product TypeU"><br>
+tags:      <input id="tagU" type="text" name="tagsU"><br>
+<button id="update" name="update">Update</button>
+
+
+<h3>Delete ITEM</h3>
+Delete:          <input id="deleteID" type="text" name="deleteID"><br>
+<button id="delete" name="delete">Delete</button>
 
 <script type="text/javascript">
     //ADD ITEM -------------------------------------------------------------------------------
@@ -44,6 +49,7 @@ tags:      <input id="tagU" type="text" name="tags"><br>
                 product_type: type,
                 tags: tag
              }
+
         ;
         $.ajax({
             type: "POST",
@@ -78,7 +84,7 @@ tags:      <input id="tagU" type="text" name="tags"><br>
             type: "POST",
             contentType : 'application/json; charset=utf-8',
             dataType : 'json',
-            url: "http://localhost:8080/shopify/createItem",
+            url: "http://localhost:8080/shopify/update/",
             data: JSON.stringify(obj), // Note it is important
             success :function(result) {
                 console.log("MAYBE ")
@@ -87,7 +93,24 @@ tags:      <input id="tagU" type="text" name="tags"><br>
     });
 
 
-
+    //Delete ITEM -------------------------------------------------------------------------------
+    $("#delete").click(function(){
+        var id = $("#deleteID").val();
+        var obj = {
+                id: id,
+            }
+            ;
+        $.ajax({
+            type: "POST",
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+            url: "http://localhost:8080/shopify/delete/",
+            data: JSON.stringify(obj), // Note it is important
+            success :function(result) {
+                console.log("MAYBE ")
+            }
+        });
+    });
 
 
 
