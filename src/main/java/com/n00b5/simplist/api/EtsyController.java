@@ -1,8 +1,11 @@
 package com.n00b5.simplist.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.oauth.OAuth10aService;
+import com.n00b5.simplist.api.beans.EtsyItem;
+import com.n00b5.simplist.api.etsy.OAuth1Converter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -10,14 +13,15 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import java.io.IOException;
 
+import java.io.IOException;
 
 
 /**
  * Created by Louis on 1/1/2017.
  * This uses a OAuth 1.0 library which extends OAuthService
  */
+
 @Controller
 @RequestMapping(value ="/etsy")
 @PropertySource("classpath:dev_etsy.properties")
@@ -34,10 +38,9 @@ public class EtsyController {
 
     private OAuth10aService service;
     private OAuth1RequestToken requestToken;
+    OAuth1AccessToken accessToken;
 
 
-
-    //etsy/oauth
     @RequestMapping(value="/oauth")
     public ModelAndView etsy() throws IOException {
 
@@ -69,55 +72,109 @@ public class EtsyController {
 
        // System.out.println("In Auth");
 
-       OAuth1AccessToken accessToken = service.getAccessToken(requestToken,verifier);
-       //System.out.println("ACCESS TOKEN IS " + accessToken);
+        accessToken = service.getAccessToken(requestToken,verifier);
 
 
-        // THIS ADDS AN ITEM
-        int quantity = 1;
-        String title = "Sponge_bob_blanket";
-        String description = "Sponge_bob_blanket";
-        double price = 0.20; // change to float
-        String state = "draft";
-        String who_made = "i_did"; // need to make enum
-        boolean is_supply = true;
-        String when_made = "made_to_order"; // needs to be enum
-        String shipping_template_id = "35750756683";    //USER MUST CREATE AT LEAST ONE
+        //System.out.println("THIS IS MY ACCESS TOKEN "+ accessToken);
+        OAuth1Converter converter = new OAuth1Converter(accessToken.getToken(),accessToken.getTokenSecret());
+        String acToken = new ObjectMapper().writeValueAsString(converter);
+        System.out.println("IN authorize " + acToken);
+        return acToken;
 
 
-        String addedItems =
-                "quantity="+quantity+"&"+
-                        "title="+title+"&"+
-                        "description="+description+"&"+
-                        "price="+price+"&"+
-                        "state="+state+"&"+
-                        "is_supply="+is_supply+"&"+
-                        "who_made="+who_made+"&"+
-                        "when_made="+when_made+"&"+
-                        "shipping_template_id="+shipping_template_id;
+       //return addItem(accessToken); //Create an item
 
+        //return getById(accessToken,488901146); //Return ONE item
 
-        //HARD-CODED FOR NOW . . .
-        final OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?"+addedItems, service);
-        service.signRequest(accessToken, request); // the access token from step 4
-        final Response response = request.send();
-        System.out.println(response.getBody());
-        System.out.println("HTTP CODE " +response.getCode());
-        System.out.println("HTTP MESSAGE " +response.getMessage());
-        System.out.println("HTTP HEADER " +response.getHeaders());
-        System.out.println(response.getStream());
-        System.out.println(response.isSuccessful());
+        //getAllListings(); //Returns ALL items
 
+        //return update(accessToken); //Update an item
 
-        return response.getBody().toString();
+        //return delete(accessToken,idNumber); //Deletes item
+
 
     }
 
 
-    //Hard coded for the moment
-    @RequestMapping(value="/add", method= RequestMethod.POST)
-    public void addItem(OAuth1AccessToken accessToken) throws IOException {
+    @RequestMapping(value="/add",method= RequestMethod.POST)
+    public void addItem(@RequestBody String json) throws IOException {
 
+        EtsyItem etsyItem = new ObjectMapper().readValue(json, EtsyItem.class);
+        OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?"+etsyItem.toString(), service);
+        service.signRequest(accessToken, request); // the access token from step 4
+        Response response = request.send();
+        System.out.println(response.getBody());
+        System.out.println("STATUS CODE " +response.getCode());
+
+    }
+
+    @RequestMapping(value="/delete")
+    public void deleteItem(@RequestParam("itemID")String id)throws IOException {
+
+        OAuthRequest request = new OAuthRequest(Verb.DELETE, "https://openapi.etsy.com/v2/listings/"+id, service);
+        service.signRequest(accessToken, request); // the access token from step 4
+        Response response = request.send();
+        System.out.println("STATUS CODE " +response.getCode());
+        System.out.println(response.getBody());
+
+    }
+
+    @RequestMapping(value="/getById")
+    public String getById(@RequestParam(value="item_id") int itemId, @RequestParam(value="oauth_token") String oauth_token, @RequestParam(value="oauth_token_secret")String oauth_token_secret) throws IOException {
+
+        //This gets my listings
+        // --> THIS IS MY ONLY ACTIVE LISTING .... itemID = 488901146
+
+        OAuth1AccessToken accessToken = new OAuth1AccessToken(oauth_token,oauth_token_secret);
+        final OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/listings/"+itemId, service);
+        System.out.println("PRINTING OUT REQUEST "+ request);
+        service.signRequest(accessToken, request); // the access token from step 4
+        final Response response = request.send();
+        System.out.println("STATUS CODE" +response.getCode());
+        System.out.println("Active listing -->" +response.getBody());
+
+        return response.getBody().toString();
+    }
+
+    @RequestMapping(value="/getAll")
+    public @ResponseBody
+    String getAllListings() throws IOException {
+
+        //This gets my listings
+        ///shops/100857342/listings/draft
+        OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/shops/"+shop_id+"/listings/draft", service);
+        service.signRequest(accessToken, request);
+        Response response = request.send();
+        System.out.println("All draft items " +response.getBody());
+        System.out.println("STATUS CODE" +response.getCode());
+
+
+        return response.getBody();
+
+    }
+
+    @RequestMapping(value="/update")
+    public void update(@RequestBody String json, @RequestParam("itemID")String id) throws IOException {
+
+        EtsyItem etsyItem = new ObjectMapper().readValue(json,EtsyItem.class);
+        OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/"+id+"?"+etsyItem.toString(), service);
+        service.signRequest(accessToken, request); // the access token from step 4
+        Response response = request.send();
+        System.out.println("STATUS CODE " +response.getCode());
+        System.out.println(response.getBody());
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    public OAuth1AccessToken getAccessToken() {
+        return accessToken;
+    }
+
+
+    public void createShippingTemplate(){
          /*
     //FIRST I MUST CREATE A SHIPPING TEMPLATE
         //THEN I CAN RETRIEVE THE ID AND STORE IT IN SHIPPING_TEMPLATE_ID THEN I CAN ADD A NEW ITEM
@@ -186,91 +243,6 @@ public class EtsyController {
 }
 
      */
-
-        // THIS ADDS AN ITEM
-        int quantity = 1;
-        String title = "Sponge_bob_blanket";
-        String description = "Sponge_bob_blanket";
-        double price = 0.20; // change to float
-        String state = "draft";
-        String who_made = "i_did"; // need to make enum
-        boolean is_supply = true;
-        String when_made = "made_to_order"; // needs to be enum
-        String shipping_template_id = "35750756683";    //USER MUST CREATE AT LEAST ONE
-
-
-        String addedItems =
-                "quantity="+quantity+"&"+
-                        "title="+title+"&"+
-                        "description="+description+"&"+
-                        "price="+price+"&"+
-                        "state="+state+"&"+
-                        "is_supply="+is_supply+"&"+
-                        "who_made="+who_made+"&"+
-                        "when_made="+when_made+"&"+
-                        "shipping_template_id="+shipping_template_id;
-
-
-        //HARD-CODED FOR NOW . . .
-        final OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?"+addedItems, service);
-        service.signRequest(accessToken, request); // the access token from step 4
-        final Response response = request.send();
-        System.out.println(response.getBody());
-        System.out.println("HTTP CODE " +response.getCode());
-        System.out.println("HTTP MESSAGE " +response.getMessage());
-        System.out.println("HTTP HEADER " +response.getHeaders());
-        System.out.println(response.getStream());
-        System.out.println(response.isSuccessful());
-    }
-
-    @RequestMapping(value="/delete", method = RequestMethod.DELETE)
-    public void deleteItem(OAuth1AccessToken accessToken,String itemNumber) throws IOException {
-        //HARD-CODED FOR NOW . . .
-        final OAuthRequest request = new OAuthRequest(Verb.DELETE, "https://openapi.etsy.com/v2/listings/"+itemNumber, service);
-        service.signRequest(accessToken, request); // the access token from step 4
-        final Response response = request.send();
-        System.out.println(response.getBody());
-
-    }
-
-
-    @RequestMapping(value="/getAll", method=RequestMethod.GET)
-    public void getAllListings(OAuth1AccessToken accessToken) throws IOException {
-
-        //This gets my listings
-        ///shops/100857342/listings/draft
-        final OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/shops/"+shop_id+"/listings/draft", service);
-        System.out.println("PRINTING OUt REQUEST "+ request);
-        System.out.println("PRINTING OUT SERVICE "+service);
-        service.signRequest(accessToken, request); // the access token from step 4
-        final Response response = request.send();
-        System.out.println("DRAFTS " +response.getBody());
-    }
-
-    @RequestMapping(value="update", method=RequestMethod.PUT)
-    public void update(OAuth1AccessToken accessToken) throws IOException {
-        //This updates an item, fields can be added
-        //488901146 <--- draft listing id
-        //HARD-CODED FOR NOW . . .
-        final OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/488901146?quantity=4", service);
-        service.signRequest(accessToken, request); // the access token from step 4
-        final Response response = request.send();
-        System.out.println(response.getBody());
-        System.out.println("Code " +response.getCode());
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
-
-
-    public enum who_made {
-        i_did, collective, someone_else;
-    }
-
-    public enum when_made {
-       // made_to_order, 2010_2017, 2000_2009, 1998_1999, before_1998, 1990_1997, 1980s, 1970s, 1960s, 1950s, 1940s, 1930s, 1920s, 1910s, 1900s, 1800s, 1700s, before_1700;
     }
 
 }

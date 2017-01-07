@@ -1,10 +1,8 @@
-package com.n00b5.simplist.api;
+package com.n00b5.simplist.api.ebay;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by d4k1d23 on 12/29/16.
