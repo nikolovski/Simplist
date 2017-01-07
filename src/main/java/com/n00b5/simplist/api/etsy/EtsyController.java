@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.oauth.OAuth10aService;
-import com.n00b5.simplist.api.beans.EtsyItem;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -102,8 +101,8 @@ public class EtsyController {
         OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?"+etsyItem.toString(), service);
         service.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
-        System.out.println(response.getBody());
         System.out.println("STATUS CODE " +response.getCode());
+        System.out.println("Added " + response.getBody());
 
     }
 
@@ -114,23 +113,21 @@ public class EtsyController {
         service.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
         System.out.println("STATUS CODE " +response.getCode());
-        System.out.println(response.getBody());
+        System.out.println("Deleted " +response.getBody());
 
     }
 
     @RequestMapping(value="/getById")
-    public String getById(@RequestParam(value="item_id") int itemId, @RequestParam(value="oauth_token") String oauth_token, @RequestParam(value="oauth_token_secret")String oauth_token_secret) throws IOException {
+    public @ResponseBody
+    String getById(@RequestParam("itemID")String id) throws IOException {
 
-        //This gets my listings
         // --> THIS IS MY ONLY ACTIVE LISTING .... itemID = 488901146
-
-        OAuth1AccessToken accessToken = new OAuth1AccessToken(oauth_token,oauth_token_secret);
-        final OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/listings/"+itemId, service);
+        OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/listings/"+id, service);
         System.out.println("PRINTING OUT REQUEST "+ request);
         service.signRequest(accessToken, request); // the access token from step 4
-        final Response response = request.send();
+        Response response = request.send();
         System.out.println("STATUS CODE" +response.getCode());
-        System.out.println("Active listing -->" +response.getBody());
+        System.out.println("Item by ID " +response.getBody());
 
         return response.getBody().toString();
     }
@@ -144,8 +141,8 @@ public class EtsyController {
         OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/shops/"+shop_id+"/listings/draft", service);
         service.signRequest(accessToken, request);
         Response response = request.send();
-        System.out.println("All draft items " +response.getBody());
         System.out.println("STATUS CODE" +response.getCode());
+        System.out.println("All draft items " +response.getBody());
 
 
         return response.getBody();
@@ -160,7 +157,7 @@ public class EtsyController {
         service.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
         System.out.println("STATUS CODE " +response.getCode());
-        System.out.println(response.getBody());
+        System.out.println("Updated item " + response.getBody());
     }
 
     @Bean
