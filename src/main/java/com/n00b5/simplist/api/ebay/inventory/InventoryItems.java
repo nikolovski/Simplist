@@ -1,4 +1,4 @@
-package com.n00b5.simplist.api.ebay;
+package com.n00b5.simplist.api.ebay.inventory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

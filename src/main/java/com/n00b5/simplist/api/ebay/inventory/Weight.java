@@ -1,4 +1,4 @@
-package com.n00b5.simplist.api.ebay;
+package com.n00b5.simplist.api.ebay.inventory;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,12 +10,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @date 1/5/17
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TimeDuration {
+public class Weight {
     @JsonProperty
     private String unit;
     @JsonProperty
-    private int value;
-
+    private double value;
     public String getUnit() {
         return unit;
     }
@@ -24,18 +23,19 @@ public class TimeDuration {
         this.unit = unit;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
     @Override
     public String toString() {
-        return "TimeDuration{" +
-                "unit=" + unit +
+        return "Weight{" +
+                "unit='" + unit + '\'' +
                 ", value=" + value +
                 '}';
     }
+
 }

@@ -4,6 +4,7 @@ import com.n00b5.simplist.api.ebay.enums.ConditionEnum;
 import com.n00b5.simplist.api.ebay.enums.LengthUnitOfMeasureEnum;
 import com.n00b5.simplist.api.ebay.enums.PackageTypeEnum;
 import com.n00b5.simplist.api.ebay.enums.WeightUnitOfMeasureEnum;
+import com.n00b5.simplist.api.ebay.inventory.*;
 import org.apache.http.HttpResponse;
 import org.junit.Before;
 import org.junit.Test;

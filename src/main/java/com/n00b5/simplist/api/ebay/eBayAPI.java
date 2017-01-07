@@ -1,7 +1,8 @@
 package com.n00b5.simplist.api.ebay;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.n00b5.simplist.api.ebay.inventory.InventoryItem;
+import com.n00b5.simplist.api.ebay.inventory.InventoryItems;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
@@ -10,8 +11,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Project: Simplist
