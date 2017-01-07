@@ -37,7 +37,7 @@ public class TokenAuthTest {
     public void createItem(){
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                        page.setPassword("Aa0607645");
+                                                                                                                                                                                                        page.setPassword("");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
 
@@ -68,7 +68,7 @@ public class TokenAuthTest {
     public void updateItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                             page.setPassword("Aa0607645");
+                                                                                                                                                                                                             page.setPassword("");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
@@ -102,7 +102,7 @@ public class TokenAuthTest {
     public void deleteItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                             page.setPassword("Aa0607645");
+                                                                                                                                                                                                             page.setPassword("");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
