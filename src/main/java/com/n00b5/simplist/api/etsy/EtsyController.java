@@ -1,11 +1,10 @@
-package com.n00b5.simplist.api;
+package com.n00b5.simplist.api.etsy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import com.n00b5.simplist.api.beans.EtsyItem;
-import com.n00b5.simplist.api.etsy.OAuth1Converter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
