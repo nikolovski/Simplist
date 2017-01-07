@@ -21,7 +21,6 @@ public class Facade {
 
     public void insertUser(User user) throws InterruptedException{
             dao.insert(user);
-            System.out.println("user inserted.. (uncommited)");
 
     }
 }
