@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Project: Simplist
  *
- * @author d4k1d23
+ * @author Martino Nikolovski
  * @date 1/5/17
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)

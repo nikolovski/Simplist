@@ -1,7 +1,6 @@
 package com.n00b5.simplist.api.ebay;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
@@ -14,7 +13,7 @@ import java.net.URLEncoder;
 /**
  * Project: Simplist
  *
- * @author d4k1d23
+ * @author Martino Nikolovski
  * @date 1/4/17
  */
 public class eBayAPI {
@@ -40,10 +39,10 @@ public class eBayAPI {
         String parameters = "grant_type=authorization_code&" +
                 "&code=" + URLEncoder.encode(code, "UTF-8") +
                 "&redirect_uri=" + redirectURI;
-        TokenResponse tokenResponse = new ObjectMapper()
+        EbayToken ebayToken = new ObjectMapper()
                 .readValue(postRequest(tokenUrl,"application/x-www-form-urlencoded",
-                        parameters, "Basic " + base64String).getEntity().getContent(), TokenResponse.class);
-        return tokenResponse.getAccessToken();
+                        parameters, "Basic " + base64String).getEntity().getContent(), EbayToken.class);
+        return ebayToken.getAccessToken();
     }
 
     HttpResponse createOrReplaceInventoryItem(InventoryItem item, String token) throws IOException {

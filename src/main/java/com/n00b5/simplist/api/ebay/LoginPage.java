@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Project: Simplist
  *
- * @author d4k1d23
+ * @author Martino Nikolovski
  * @date 1/4/17
  */
 public class LoginPage {
