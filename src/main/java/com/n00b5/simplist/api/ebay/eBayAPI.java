@@ -1,5 +1,6 @@
 package com.n00b5.simplist.api.ebay;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -9,6 +10,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Project: Simplist
@@ -56,6 +59,13 @@ public class eBayAPI {
         HttpResponse response = getRequest(uri,"Bearer " + token);
         return new ObjectMapper().readValue(response.getEntity().getContent(),InventoryItem.class);
     }
+
+    InventoryItems getAllInventoryItems(String token) throws IOException {
+        String uri = "https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/";
+        HttpResponse response = getRequest(uri,"Bearer " + token);
+        return new ObjectMapper().readValue(response.getEntity().getContent(),InventoryItems.class);
+    }
+
     HttpResponse deleteInventoryItem(String inventoryItemSKU, String token) throws IOException {
         String uri = "https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/" + inventoryItemSKU;
         return deleteRequest(uri,"Bearer " + token);
