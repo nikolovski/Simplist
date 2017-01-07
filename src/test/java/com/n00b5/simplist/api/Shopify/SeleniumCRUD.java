@@ -15,6 +15,7 @@ public class SeleniumCRUD {
     private final String Company = "Company";
     private final String Product_type = "Product Type";
     private final String tags = "tags";
+    private final String price = "price";
     private final String addItem = "add";
 
     private final String productId = "id";
@@ -23,6 +24,7 @@ public class SeleniumCRUD {
     private final String CompanyU = "CompanyU";
     private final String Product_typeU = "Product TypeU";
     private final String tagsU = "tagsU";
+    private final String priceU = "priceU";
     private final String updateItem = "update";
 
     private final String delete = "deleteID";
@@ -35,7 +37,7 @@ public class SeleniumCRUD {
         driver.get("http://localhost:8080/pages/ShopifyApiTest/APITest.html");
     }
 
-    public void setCreate(String titleP,String DescriptionP,String CompanyP, String ProductP, String tagsP){
+    public void setCreate(String titleP,String DescriptionP,String CompanyP, String ProductP, String tagsP,String Price){
         driver.findElement(By.name(title))
                 .sendKeys(titleP);
         driver.findElement(By.name(Description))
@@ -46,10 +48,12 @@ public class SeleniumCRUD {
                 .sendKeys(ProductP);
         driver.findElement(By.name(tags))
                 .sendKeys(tagsP);
+        driver.findElement(By.name(price))
+                .sendKeys(Price);
 
     }
 
-    public void setUpdate(String idUp,String titleUp,String DescriptionUp, String CompanyUp, String ProductUp, String tagsUp){
+    public void setUpdate(String idUp,String titleUp,String DescriptionUp, String CompanyUp, String ProductUp, String tagsUp,String price){
         driver.findElement(By.name(productId))
                 .sendKeys(idUp);
         driver.findElement(By.name(TitleU))
@@ -62,6 +66,8 @@ public class SeleniumCRUD {
                 .sendKeys(ProductUp);
         driver.findElement(By.name(tagsU))
                 .sendKeys(tagsUp);
+        driver.findElement(By.name(priceU))
+                .sendKeys(price);
         implicitwait();
     }
 

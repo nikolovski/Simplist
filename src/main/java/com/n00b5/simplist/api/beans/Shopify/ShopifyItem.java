@@ -1,10 +1,9 @@
-package com.n00b5.simplist.api.beans;
+package com.n00b5.simplist.api.beans.Shopify;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**#
  * Created by Shehar on 1/3/2017.
@@ -12,14 +11,20 @@ import java.util.Map;
 public class ShopifyItem {
 
 
-
+    @JsonProperty
     private String id;
+    @JsonProperty
     private String title;
+    @JsonProperty
     private String body_html;
+    @JsonProperty
     private String vendor;
+    @JsonProperty
     private String product_type;
+    @JsonProperty
     private String tags;
-    Map<String, String> variants = new HashMap<String, String>();
+    @JsonProperty
+    private Variants[] variants;
 
     public ShopifyItem(){
 
@@ -31,18 +36,9 @@ public class ShopifyItem {
         this.vendor = vendor;
         this.product_type = product_type;
         this.tags = tags;
+
     }
 
-    @Override
-    public String toString() {
-        return "ShopifyItem{" +
-                "title='" + title + '\'' +
-                ", body_html='" + body_html + '\'' +
-                ", vendor='" + vendor + '\'' +
-                ", product_type='" + product_type + '\'' +
-                ", tags='" + tags + '\'' +
-                '}';
-    }
 
     public String getId() {
         return id;
@@ -91,17 +87,51 @@ public class ShopifyItem {
         this.tags = tags;
     }
 
-    public JSONObject getJSONItem() throws JSONException {
-        JSONObject createItem = new JSONObject("{\n  \"product\": " +
-                                                "{\n    \"title\": \""+this.getTitle()+"\"," +
-                                                "\n    \"body_html\": \"<strong>"+this.getBody_html()+"<\\/strong>\"," +
-                                                "\n    \"vendor\": \""+this.getVendor()+"\"," +
-                                                "\n    \"product_type\": \""+this.getProduct_type()+"\"," +
-                                                "\n    \"tags\": \""+this.getTags()+"\"\n  }\n}");
-        return createItem;
+    public Variants[] getVariants() {
+        return variants;
     }
 
+    public void setVariants(Variants[] variants) {
+        this.variants = variants;
+    }
+
+    public JSONObject getJSONItem() throws JSONException {
+        System.out.println(variants[0].getPrice());
+        JSONObject product = new JSONObject();
+        JSONObject productTags = new JSONObject();
+        JSONArray productVariants = new JSONArray();
+        productTags.put("title",this.getTitle());
+        productTags.put("body_html",this.getBody_html());
+        productTags.put("vendor",this.getVendor());
+        productTags.put("product_type",this.getProduct_type());
+        productTags.put("tags",this.getTags());
+        productTags.put("variants",productVariants);
+        productVariants.put(0,new JSONObject().put("price",variants[0].getPrice()));
+        product.put("product",productTags);
+        System.out.println(product.toString());
+        return product;
+    }
+
+
+
+
     public JSONObject getUpdateJSONItem() throws JSONException {
+        System.out.println(variants[0].getPrice());
+        JSONObject product = new JSONObject();
+        JSONObject productTags = new JSONObject();
+        JSONArray productVariants = new JSONArray();
+        productTags.put("id",this.getId());
+        productTags.put("title",this.getTitle());
+        productTags.put("body_html",this.getBody_html());
+        productTags.put("vendor",this.getVendor());
+        productTags.put("product_type",this.getProduct_type());
+        productTags.put("tags",this.getTags());
+        productTags.put("variants",productVariants);
+        productVariants.put(0,new JSONObject().put("price",variants[0].getPrice()));
+        product.put("product",productTags);
+        System.out.println(product.toString());
+
+/*
         JSONObject updateItem = new JSONObject("{\n  \"product\": " +
                 "{\n    \"id\": \""+this.getId()+"\"," +
                 "\n    \"title\": \""+this.getTitle()+"\"," +
@@ -109,6 +139,7 @@ public class ShopifyItem {
                 "\n    \"vendor\": \""+this.getVendor()+"\"," +
                 "\n    \"product_type\": \""+this.getProduct_type()+"\"," +
                 "\n    \"tags\": \""+this.getTags()+"\"\n  }\n}");
-        return updateItem;
+                */
+        return product;
     }
 }
