@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Project: Simplist
  *
- * @author d4k1d23
+ * @author Martino Nikolovski
  * @date 1/4/17
  */
 public class extractToken {

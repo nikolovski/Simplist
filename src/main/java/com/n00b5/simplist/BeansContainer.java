@@ -6,7 +6,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 /**
  * Project: Simplist
  *
- * @author d4k1d23
+ * @author Martino Nikolovski
  * @date 1/4/17
  */
 public abstract class BeansContainer {
