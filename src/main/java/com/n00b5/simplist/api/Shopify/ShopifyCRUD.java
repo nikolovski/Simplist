@@ -6,9 +6,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Bean;
@@ -31,26 +29,34 @@ public class ShopifyCRUD{
 
 
 
+    public String productID(String response){
+        String id = response;
+        String[] output = id.split("admin/products/");
+        int comma = output[1].indexOf(',');
+        id = output[1].substring(0,comma);
+        return id;
+    }
 
     @RequestMapping(value="/shopify/createItem",method=RequestMethod.POST)
     public @ResponseBody ShopifyItem createItem(@RequestBody ShopifyItem item) throws IOException, JSONException {
         String uri = "https://paperss.myshopify.com/admin/products.json?access_token="+ ShopifyAPI.getTokenKey();
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        HttpClient httpClient = new DefaultHttpClient();
         try {
             HttpPost request = new HttpPost(uri);
             StringEntity params = new StringEntity(item.getJSONItem().toString());
             request.addHeader("Content-Type", "application/json;; charset=UTF-8");request.addHeader("Accept", "application/json;; charset=UTF-8");
             request.setEntity(params);
             HttpResponse response = httpClient.execute(request);
-            System.out.println(response);
-            System.out.println("Shopify ITEM ID : " + item.getShopifyId());
+            item.setShopifyId(productID(response.toString()));
         } catch (Exception ex) {
             // handle exception here
-        } finally {
-
-
-            httpClient.close();
         }
+// finally {
+//
+//
+//            httpClient.close();
+//        }
         return new ShopifyItem();
     }
 

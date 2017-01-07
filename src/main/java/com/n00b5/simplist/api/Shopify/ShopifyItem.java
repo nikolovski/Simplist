@@ -21,6 +21,7 @@ public class ShopifyItem {
     @Column(name = "ITEM_ID")
     private String id;
 
+    @Column(name = "SHOPIFY_PRODUCT_ID")
     @JsonProperty(value = "id")
     private String shopifyId;
 
