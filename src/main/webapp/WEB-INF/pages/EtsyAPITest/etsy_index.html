@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ETSY</title>
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h2>Etsy </h2>
+
+
+<div id="addItem">
+    <h5>Add Items</h5>
+    Quantity <input id="quantity" type="text"><br>
+    Title <input id="title" type="text"><br>
+    Description<input id="description" type="text"><br>
+    <!--Price<input id="price" type="text"><br>-->
+    <!--State<input id="state" type="text"><br>-->
+    <!--Is_supply <input id="is_supply" type="text"><br> &lt;!&ndash;dropdown&ndash;&gt;-->
+    <!--Who_made<input id="who_made" type="text"><br>&lt;!&ndash;dropdown&ndash;&gt;-->
+    <!--When_made<input id="when_made" type="text"><br>&lt;!&ndash;dropdown&ndash;&gt;-->
+    <!--Shipping template <input id="shipping_template_id" type="text"><br>-->
+    <input id="addSubmit" type="submit" value="Add">
+</div>
+
+
+
+<div id="updateItem">
+    <h5>Update</h5>
+    Item ID <input id="updateItemId" type="text"><br>
+    New Quantity <input id="updateQuantity" type="text"><br>
+    Title <input id="updateTitle" type="text"><br>
+    Description<input id="updateDescription" type="text"><br>
+    <input id="updateSubmit" type="submit" value="Update"><br>
+</div>
+
+
+<div id="deleteItem">
+    <h5>Delete</h5>
+    Enter item # to be deleted <input id="deleteId" type="text"><br>
+    <input id="deleteSubmit" type="submit" value="Delete"><br>
+</div>
+
+<div><br><br>
+    <header>Get By ID</header>
+     Enter ID of listing  <input type="text" id="getByID">
+     <input type="submit" id="getByIDSubmit" value="GET">
+</div>
+
+
+<div><br><br>
+    <header>Get All</header>
+    GET ALL LISTINGS ! <input type="submit" id="getAllListings" value="ALL">
+</div>
+
+<h1></h1>
+</body>
+
+<script type="text/javascript">
+    $("#addSubmit").click(function(){
+
+        var obj = {
+           quantity : $("#quantity").val(),
+            title:  $("#title").val(),
+            description: $("#description").val(),
+            price: 0.20,
+            state: "draft",
+            is_supply: true,
+            who_made: "i_did",
+            when_made: "made_to_order",
+            shippingTemplate: 35750756683
+            //oauth_token: oauth_token,
+            //oauth_token_secret: oauth_token_secret
+        }
+         $.ajax({
+                method: "POST",
+                dataType : 'json',
+                contentType : 'application/json; charset=utf-8',
+                url: "http://localhost:8080/etsy/add",
+                data: JSON.stringify(obj) // Note it is important
+            })
+    })
+
+    $("#updateSubmit").click(function(){
+
+        var id = "itemID="+ $("#updateItemId").val();
+        var obj = {
+            title:   $("#updateTitle").val(),
+            quantity : $("#updateQuantity").val(),
+            description: $("#updateDescription").val(),
+            price: 0.20,
+            state: "draft",
+            is_supply: true,
+            who_made: "i_did",
+            when_made: "made_to_order",
+            shippingTemplate: 35750756683
+        }
+
+        $.ajax({
+            method: "PUT",
+            dataType : 'json',
+            contentType : 'application/json; charset=utf-8',
+            url: "http://localhost:8080/etsy/update?"+id,
+            data: JSON.stringify(obj) // Note it is important
+
+        })
+    })
+
+    $("#deleteSubmit").click(function(){
+
+        var id = "itemID="+ $("#deleteId").val();
+
+        console.log("IN DELETE " + id);
+        $.ajax({
+            method: "DELETE",
+            dataType : 'json',
+            contentType : 'application/json; charset=utf-8',
+            url: "http://localhost:8080/etsy/delete?"+id
+        })
+    })
+
+    $("#getAllListings").click(function(){
+
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/etsy/getAll",
+            dataType: "json",
+            success: function(resp){
+                console.log(resp);
+            }
+        })
+    })
+
+    $("#getByIDSubmit").click(function(){
+
+       var id = "itemID="+$("#getByID").val();
+        console.log("GET BY ID WAS CLICKED - > " + id);
+       $.ajax({
+           method: "GET",
+           url: "http://localhost:8080/etsy/getById?"+id,
+           dataType: "json",
+           success: function(resp){
+               console.log(resp);
+           }
+
+       })
+
+    });
+
+</script>
+
+</html>
