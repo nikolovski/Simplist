@@ -1,11 +1,14 @@
 package com.n00b5.simplist.api.ebay;
 
-import com.n00b5.simplist.api.ebay.enums.ConditionEnum;
-import com.n00b5.simplist.api.ebay.enums.LengthUnitOfMeasureEnum;
-import com.n00b5.simplist.api.ebay.enums.PackageTypeEnum;
-import com.n00b5.simplist.api.ebay.enums.WeightUnitOfMeasureEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.n00b5.simplist.api.ebay.enums.*;
 import com.n00b5.simplist.api.ebay.inventory.*;
+import com.n00b5.simplist.api.ebay.location.Address;
+import com.n00b5.simplist.api.ebay.location.InventoryLocation;
+import com.n00b5.simplist.api.ebay.location.InventoryLocations;
+import com.n00b5.simplist.api.ebay.location.Location;
 import org.apache.http.HttpResponse;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,7 +26,7 @@ public class CRUDTest {
     String token;
     @Before
     public void setup(){
-        token = "v^1.1#i^1#f^0#p^3#I^3#r^0#t^H4sIAAAAAAAAAOVXbWxTVRhe121AxocRBEImNpcFQXLb09vb2/a6lnRfrMC6jg5kIC6n9567Xbi9t7nn3G0NEuZEpqgJ+ks0JHwsIBpIjIoQIUgi0fBDAz9EiIIJRPkh0ZAQEjTqud1XNxX2QeISmybNOef9et73ed+eA7pKpj21s27n3RmOKYX7ukBXocPhLQXTSoqXzXQWLiguAHkCjn1d5V1F3c6bFRimtYy4BuGMoWPk6kxrOhZzm2HGMnXRgFjFog7TCItEEpPR+tUi5wZixjSIIRka44pVh5mUEIAy8gs8L3Ah2Reiu/qAzSYjzAQ46JMQxwlIUGSBl+k5xhaK6ZhAnYQZDngDLPCyINAEBJEP0a+b40MbGNc6ZGLV0KmIGzCRXLhiTtfMi/X+oUKMkUmoESYSi9YmG6Kx6pp4U4Unz1akPw9JAomFh6+qDBm51kHNQvd3g3PSYtKSJIQx44n0eRhuVIwOBDOO8HOpluVAKISgIiMg+xUl+FBSWWuYaUjuH4e9o8qskhMVkU5Ukn1QRmk2UpuRRPpXcWoiVu2yfxotqKmKiswwU1MZbV6brFnDuJKJhGm0qzKSbaRen8/HBX1+PxMhCNMUIrMFI9JGWaepOu5312ezP9kj/FUZuqzaqcOuuEEqEY0djcyQLy9DVKhBbzCjCrHjypcLDmTS599gl7avlhZp0+3qojRNhyu3fHAdBogxRIWHRY2QwMkylBSvoHABDuUzw+718bIjYhcomkh4UApm2TQ0tyCS0aCEWIlm1kojU5VFnk/xAvXN0pJJLC/7JTYU8iOWQ7TnaffzQOH/fwQhxFRTFkGDJBl5kIMaZpKSkUEJQ1OlLDNSJDd6+inRicNMGyEZ0ePp6Ohwd/jchtnq4QDwetbXr05KbSgNmUFZ9cHCrJrjq0TJQuVFks3QaDop96hzvZWJ+Ew5AU2SrbSydJ1EdmJbB/g7LMLIyN1/gYptqJMLpK2PqQGYUd02x92SkfYYkLazvdWSi9g1GiFPyspS/zIy3SaCsqFr2dHrtVqUw33ao1PCtBruvnakMIY82r0+DgNjcKrq7ZTLhpkdI8zhymPQgZJkWDoZj7t+1TFoKJamqJpmt+t4HOapjyVMHWpZokp40OWEuiyaycTkydVl9XSOqLoRZ5NqOqOpmLDJyvUs5P0KvTbyEutPyXxQAtyEcMuoXZVQizrJsOuWpk0IV33rP0OivX7gv4MV90QnhKoatU82lnp52SsIfIqFfi7F8tAfoBQFITYI6YVHCAaEUABOCHOVptLJ0JSdbH+CdQYmSJ4YNHoZnVyg7AkzMGCgwAFWDgVoVfkgYIOKT2LpvEmNFvKIjbwr3d+u857hr+pIQe7j7XacBt2Ok/RhDgKA9S4DS0uca4uc0xmsEuTGUJdTRqdbhYobq606fTSayL0FZTNQNQtLHPXXX2venvee37cJzB980U9zekvznvegbOik2Dtr3gxvAHipU4EP0XssWDR0WuSdWzTnq+fOKWVXu53WN4cr2qe/CjbC5XPBjEEhh6O4oKjbUdADju9ecqBtF/niXkdp+b23tr554euZm1b1lFyc+cZvCxclep/5s6p5zs0/Pg7cXHzJ99ILPx/88qDn0713kXCx9uivt6cWO+8cOTs9sfv57U98Vvj5nSs9r1z7/nTjydmfbC7bf+zCSp3bey52bF2Gff/R34vS73w06+z82eXbbnyQWXrxRFNDY+uLP5xY8chmvONdecn1t1/f+l5Rl1C3Z+/cDVOjy3sPXV58/OmfzpzeeGp/eEXNkqy/ceUq6+qNeb07FzY//mPFjtJtu0BP9uVb5Ve+2yKfv3ao+vzlo78oa7Y7a+sWlO6+FY9zl75d5l54+Ej8+pkP94i3W5IrZrcxZb3LN065vbjm2cc2nXqyyeor41/gawcXaREAAA==";
+        token = "v^1.1#i^1#r^0#p^3#I^3#f^0#t^H4sIAAAAAAAAAOVXa2wUVRTudttCgzw0BEEF1wEJQmb2zmNnd4d2dftASugDtuVlTHN35k47dnZmnTvTdsHKWrGJShpCIASIgCIaghEJiYSIpNFGf/iCyA+Ipj6jBAOJgsEfjXhn+2BbFfogsYn7Z3PvPa/vnO+cuRekCwoXdyzvuD7VMyn3QBqkcz0edgooLMhfMs2be19+DsgS8BxIL0jntXsvFmGY0JPSaoSTpoGRrzWhG1jKbBZTjmVIJsQalgyYQFiyZSkWrVwpcQyQkpZpm7KpU76KsmJKDSphLiSyrCAHBU6EZNcYsFlruuecHAqykI3zMMCHATnH2EEVBrahYRdTHGCDNGBpEKwFIYkTJV5geBDYQPnWIAtrpkFEGEBFMuFKGV0rK9ZbhwoxRpZNjFCRiuiyWHW0oqy8qrbIn2Ur0p+HmA1tBw9dlZoK8q2BuoNu7QZnpKWYI8sIY8of6fMw1KgUHQhmDOFnUs3zobCMhFCIUwNhhRfuSCqXmVYC2reOw93RFFrNiErIsDU7dbuMkmzEn0Ky3b+qIiYqynzu3yoH6pqqIauYKi+Jrq+Lla+mfLGaGsts1hSkuEhZnue5EB8IUBEbYZJCZNVjZDcS1umagfvd9dnsT/Ywf6WmoWhu6rCvyrRLEIkdDc8Qm5UhIlRtVFtR1XbjypJjQX8muVBwg1vavlo6dqPhVhclSDp8meXt6zBAjJtUuFPUEONCGPB8EKpIBEhWsqjh9vqY6RFxKxStqfGjOEzRCWg1ITupQxnRMkmtk0CWpkiCEBdEKKs0qZlMC0pApsPhAKI5JCKRg7wAVOH/xxDbtrS4Y6NBlgw/yEAtpmKymUQ1pq7JKWq4SGb29HOiFRdTjbadlPz+lpYWpoVnTKvBzwHA+tdVrozJjShBhu+ArHZ7YVrLEFZGRAtrkp1KkmhaCfmIc6OBivCWUgMtO1XipMg6htzENgwQeEiEkeG7/wIVu1AnFkhXHxMDMKkxLscZ2Uz4TUj62d2qz0TsG4mQP+6kiH8FWYyFoGIaemrkeg0O4XCf9siUMKkG09eOBMagR7fXx2JgFDqa0Uy4bFqpUcIcqjwKHSjLpmPYY3HXrzoKDdXRVU3X3XYdi8Ms9dGEaUA9ZWsyHnQ5ri6LJpMVysTqskoyRzTDrKJjWiKpa9imYyXraCgEVFEQBJkOxBUhJANuXLgV1KzJqF6bYNgNR9fHhauy4R8hkV4/+B/CqvJHx4WqDDVPNJaygsKKohCnYYCL0wIMBAlFQZgOQXLhEUNBMRyE48JcqmtkMtSmJtpHcLmJbaSMDxq5jU4sUO6EGRgwUOQArYSDpKpCCNAhlZdpMm/iI4U8bCPrSve3+7x/6LM6kpP5se2e90G75yR5mYMgoNkl4JECb12e9y4KazZiMDSUuNnKaFBlsNZgkFejhZgmlEpCzcot8FT+sHX95qwH/YEnwezBJ32hl52S9b4HD9w8yWen3zuVDQKWOA1xIi9sAPNvnuaxs/JmJmf80tvx4RetFV27js5++8gL7cy7Dpg6KOTx5OfktXty5rKHOkur5q+LFHROr/9446vdu3amz12d82bXr6vXXvq27XjJzoMzvzROrl31KH1MffHGwzu53p+6C79KdT57o+tSx5XJ99TZ5Q2/z+o9//1H215++r1FJ0q8rzddrU++g7p3v8I1bddeu3Z9+pWL87cd6j671EMdnnHkfNGmLVe7P2dn7Vn0NZ/e33P0dNGiM9uemxt7/vEXul6Kzqlb+Ic+d1LnNPDgip5zzuLLPUurVfPUn4fz9m05zTyzdstC7xsL5qXn7a3e3XZ322P1PdMuFD3x855dx1bs3mRcDmzt+WzHb9cucj9eKP9k8sq28Objh7/Z0UN/8Fbh3vvb95Ua0f3fneo982nl2WXbNxaeeOhEXxn/ApTRsHxqEQAA";
     }
     @Test
     public void createOrReplaceInventoryItem() throws IOException {
@@ -100,4 +103,63 @@ public class CRUDTest {
         System.out.println(response);
         assertEquals(204,response.getStatusLine().getStatusCode());
     }
+
+    @Test
+    public void createInventoryLocation() throws IOException {
+        InventoryLocation inventoryLocation = new InventoryLocation();
+        Location location = new Location();
+
+        Address address = new Address();
+        address.setAddressLine1("2034 Broadway");
+        address.setAddressLine2("Apt 5F");
+        address.setCity("New York");
+        address.setStateOrProvince("NY");
+        address.setPostalCode("12342");
+        address.setCountry(CountryCodeEnum.US.toString());
+
+        location.setAddress(address);
+
+        inventoryLocation.setLocationInstructions("Items ship from this address. Some other instructions!");
+        inventoryLocation.setLocation(location);
+        inventoryLocation.setName("ShopName");
+        inventoryLocation.setMerchantLocationStatus(StatusEnum.ENABLED.toString());
+        inventoryLocation.setLocationTypes(new String[]{StoreTypeEnum.STORE.toString()});
+        inventoryLocation.setMerchantLocationKey("myFirstStore");
+        HttpResponse response = new eBayAPI().createInventoryLocation(inventoryLocation, token);
+        assertEquals(204, response.getStatusLine().getStatusCode());
+    }
+
+    @Test
+    public void getInventoryLocation() throws IOException {
+        InventoryLocation location = new eBayAPI().getInventoryLocation("myFirstStore", token);
+        System.out.println(location);
+        assertNotNull(location);
+    }
+
+    @Test
+    public void getAllInventoryLocations() throws IOException {
+        InventoryLocations locations = new eBayAPI().getAllInventoryLocations(token);
+        System.out.println(locations);
+        assertNotNull(locations);
+    }
+
+    @Test
+    public void deleteInventoryLocation() throws IOException {
+        HttpResponse response = new eBayAPI().deleteInventoryLocation("myFirstStore", token);
+        System.out.println(response);
+        assertEquals(200, response.getStatusLine().getStatusCode());
+    }
+
+    @Test
+    public void updateInventoryLocation() throws IOException, JSONException {
+        HttpResponse response = new eBayAPI().updateInventoryLocation("myFirstStore",
+                "some location additional information",
+                "some location instructions",
+                "www.myfirststore.com",
+                "myFirstStore",
+                "234-244-1234", token);
+        System.out.println(response);
+        assertEquals(204, response.getStatusLine().getStatusCode());
+    }
+
 }
