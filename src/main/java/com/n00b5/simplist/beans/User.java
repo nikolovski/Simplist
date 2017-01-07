@@ -1,8 +1,5 @@
 package com.n00b5.simplist.beans;
 
-import com.n00b5.simplist.api.Shopify.ShopifyToken;
-import com.n00b5.simplist.api.ebay.EbayToken;
-import com.n00b5.simplist.api.etsy.EtsyToken;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,6 +12,7 @@ import javax.persistence.*;
  * @date 1/6/17
  */
 @Entity
+@Table(name = "SIMPLIST_USER")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +21,8 @@ public class User {
     @Column(nullable = false)
     @NotEmpty(message = "The first name cannot be null nor empty!")
     private String firstName;
+
+
 
     @Column
     private String lastName;
@@ -36,6 +36,18 @@ public class User {
     @NotEmpty
     private String password;
 
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+
+    /*
     @OneToOne(cascade = CascadeType.REMOVE)
     private ShopifyToken shopifyToken;
 
@@ -44,6 +56,6 @@ public class User {
 
     @OneToOne(cascade = CascadeType.REMOVE)
     private EtsyToken etsyToken;
-
+*/
 
 }
