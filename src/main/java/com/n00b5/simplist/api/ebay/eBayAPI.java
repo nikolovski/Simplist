@@ -1,6 +1,5 @@
 package com.n00b5.simplist.api.ebay;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.n00b5.simplist.api.ebay.inventory.InventoryItem;
 import com.n00b5.simplist.api.ebay.inventory.InventoryItems;
@@ -8,13 +7,11 @@ import com.n00b5.simplist.api.ebay.location.InventoryLocation;
 import com.n00b5.simplist.api.ebay.location.InventoryLocations;
 import com.n00b5.simplist.api.ebay.offer.Offer;
 import com.n00b5.simplist.api.ebay.offer.Offers;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,31 +33,49 @@ public class eBayAPI {
     private final String inventoryUri = resourceBundle.getString("inventoryUri");
     private final String locationUri = resourceBundle.getString("locationUri");
     private final String offerUri = resourceBundle.getString("offerUri");
+    private final String tokenUrl = resourceBundle.getString("tokenUrl");
+    private final String scope = resourceBundle.getString("scope");
+    private final String signInURL = resourceBundle.getString("signInUrl");
+    private final String redirectURI = resourceBundle.getString("RuName");
+    private final String clientID = resourceBundle.getString("appId");
+    private final String base64String = resourceBundle.getString("Base64String");
 
     public eBayAPI() {
         httpClient = HttpClientBuilder.create().build();
     }
 
-    String generateURL(String clientID,
-                       String redirectURI,
-                       String signInURL,
-                       String scope,
-                       String responseType) throws UnsupportedEncodingException {
+    String generateURL() throws UnsupportedEncodingException {
         return signInURL + "?client_id=" +
-                clientID + "&response_type=" +
-                responseType + "&redirect_uri=" +
-                redirectURI + "&scope=" +
-                URLEncoder.encode(scope, "UTF-8");
+                clientID + "&response_type=code" +
+                "&redirect_uri=" + redirectURI +
+                "&scope=" + URLEncoder.encode(scope, "UTF-8");
     }
 
-    String getToken(String tokenUrl, String redirectURI, String base64String, String code) throws IOException {
-        String parameters = "grant_type=authorization_code&" +
+    EbayToken getToken(String code) throws IOException {
+        String parameters = "grant_type=authorization_code" +
                 "&code=" + URLEncoder.encode(code, "UTF-8") +
                 "&redirect_uri=" + redirectURI;
         EbayToken ebayToken = new ObjectMapper()
                 .readValue(postRequest(tokenUrl, "application/x-www-form-urlencoded",
                         parameters, "Basic " + base64String).getEntity().getContent(), EbayToken.class);
-        return ebayToken.getAccessToken();
+        return ebayToken;
+    }
+
+    EbayToken tokenFromRefreshToken(EbayToken token) throws IOException, JSONException {
+        String parameters = "grant_type=refresh_token" +
+                "&refresh_token=" + token.getRefreshToken() +
+                "&scope=" + URLEncoder.encode(scope, "UTF-8");
+        HttpResponse response = postRequest(tokenUrl, "application/x-www-form-urlencoded", parameters,
+                "Basic " + base64String);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = bufferedReader.readLine()) != null)
+            stringBuilder.append(line);
+        JSONObject listingJSON = new JSONObject(stringBuilder.toString());
+        bufferedReader.close();
+        token.setAccessToken((String) listingJSON.get("access_token"));
+        return token;
     }
 
     HttpResponse createOrReplaceInventoryItem(InventoryItem item, String token) throws IOException {

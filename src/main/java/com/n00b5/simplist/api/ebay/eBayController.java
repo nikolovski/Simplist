@@ -14,33 +14,17 @@ import java.io.*;
  */
 @Controller
 @RequestMapping("/ebay")
-@PropertySource("classpath:dev_ebay.properties")
 public class eBayController {
-    @Value("${appId}")
-    private String clientID;
-    @Value("${certId}")
-    private String clientSecret;
-    @Value("${RuName}")
-    private String redirectURI;
-    @Value("${signInUrl}")
-    private String signInURL;
-    @Value("${tokenUrl}")
-    private String tokenUrl;
-    @Value("${Base64String}")
-    private String base64String;
-    @Value("${scope}")
-    private String scope;
-    private String responseType = "code";
 
     @RequestMapping(value = "/oauth")
     public ModelAndView getCode() throws IOException {
-        String url = new eBayAPI().generateURL(clientID,redirectURI,signInURL,scope,responseType);
+        String url = new eBayAPI().generateURL();
         return new ModelAndView("redirect:" + url);
     }
 
     @RequestMapping(value = "/authorize", params = {"state", "code"})
     @ResponseBody
     public String getToken(String state, String code) throws IOException {
-        return new eBayAPI().getToken(tokenUrl,redirectURI,base64String,code);
+        return new eBayAPI().getToken(code).toString();
     }
 }

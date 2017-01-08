@@ -1,6 +1,5 @@
 package com.n00b5.simplist.api.ebay;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.ebay.enums.*;
 import com.n00b5.simplist.api.ebay.inventory.*;
 import com.n00b5.simplist.api.ebay.location.Address;
