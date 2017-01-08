@@ -18,9 +18,6 @@ public class Address {
     @JsonProperty
     private String city;
 
-    /**
-     * @see com.n00b5.simplist.api.ebay.enums.CountryCodeEnum
-     */
     @JsonProperty
     private String country;
 
@@ -58,6 +55,10 @@ public class Address {
         return country;
     }
 
+    /**
+     * @param country
+     * @see com.n00b5.simplist.api.ebay.enums.CountryCodeEnum
+     */
     public void setCountry(String country) {
         this.country = country;
     }

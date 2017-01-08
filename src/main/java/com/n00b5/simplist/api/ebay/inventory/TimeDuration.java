@@ -20,6 +20,10 @@ public class TimeDuration {
         return unit;
     }
 
+    /**
+     * @param unit
+     * @see TimeDuration
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }

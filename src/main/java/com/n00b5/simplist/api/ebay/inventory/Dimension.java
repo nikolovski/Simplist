@@ -40,6 +40,10 @@ public class Dimension {
         return unit;
     }
 
+    /**
+     * @param unit
+     * @see com.n00b5.simplist.api.ebay.enums.LengthUnitOfMeasureEnum
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }

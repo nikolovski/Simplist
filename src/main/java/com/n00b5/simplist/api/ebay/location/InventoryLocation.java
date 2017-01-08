@@ -25,19 +25,12 @@ public class InventoryLocation {
     @JsonProperty
     private String locationAdditionalInformation;
 
-    /**
-     * @see com.n00b5.simplist.api.ebay.enums.StoreTypeEnum
-     */
     @JsonProperty
     private String[] locationTypes;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty
     private String locationWebUrl;
 
-    /**
-     * @see com.n00b5.simplist.api.ebay.enums.StatusEnum
-     */
     @JsonProperty
     private String merchantLocationStatus;
 
@@ -83,6 +76,10 @@ public class InventoryLocation {
         return locationTypes;
     }
 
+    /**
+     * @param locationTypes
+     * @see com.n00b5.simplist.api.ebay.enums.StoreTypeEnum
+     */
     public void setLocationTypes(String[] locationTypes) {
         this.locationTypes = locationTypes;
     }
@@ -99,6 +96,10 @@ public class InventoryLocation {
         return merchantLocationStatus;
     }
 
+    /**
+     * @param merchantLocationStatus
+     * @see com.n00b5.simplist.api.ebay.enums.StatusEnum
+     */
     public void setMerchantLocationStatus(String merchantLocationStatus) {
         this.merchantLocationStatus = merchantLocationStatus;
     }
