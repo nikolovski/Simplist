@@ -1,9 +1,7 @@
-package com.n00b5.simplist.api.ebay;
+package com.n00b5.simplist.api.ebay.inventory;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Set;
 
 /**
  * Project: Simplist
@@ -14,7 +12,7 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Availability {
     @JsonProperty
-    private PickupAtLocationAvailability [] pickupAtLocationAvailability;
+    private PickupAtLocationAvailability[] pickupAtLocationAvailability;
     @JsonProperty
     private ShipToLocationAvailability shipToLocationAvailability;
 
@@ -33,6 +31,7 @@ public class Availability {
     public void setShipToLocationAvailability(ShipToLocationAvailability shipToLocationAvailability) {
         this.shipToLocationAvailability = shipToLocationAvailability;
     }
+
     @Override
     public String toString() {
         return "Availability{" +
