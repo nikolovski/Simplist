@@ -3,56 +3,63 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
     <mvc:annotation-driven />
     <mvc:resources mapping="/pages/**" location="/WEB-INF/pages/" />
     <context:component-scan base-package="com.n00b5.simplist" />
     <context:annotation-config />
     <context:property-placeholder location="classpath:environment.properties"/>
 
-    <!---->
-    <!--&lt;!&ndash; DataSource bean &ndash;&gt;-->
-    <!--<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
-        <!--<property 	name="driverClassName"-->
-                     <!--value="oracle.jdbc.OracleDriver" />-->
-        <!--<property 	name="username" value="${DS_USERNAME}" />-->
-        <!--<property 	name="password" value="${DS_PASSWORD}" />-->
-        <!--<property 	name="url" value="${DS_URL}" />-->
-    <!--</bean>-->
-    <!--&lt;!&ndash; SessionFactory &ndash;&gt;-->
-    <!--<bean name="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
-        <!--<property name="dataSource" ref="dataSource" />-->
-        <!--<property name="packagesToScan" value="com.n00b5.simplist" />-->
-        <!--<property name="hibernateProperties">-->
-            <!--<props>-->
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
-                <!--<prop key="hibernate.connection.pool_size">30</prop>-->
-                <!--<prop key="hibernate.dialect">-->
-                    <!--org.hibernate.dialect.Oracle10gDialect-->
-                <!--</prop>-->
-                <!--<prop key="show_sql">true</prop>-->
-            <!--</props>-->
-        <!--</property>-->
-    <!--</bean>-->
-    <!--&lt;!&ndash; Transaction Manager &ndash;&gt;-->
-    <!--<bean name="transactionManager"-->
-          <!--class="org.springframework.orm.hibernate3.HibernateTransactionManager">-->
-        <!--<property name="sessionFactory" ref="sessionFactory" />-->
-    <!--</bean>-->
-    <!--&lt;!&ndash;TODO beans-->
-    <!--<bean name="dao" class="com.n00b5.simplist.DAO">-->
-        <!--<property name="sessionFactory" ref="sessionFactory" />-->
-    <!--</bean>-->
-    <!--&ndash;&gt;-->
-    <!--&lt;!&ndash; Facade bean &ndash;&gt;-->
-    <!--<bean name="facade" class="com.n00b5.simplist.data.Facade">-->
-        <!--&lt;!&ndash;TODO <property name="dao" ref="dao" />&ndash;&gt;-->
-    <!--</bean>-->
 
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="prefix" value="/pages/"/>-->
-        <!--<property name="suffix" value=".html"/>-->
-    <!--</bean>-->
+        <tx:annotation-driven />
+    <!-- DataSource bean -->
+    <bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property 	name="driverClassName"
+                     value="oracle.jdbc.OracleDriver" />
+        <property 	name="username" value="${DS_USERNAME}" />
+        <property 	name="password" value="${DS_PASSWORD}" />
+        <property 	name="url" value="${DS_URL}" />
+    </bean>
+    <!-- SessionFactory -->
+    <bean name="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.n00b5.simplist" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.pool_size">30</prop>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.Oracle10gDialect
+                </prop>
+                <prop key="show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- Transaction Manager -->
+    <bean name="transactionManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+
+    <bean name="dao" class="com.n00b5.simplist.data.DAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <!-- Facade bean -->
+    <bean name="facade" class="com.n00b5.simplist.data.Facade">
+        <property name="dao" ref="dao" />
+    </bean>
+
+
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/pages/"/>
+        <property name="suffix" value=".html"/>
+    </bean>
 </beans>

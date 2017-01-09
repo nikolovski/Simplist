@@ -11,7 +11,6 @@ public class OAuth1Converter {
     @JsonProperty(value = "oauth_token_secret")
     private String oauthTokenSecret;
 
-    //needed to add an no-arg constructor
     public OAuth1Converter() {
     }
 
