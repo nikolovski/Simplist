@@ -1,6 +1,5 @@
 package com.n00b5.simplist.api.ebay;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.ebay.enums.*;
 import com.n00b5.simplist.api.ebay.inventory.*;
 import com.n00b5.simplist.api.ebay.location.Address;
@@ -11,12 +10,16 @@ import com.n00b5.simplist.api.ebay.offer.*;
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
+
 import static org.junit.Assert.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * Project: Simplist
@@ -24,11 +27,17 @@ import java.util.Map;
  * @author Martino Nikolovski
  * @date 1/5/17
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CRUDTest {
     String token;
+    ResourceBundle bundle = ResourceBundle.getBundle("ebay_login");
     @Before
-    public void setup(){
-        token = "v^1.1#i^1#f^0#p^3#I^3#r^0#t^H4sIAAAAAAAAAOVXa2wURRzv9WUoUpBHFTTxXIoPYO9mb/deC714pa09SkvhCkKj1NnZ2evSvd1jZ7ftBYNNeZiAkqAxaTTEJgqIflHESEW+NIJATCRUosFnwCj6AWOUEA0kzl4fXKtCHyQ2sV+anfm/fr//7z83AzoKpyzcUb3j6jTXHbndHaAj1+XipoIphQWLivNy5xXkgCwDV3dHaUd+Z96lpQQmtZS4GpOUoRPsbk9qOhEzi2WMbeqiAYlKRB0mMREtJMajtStEnweIKdOwDGRojDtWUcbIQT9CUkiBPgyCCuLoqj4Ys8EoY5AEAYbIz/tkQZBkH90nxMYxnVhQt8oYH+CCLOBYEGoAPpHnRcB7/FygkXGvxSZRDZ2aeAATyZQrZnzNrFpvXiokBJsWDcJEYtGq+MporKKyrmGpNytWZICHuAUtmwz/WmbI2L0Waja+eRqSsRbjNkKYEMYb6c8wPKgYHSxmHOVnqA6E/YqfD8gwLAVCflm5LVRWGWYSWjevw1lRZVbJmIpYt1QrfStGKRvSRoysga86GiJW4Xb+rbKhpioqNsuYyvLo+jXxytWMO15fbxqtqoxlBynH87wvxPv9TMTChFKIzSaCrWaqOk3VyUC6/pgDZI/It8zQZdWhjrjrDKsc09rxSIZ8WQxRo5X6SjOqWE5d2XbCAJNCONjotLa/l7bVrDvdxUlKhzvzees+DArjhhRulzRwAHEK4qGAeBlISMiShjPr45ZHxOlQtL7eiyWYZpPQbMFWSoMIs4hSayexqcoinWshAJHC0p4hVpD9iA2H/Zj14QAO+CAvAEX4/ynEskxVsi08pJKRGxmoZUwcGSlcb2gqSjMjTTJnz4Am2kkZ02xZKdHrbWtr87TxHsNMeH0AcN51tSviqBknITNkq97amFUzgkWYehFVtNIpWk07FR9NrieYCG/K9dC00uV2mn7HsUNsYlDAwyqMjFz9F6jEgTq5QDr+hAaAKdXjaNyDjKTXgHSenaWmTMXu0Rh5JTtN88vY9JgYyoaupUfvl7Cphvu9R+dEaDc8/eNIYQxldGZ9PAHG4KPqrVTLhpkeI8zhzmPwgQgZtm6NJ92A6xg8FFtTVE1zxnU8CbPcx1KmDrW0pSIylHJCUxZNpWLy5JqyWnqOqLpRx8bVZEpTicXGy9exUPArAUEQEOuXZCGEgG9CuGXcqiLcpE4y7LqtaRPCVZv4R0h01l/7D2HVeaMTQlWBWyebSjlB5gIBQWKh3yexAvQHqURBmA1BeuEJhIKBcBBOCPMyTaUnQ0N6sv0IVhvEwvLEoNHb6OQC5ZwwgwcMDPgAK4eDtKtCCLAhhUcsPW+k0UIesZB1pfvbfd47/Fkdycn8cZ2uY6DT1UNf5iAIWG4ReKQwb01+3p0MUS3sIVCXJaPdo0LFQ9SETl+NJva04HQKqmZuoav24nPrn8l60Hc/Ce4ZetJPyeOmZr3vwX03dgq46XdP44KAAyHg43nAN4L5N3bzuZL82fqR2EH0/cOzDr30xUP7vgKFH9ZszAHThoxcroKc/E5XTt7imndqi6/2ulDv9uuzwltzZ8UemFN9V/GC65v6vutcW7mGnLny3rZNH8x/4uDuXaXXCj6pfOPa5sslR7ftutLH/9T14oYFy+cu7Al2tswF7/b8+tvx8LNKk3G6t48vKpz5yi9bNiAltuT5PRcei1f0nX6h9OVzHz26/8c3qy5+WV5z6sLeq5+dKHrcjPftbp1x+WzR+0X73pqb2DnzQPSEfP1MXDp84d5XS37/dHnxgzv+SNfNlI90/3w+Un2gsSqSk7s30bio8sjOb05ufWpO6ZLpR+/v2fz61zN2sebTp1YdU+Yluo6f78qtaTl8aU/65Me4+Nuu4xsPzz+0t2v2lv2fL377h96j20v+PDej5+yl/jb+Bezgzr5qEQAA";
+    public void setup() throws IOException, JSONException {
+        EbayToken reftoken = new EbayToken();
+        reftoken.setRefreshToken(bundle.getString("refresh_token"));
+        reftoken = new eBayAPI().tokenFromRefreshToken(reftoken);
+        token = reftoken.getAccessToken();
+        System.out.println(token);
     }
     @Test
     public void createOrReplaceInventoryItemTest() throws IOException {
@@ -87,7 +96,7 @@ public class CRUDTest {
         inventoryItem.setSku("RSUB123");
         HttpResponse response = new eBayAPI().createOrReplaceInventoryItem(inventoryItem, token);
         System.out.println(response);
-        assertEquals(204,new eBayAPI().createOrReplaceInventoryItem(inventoryItem, token).getStatusLine().getStatusCode());
+        assertEquals(200, new eBayAPI().createOrReplaceInventoryItem(inventoryItem, token).getStatusLine().getStatusCode());
     }
     @Test
     public void getInventoryItemTest() throws IOException, URISyntaxException {
@@ -212,16 +221,16 @@ public class CRUDTest {
     }
 
     @Test
+    public void publishOfferTest() throws IOException, JSONException {
+        String listingId = new eBayAPI().publishOffer("5006348010", token);
+        System.out.println(listingId);
+    }
+
+    @Test
     public void deleteOfferTest() throws IOException {
         HttpResponse response = new eBayAPI().deleteOffer("5006347010", token);
         System.out.println(response);
         assertEquals(204, response.getStatusLine().getStatusCode());
-    }
-
-    @Test
-    public void publishOfferTest() throws IOException, JSONException {
-        String listingId = new eBayAPI().publishOffer("5006348010", token);
-        System.out.println(listingId);
     }
 
 
