@@ -2,6 +2,6 @@
 .DS_Store
 .idea
 target
-Simplist.iml
+*.iml
 *.properties
 out
