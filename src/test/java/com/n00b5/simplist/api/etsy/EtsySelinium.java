@@ -48,9 +48,9 @@ public class EtsySelinium {
 
     public void updateItem(){
         driver.findElement(By.xpath("//*[@id=\"updateItemId\"]")).sendKeys("503942839");
-        driver.findElement(By.xpath("//*[@id=\"updateQuantity\"]")).sendKeys("5");
-        driver.findElement(By.xpath("//*[@id=\"updateTitle\"]")).sendKeys("Ground beef gum");
-        driver.findElement(By.xpath("//*[@id=\"updateDescription\"]")).sendKeys("This gum is for vegetarians who are craving tacos");
+        driver.findElement(By.xpath("//*[@id=\"updateQuantity\"]")).sendKeys("3");
+        driver.findElement(By.xpath("//*[@id=\"updateTitle\"]")).sendKeys("Fishy gum");
+        driver.findElement(By.xpath("//*[@id=\"updateDescription\"]")).sendKeys("This gum is for vegetarians who are craving fish");
         driver.findElement(By.xpath("//*[@id=\"updateSubmit\"]")).click();
     }
 

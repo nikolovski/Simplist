@@ -5,12 +5,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Project: Simplist
- *
- * @author Martino Nikolovski
- * @date 1/6/17
- */
 
 public class Facade {
 
