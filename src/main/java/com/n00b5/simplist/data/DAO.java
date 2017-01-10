@@ -1,12 +1,16 @@
 package com.n00b5.simplist.data;
 
+<<<<<<< HEAD
 import com.n00b5.simplist.api.etsy.EtsyItem;
+=======
+>>>>>>> master
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+<<<<<<< HEAD
  * Created by Louis on 1/7/2017.
  */
 
@@ -23,10 +27,21 @@ public class DAO {
         System.out.println("ITEM IN DAO -> " + etsyItem);
         return etsyItem;
     }
+=======
+ * Created by Shehar on 1/7/2017.
+ */
+public class DAO {
+
+    private SessionFactory sessionFactory;
+    public void setSessionFactory(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
+
+
+>>>>>>> master
 
     @Transactional(	isolation= Isolation.READ_COMMITTED,
             propagation= Propagation.REQUIRED,
             rollbackFor=Exception.class)
+<<<<<<< HEAD
     public void etsyAddItem(EtsyItem etsyItem) {
         System.out.println("Saving this to the db -> " + etsyItem.toString());
         sessionFactory.getCurrentSession().save(etsyItem);
@@ -60,3 +75,10 @@ public class DAO {
         System.out.println("ADDED TO THE DB");
     }
 }
+=======
+    public void insert(Object obj){
+        sessionFactory.getCurrentSession().save(obj);
+    }
+
+}
+>>>>>>> master

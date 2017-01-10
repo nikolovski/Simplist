@@ -1,4 +1,4 @@
-package com.n00b5.simplist.api.ebay;
+package com.n00b5.simplist.api.ebay.inventory;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,6 +30,10 @@ public class PackageWeightAndSize {
         return packageType;
     }
 
+    /**
+     * @param packageType
+     * @see com.n00b5.simplist.api.ebay.enums.PackageTypeEnum
+     */
     public void setPackageType(String packageType) {
         this.packageType = packageType;
     }

@@ -1,28 +1,51 @@
-package com.n00b5.simplist.api.beans.Shopify;
+package com.n00b5.simplist.api.Shopify;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**#
  * Created by Shehar on 1/3/2017.
  */
+@Entity
+@Table(name="SHOPIFY_ITEM")
 public class ShopifyItem {
 
-
-    @JsonProperty
+    @Id
+    @Column(name = "ITEM_ID")
     private String id;
+
+    @Column(name = "SHOPIFY_PRODUCT_ID")
+    @JsonProperty(value = "id")
+    private String shopifyId;
+
+    @Column(name = "TITLE")
     @JsonProperty
     private String title;
+
+    @Column(name = "DESCRIPTION")
     @JsonProperty
     private String body_html;
+
+    @Column(name = "VENDOR")
     @JsonProperty
     private String vendor;
+
+    @Column(name = "TYPE")
     @JsonProperty
     private String product_type;
+
+    @Column(name = "TAGS")
     @JsonProperty
     private String tags;
+
+
     @JsonProperty
     private Variants[] variants;
 
@@ -39,14 +62,15 @@ public class ShopifyItem {
 
     }
 
-
-    public String getId() {
-        return id;
+    public String getShopifyId() {
+        return shopifyId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setShopifyId(String shopifyId) {
+        this.shopifyId = shopifyId;
     }
+
+
     public String getTitle() {
         return title;
     }
@@ -120,7 +144,7 @@ public class ShopifyItem {
         JSONObject product = new JSONObject();
         JSONObject productTags = new JSONObject();
         JSONArray productVariants = new JSONArray();
-        productTags.put("id",this.getId());
+        productTags.put("shopifyId",this.getShopifyId());
         productTags.put("title",this.getTitle());
         productTags.put("body_html",this.getBody_html());
         productTags.put("vendor",this.getVendor());

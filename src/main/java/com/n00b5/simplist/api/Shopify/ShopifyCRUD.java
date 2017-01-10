@@ -1,4 +1,4 @@
-package com.n00b5.simplist.api.beans.Shopify;
+package com.n00b5.simplist.api.Shopify;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -6,9 +6,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Bean;
@@ -31,42 +29,44 @@ public class ShopifyCRUD{
 
 
 
+    public String productID(String response){
+        String id = response;
+        String[] output = id.split("admin/products/");
+        int comma = output[1].indexOf(',');
+        id = output[1].substring(0,comma);
+        return id;
+    }
 
     @RequestMapping(value="/shopify/createItem",method=RequestMethod.POST)
     public @ResponseBody ShopifyItem createItem(@RequestBody ShopifyItem item) throws IOException, JSONException {
-        System.out.println("CREATE ITEM");
         String uri = "https://paperss.myshopify.com/admin/products.json?access_token="+ ShopifyAPI.getTokenKey();
-        System.out.println("REQUEST2");
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        System.out.println("REQUEST3");
+        //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        HttpClient httpClient = new DefaultHttpClient();
         try {
             HttpPost request = new HttpPost(uri);
-            System.out.println("REQUEST4");
             StringEntity params = new StringEntity(item.getJSONItem().toString());
-            System.out.println("REQUEST5");
             request.addHeader("Content-Type", "application/json;; charset=UTF-8");request.addHeader("Accept", "application/json;; charset=UTF-8");
-            System.out.println("REQUEST6");
             request.setEntity(params);
-            System.out.println("REQUEST7");
             HttpResponse response = httpClient.execute(request);
-            System.out.println(response);
+            item.setShopifyId(productID(response.toString()));
         } catch (Exception ex) {
             // handle exception here
-        } finally {
-
-
-            httpClient.close();
         }
+// finally {
+//
+//
+//            httpClient.close();
+//        }
         return new ShopifyItem();
     }
 
     @ResponseBody
     @RequestMapping(value = "shopify/update/", method = RequestMethod.POST)
     public void updateItem(@RequestBody ShopifyItem item){
-        System.out.println("IN Update ITEM " + item.getId());
+        System.out.println("IN Update ITEM " + item.getShopifyId());
         HttpClient httpClient = new DefaultHttpClient();
         try {
-            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+item.getId()+".json?access_token="+ ShopifyAPI.getTokenKey());
+            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+item.getShopifyId()+".json?access_token="+ ShopifyAPI.getTokenKey());
             StringEntity params = new StringEntity(item.getUpdateJSONItem().toString());
             putRequest.addHeader("Content-Type", "application/json;; charset=UTF-8");putRequest.addHeader("Accept", "application/json;; charset=UTF-8");
             putRequest.setEntity(params);

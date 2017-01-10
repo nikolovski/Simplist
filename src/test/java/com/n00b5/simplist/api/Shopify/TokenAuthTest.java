@@ -40,8 +40,7 @@ public class TokenAuthTest {
                                                                                                                                                                                                         page.setPassword("");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
-        org.junit.Assert.assertEquals("",
-                findAuthPage.getPageTitle());
+
         String token = "";
         List<WebElement> getToken = driver.findElements(By.tagName("body"));
         for (WebElement body : getToken) {

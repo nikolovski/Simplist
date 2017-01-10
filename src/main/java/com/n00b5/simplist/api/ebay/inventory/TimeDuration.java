@@ -1,4 +1,4 @@
-package com.n00b5.simplist.api.ebay;
+package com.n00b5.simplist.api.ebay.inventory;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,6 +20,10 @@ public class TimeDuration {
         return unit;
     }
 
+    /**
+     * @param unit
+     * @see TimeDuration
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }

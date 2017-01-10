@@ -1,4 +1,4 @@
-package com.n00b5.simplist.api.ebay;
+package com.n00b5.simplist.api.ebay.inventory;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,6 +19,10 @@ public class Weight {
         return unit;
     }
 
+    /**
+     * @param unit
+     * @see com.n00b5.simplist.api.ebay.enums.WeightUnitOfMeasureEnum
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }
