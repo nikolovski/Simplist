@@ -12,15 +12,22 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 1/6/17
  */
 public class Facade {
-    private DAO dao;
-    public void setDao(DAO dao) {this.dao = dao;}
+    private UserDAO userDAO;
 
-    @Transactional(isolation= Isolation.READ_COMMITTED,
-            rollbackFor=Exception.class,
-            propagation= Propagation.REQUIRES_NEW)
-
-    public void insertUser(User user) throws InterruptedException{
-            dao.insert(user);
-
+    public void setUser(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
+
+    public UserDAO getUser() {
+        return userDAO;
+    }
+
+    public void insertUser(User user) {
+        userDAO.insert(user);
+    }
+
+    public User getUserById(int id) throws InterruptedException {
+        return userDAO.getById(id);
+    }
+
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:spring="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/pages/**" location="/WEB-INF/pages/"/>
+    <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/"/>
+    <context:component-scan base-package="com.n00b5.simplist"/>
+    <context:annotation-config/>
+    <context:property-placeholder location="classpath:environment.properties"/>
+
+    <!-- Use @Transactional instead of <tx:advice> -->
+    <tx:annotation-driven/>
+
+    <!-- DataSource bean -->
+    <bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName"
+                  value="oracle.jdbc.OracleDriver"/>
+        <property name="username" value="${DS_USERNAME}"/>
+        <property name="password" value="${DS_PASSWORD}"/>
+        <property name="url" value="${DS_URL}"/>
+    </bean>
+    <!-- SessionFactory -->
+    <bean name="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.n00b5.simplist"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.pool_size">30</prop>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.Oracle10gDialect
+                </prop>
+                <prop key="show_sql">true</prop>
+                <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+            </props>
+
+        </property>
+    </bean>
+    <!-- Transaction Manager -->
+    <bean name="transactionManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- DAO beans -->
+    <bean name="userDAO" class="com.n00b5.simplist.data.UserDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- Facade bean -->
+    <bean name="facade" class="com.n00b5.simplist.data.Facade">
+        <property name="user" ref="userDAO"/>
+    </bean>
+
+    <!--Business delegate bean-->
+    <bean name="businessDelegate" class="com.n00b5.simplist.middle.BusinessDelegate">
+        <property name="userService" ref="userService"/>
+    </bean>
+    <!--Service beans-->
+    <bean name="userService" class="com.n00b5.simplist.middle.UserService">
+        <property name="facade" ref="facade"/>
+    </bean>
+
+    <!--Controller beans-->
+    <bean name="userController" class="com.n00b5.simplist.web.UserController">
+        <property name="businessDelegate" ref="businessDelegate"/>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/pages/"/>
+        <property name="suffix" value=".html"/>
+    </bean>
+    <bean id="cssResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/resources/css/"/>
+        <property name="suffix" value=".css"/>
+    </bean>
+    <bean id="scssResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/resources/scss/"/>
+        <property name="suffix" value=".scss"/>
+    </bean>
+    <bean id="jsResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/resources/js/"/>
+        <property name="suffix" value=".js"/>
+    </bean>
+</beans>
