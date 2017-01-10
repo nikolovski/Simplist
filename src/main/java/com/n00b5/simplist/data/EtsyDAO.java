@@ -67,8 +67,6 @@ public class EtsyDAO {
     @Transactional()
     public void getAll() {
         List<EtsyItem> list = sessionFactory.getCurrentSession().createCriteria(EtsyItem.class).list();
-
-
     }
 }
 

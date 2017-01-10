@@ -5,10 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**#
  * Created by Shehar on 1/3/2017.
@@ -17,11 +14,9 @@ import javax.persistence.Table;
 @Table(name="SHOPIFY_ITEM")
 public class ShopifyItem {
 
+
     @Id
     @Column(name = "ITEM_ID")
-    private String id;
-
-    @Column(name = "SHOPIFY_PRODUCT_ID")
     @JsonProperty(value = "id")
     private String shopifyId;
 
@@ -46,6 +41,7 @@ public class ShopifyItem {
     private String tags;
 
 
+    @Transient
     @JsonProperty
     private Variants[] variants;
 
@@ -53,13 +49,13 @@ public class ShopifyItem {
 
     }
 
-    public ShopifyItem(String title, String body_html, String vendor, String product_type, String tags) {
+    public ShopifyItem(String shopifyId, String title, String body_html, String vendor, String product_type, String tags) {
+        this.shopifyId = shopifyId;
         this.title = title;
         this.body_html = body_html;
         this.vendor = vendor;
         this.product_type = product_type;
         this.tags = tags;
-
     }
 
     public String getShopifyId() {

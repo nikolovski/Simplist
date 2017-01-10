@@ -1,12 +1,15 @@
 package com.n00b5.simplist.data;
 
+import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyItem;
 import com.n00b5.simplist.beans.User;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public class Facade {
     private UserDAO userDAO;
     private EtsyDAO etsyDAO;
+    private ShopifyItemDAO shopifyDAO;
 
     public void setUser(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -55,6 +58,42 @@ public class Facade {
 
     public User getUserById(int id) throws InterruptedException {
         return userDAO.getById(id);
+    }
+
+    /**
+     *
+     * Shopify facade
+     */
+    public void setShopifyDAO(ShopifyItemDAO shopifyDAO) {
+        this.shopifyDAO = shopifyDAO;
+    }
+
+    public ShopifyItemDAO getShopifyDAO() {
+        return shopifyDAO;
+    }
+
+
+    //create
+    public void addShopifyItem(ShopifyItem item) {
+        shopifyDAO.addShopifyItem(item);
+    }
+
+    //read
+    @Transactional()
+    public ShopifyItem getById(String id){
+        return shopifyDAO.getById(id);
+    }
+
+    //update
+    @Transactional()
+    public void shopifyUpdateItem(ShopifyItem shopifyItem, String id) {
+        shopifyDAO.shopifyUpdateItem(shopifyItem,id);
+    }
+
+    //delete
+    @Transactional()
+    public void shopifyDeleteItem(String shopifyId) {
+        shopifyDAO.shopifyDeleteItem(shopifyId);
     }
 
 }

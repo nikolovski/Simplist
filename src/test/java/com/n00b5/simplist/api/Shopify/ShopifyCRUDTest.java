@@ -23,7 +23,7 @@ public class ShopifyCRUDTest {
     public void createItem() throws Exception {
         String uri = "https://paperss.myshopify.com/admin/products.json?access_token="+ ShopifyAPI.getTokenKey();
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        ShopifyItem unitTestItem = new ShopifyItem("Junit","Junit","Junit","Junit","Junit");
+        ShopifyItem unitTestItem = new ShopifyItem("123","Junit","Junit","Junit","Junit","Junit");
         HttpResponse response = null;
         try {
             HttpPost request = new HttpPost(uri);
@@ -44,7 +44,7 @@ public class ShopifyCRUDTest {
     @Test
     public void updateItem() throws Exception {
         HttpClient httpClient = new DefaultHttpClient();
-        ShopifyItem unitTestItem = new ShopifyItem("Junit","Junit","Junit","Junit","Junit");
+        ShopifyItem unitTestItem = new ShopifyItem("123","Junit","Junit","Junit","Junit","Junit");
         try {
             HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+ "9999" +".json?access_token="+ ShopifyAPI.getTokenKey());
             StringEntity params = new StringEntity(unitTestItem.getUpdateJSONItem().toString());
