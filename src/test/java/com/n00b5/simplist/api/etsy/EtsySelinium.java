@@ -40,23 +40,23 @@ public class EtsySelinium {
     }
 
     public void addItem(){
-        driver.findElement(By.xpath("//*[@id=\"quantity\"]")).sendKeys("10");
-        driver.findElement(By.xpath("//*[@id=\"title\"]")).sendKeys("BOOKSSSS");
-        driver.findElement(By.xpath("//*[@id=\"description\"]")).sendKeys("ELSALVADOR");
+        driver.findElement(By.xpath("//*[@id=\"quantity\"]")).sendKeys("3");
+        driver.findElement(By.xpath("//*[@id=\"title\"]")).sendKeys("Yeezy 750s");
+        driver.findElement(By.xpath("//*[@id=\"description\"]")).sendKeys("These are the best shoes on the market!");
         driver.findElement(By.xpath("//*[@id=\"addSubmit\"]")).click();
     }
 
     public void updateItem(){
-        driver.findElement(By.xpath("//*[@id=\"updateItemId\"]")).sendKeys("490109298");
-        driver.findElement(By.xpath("//*[@id=\"updateQuantity\"]")).sendKeys("2");
-        driver.findElement(By.xpath("//*[@id=\"updateTitle\"]")).sendKeys("Tester2");
-        driver.findElement(By.xpath("//*[@id=\"updateDescription\"]")).sendKeys("ThisLitTwoTimes");
+        driver.findElement(By.xpath("//*[@id=\"updateItemId\"]")).sendKeys("503942839");
+        driver.findElement(By.xpath("//*[@id=\"updateQuantity\"]")).sendKeys("3");
+        driver.findElement(By.xpath("//*[@id=\"updateTitle\"]")).sendKeys("Fishy gum");
+        driver.findElement(By.xpath("//*[@id=\"updateDescription\"]")).sendKeys("This gum is for vegetarians who are craving fish");
         driver.findElement(By.xpath("//*[@id=\"updateSubmit\"]")).click();
     }
 
 
     public void deleteItem(){
-        driver.findElement(By.xpath("//*[@id=\"deleteId\"]")).sendKeys("489447826");
+        driver.findElement(By.xpath("//*[@id=\"deleteId\"]")).sendKeys("490699136");
         driver.findElement(By.xpath("//*[@id=\"deleteSubmit\"]")).click();
     }
 
@@ -66,7 +66,7 @@ public class EtsySelinium {
     }
 
     public void getByID(){
-        driver.findElement(By.xpath("//*[@id=\"getByID\"]")).sendKeys("488901146");
+        driver.findElement(By.xpath("//*[@id=\"getByID\"]")).sendKeys("503942839");
         driver.findElement(By.xpath("//*[@id=\"getByIDSubmit\"]")).click();
     }
 }

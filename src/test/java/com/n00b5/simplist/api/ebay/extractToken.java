@@ -1,11 +1,13 @@
 package com.n00b5.simplist.api.ebay;
 
+import org.json.JSONException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +24,7 @@ public class extractToken {
     ResourceBundle bundle = ResourceBundle.getBundle("ebay_login");
     String PATH_TO_CHROME_DRIVER=bundle.getString("chromedriver");
     WebDriver driver;
-    String username, password, signinURL, accessToken;
+    String username, password, signinURL;
     @Before
     public void setUp() throws Exception {
         username = bundle.getString("username");
@@ -34,17 +36,11 @@ public class extractToken {
     @After
     public void tearDown() throws Exception {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//        driver.quit();
     }
 
     @Test
     public void extractToken() throws Exception {
-        signinURL = new eBayAPI().generateURL(
-                "MartinoN-Simplist-SBX-a45f6444c-5bd48c02",
-                "Martino_Nikolov-MartinoN-Simpli-yxdhshy",
-                "https://signin.sandbox.ebay.com/authorize",
-                "https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/buy.order.readonly https://api.ebay.com/oauth/api_scope/buy.guest.order https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly",
-                "code");
+        signinURL = new eBayAPI().generateURL();
         assertNotNull(signinURL);
         LoginPage page = new LoginPage(driver,signinURL);
         assertEquals("Sign in or Register | eBay", page.getPageTitle());
@@ -52,6 +48,13 @@ public class extractToken {
         page.setPassword(password);
         page.clickLoginButton();
         page.clickAgree();
+    }
+
+    @Test
+    public void getTokenFromRefreshTokenTest() throws IOException, JSONException {
+        EbayToken token = new EbayToken();
+        token.setRefreshToken(bundle.getString("refresh_token"));
+        System.out.println(new eBayAPI().tokenFromRefreshToken(token));
     }
 
 }

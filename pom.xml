@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.n00b5</groupId>
   <artifactId>simplist</artifactId>
@@ -35,14 +35,14 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>4.2.0.Final</version>
+      <version>5.0.1.Final</version>
     </dependency>
 
     <!--EhCache-->
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache</artifactId>
-      <version>2.0.0</version>
+      <version>2.4.8</version>
       <type>pom</type>
     </dependency>
 
@@ -63,10 +63,10 @@
       <version>3.1.4.RELEASE</version>
     </dependency>
     <dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-tx</artifactId>
-    <version>3.1.4.RELEASE</version>
-  </dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>3.1.4.RELEASE</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
@@ -194,19 +194,24 @@
       <artifactId>ojdbc6</artifactId>
       <version>11.2.0</version>
     </dependency>
-
+    <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
+    <dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>0.3m</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>Simplist</finalName>
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <configuration>
-                  <source>1.7</source>
-                  <target>1.7</target>
-              </configuration>
-          </plugin>
-      </plugins>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>

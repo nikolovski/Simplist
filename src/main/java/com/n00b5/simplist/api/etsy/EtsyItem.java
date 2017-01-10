@@ -2,45 +2,67 @@ package com.n00b5.simplist.api.etsy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
+
 /**
  * Created by Louis on 1/4/2017.
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
+@Entity
+@Table(name = "ETSY_ITEM")
 public class EtsyItem {
 
+
+    @Id
+    @Column(name = "LISTING_ID")
+    private String listing_id;
+    @Column(name = "QUANTITY")
     @JsonProperty(value = "quantity")
     private int quantity;
+    @Column(name = "TITLE")
     @JsonProperty(value = "title")
     private String title;
+    @Column(name = "DESCRPTIONS")
     @JsonProperty(value = "description")
     private String description;
+    @Column(name = "PRICE")
     @JsonProperty(value = "price")
     private double price;
+    @Column(name = "STATE")
     @JsonProperty(value = "state")
     private String state; // needs to be enum
-    @JsonProperty(value = "is_supply")
-    private boolean is_supply;
-    @JsonProperty(value = "who_made")
-    private String who_made; // needs to be enum
-    @JsonProperty(value = "when_made")
-    private String when_made; // needs to be enum
-    @JsonProperty(value = "shippingTemplate")
-    private String shippingTemplate = "35750756683"; // needs to be shippingTemplate obj
+
+    @Column(name = "IS_SUPPLY")
+    private boolean is_supply = true;
+    @Column(name = "WHO_MADE")
+    private String who_made = "i_did"; // needs to be enum
+    @Column(name = "WHEN_MADE")
+    private String when_made = "made_to_order"; // needs to be enum
+
+    @Column(name = "SHIPPING_TEMPLATE_ID")
+    @JsonProperty(value = "shipping_template_id")
+    private String shippingTemplate; // needs to be shippingTemplate obj
+
 
     public EtsyItem() {
     }
 
-    public EtsyItem(int quantity, String title, String description, double price, String state, boolean is_supply, String who_made, String when_made, String shippingTemplate) {
+    public EtsyItem(int quantity, String title, String description, double price, String state, String shippingTemplate) {
         this.quantity = quantity;
         this.title = title;
         this.description = description;
         this.price = price;
         this.state = state;
-        this.is_supply = is_supply;
-        this.who_made = who_made;
-        this.when_made = when_made;
         this.shippingTemplate = shippingTemplate;
     }
 
+    public String getListing_id() {
+        return listing_id;
+    }
+
+    public void setListing_id(String listing_id) {
+        this.listing_id = listing_id;
+    }
 
     public int getQuantity() {
         return quantity;
@@ -114,18 +136,33 @@ public class EtsyItem {
         this.shippingTemplate = shippingTemplate;
     }
 
-    public String toString() {
+
+    public String toURL() {
         return
                 "quantity="+this.quantity+"&"+
-                "title="+this.title+"&"+
-                "description="+this.description+"&"+
-                "price="+this.price+"&"+
-                "state="+this.state+"&"+
-                "is_supply="+this.is_supply+"&"+
-                "who_made="+this.who_made+"&"+
-                "when_made="+this.when_made+"&"+
-                "shipping_template_id="+this.shippingTemplate;
+                        "title=" + this.title.replace(" ", "%20") + "&" +
+                        "description=" + this.description.replace(" ", "%20") + "&" +
+                        "price=" + this.price + "&" +
+                        "state=" + this.state + "&" +
+                        "is_supply=" + this.is_supply + "&" +
+                        "who_made=" + this.who_made + "&" +
+                        "when_made=" + this.when_made + "&" +
+                        "shipping_template_id=" + this.shippingTemplate;
     }
 
-
+    @Override
+    public String toString() {
+        return "EtsyItem{" +
+                "listing_id='" + listing_id + '\'' +
+                ", quantity=" + quantity +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", state='" + state + '\'' +
+                ", is_supply=" + is_supply +
+                ", who_made='" + who_made + '\'' +
+                ", when_made='" + when_made + '\'' +
+                ", shippingTemplate='" + shippingTemplate + '\'' +
+                '}';
+    }
 }
