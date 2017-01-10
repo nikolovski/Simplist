@@ -10,8 +10,9 @@ public class Facade {
 
     private EtsyDAO etsyDAO;
 
-    public void setDao(EtsyDAO etsyDAO) { this.etsyDAO = etsyDAO;}
-
+    public void setEtsyDAO(EtsyDAO etsyDAO) {
+        this.etsyDAO = etsyDAO;
+    }
 
     @Transactional(isolation= Isolation.READ_COMMITTED,
             rollbackFor=Exception.class,
@@ -35,9 +36,6 @@ public class Facade {
         etsyDAO.etsyUpdateItem(etsyItem,listing_id);
     }
 
-    public void setEtsyDAO(EtsyDAO etsyDAO) {
-        this.etsyDAO = etsyDAO;
-    }
 
     public void etsyGetAll() {
         System.out.println("IN FACADE GET ALL");
