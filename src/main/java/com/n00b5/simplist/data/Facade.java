@@ -12,6 +12,10 @@ public class Facade {
         this.userDAO = userDAO;
     }
 
+    public void setEtsyDAO(EtsyDAO etsyDAO) {
+        this.etsyDAO = etsyDAO;
+    }
+
     public UserDAO getUser() {
         return userDAO;
     }
@@ -20,7 +24,9 @@ public class Facade {
         userDAO.insert(user);
     }
 
-    public void setDao(EtsyDAO etsyDAO) { this.etsyDAO = etsyDAO;}
+    public void setDao(EtsyDAO etsyDAO) {
+        this.etsyDAO = etsyDAO;
+    }
 
 
     public void etsyAddItem(EtsyItem etsyItem) {
@@ -39,11 +45,7 @@ public class Facade {
 
     public void etsyUpdateItem(EtsyItem etsyItem, String listing_id) {
         System.out.println("IN FACADE UPDATE");
-        etsyDAO.etsyUpdateItem(etsyItem,listing_id);
-    }
-
-    public void setEtsyDAO(EtsyDAO etsyDAO) {
-        this.etsyDAO = etsyDAO;
+        etsyDAO.etsyUpdateItem(etsyItem, listing_id);
     }
 
     public void etsyGetAll() {

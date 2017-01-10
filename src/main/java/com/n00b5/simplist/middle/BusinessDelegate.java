@@ -14,7 +14,6 @@ public class BusinessDelegate {
     }
 
     public void registerUser(String first_name, String last_name, String new_email, String new_password) {
-        System.out.println(first_name);
         userService.registerUser(first_name, last_name, new_email, new_password);
     }
 }

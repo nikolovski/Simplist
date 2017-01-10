@@ -53,10 +53,14 @@
     <bean name="userDAO" class="com.n00b5.simplist.data.UserDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean name="EtsyDAO" class="com.n00b5.simplist.data.EtsyDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
     <!-- Facade bean -->
     <bean name="facade" class="com.n00b5.simplist.data.Facade">
         <property name="user" ref="userDAO"/>
+        <property name="etsyDAO" ref="EtsyDAO"/>
     </bean>
 
     <!--Business delegate bean-->

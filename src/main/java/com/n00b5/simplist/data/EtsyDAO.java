@@ -12,20 +12,23 @@ public class EtsyDAO {
 
 
     private SessionFactory sessionFactory;
-    public void setSessionFactory(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Transactional()
     public EtsyItem etsyGetById(String id) {
         System.out.println("IN DAO GET BY ID");
-        EtsyItem etsyItem = (EtsyItem) sessionFactory.getCurrentSession().load(EtsyItem.class,id);
+        EtsyItem etsyItem = (EtsyItem) sessionFactory.getCurrentSession().load(EtsyItem.class, id);
         System.out.println("ITEM IN DAO -> " + etsyItem);
         return etsyItem;
     }
 
 
-    @Transactional(	isolation= Isolation.READ_COMMITTED,
-            propagation= Propagation.REQUIRED,
-            rollbackFor=Exception.class)
+    @Transactional(isolation = Isolation.READ_COMMITTED,
+            propagation = Propagation.REQUIRED,
+            rollbackFor = Exception.class)
 
     public void etsyAddItem(EtsyItem etsyItem) {
         System.out.println("Saving this to the db -> " + etsyItem.toString());
@@ -38,7 +41,7 @@ public class EtsyDAO {
 
         System.out.println("IN DAO DELETE");
 
-        EtsyItem etsyItem = (EtsyItem) sessionFactory.getCurrentSession().load(EtsyItem.class,listing_id);
+        EtsyItem etsyItem = (EtsyItem) sessionFactory.getCurrentSession().load(EtsyItem.class, listing_id);
         sessionFactory.getCurrentSession().delete(etsyItem);
 
         System.out.println("deleted from db");
@@ -48,7 +51,7 @@ public class EtsyDAO {
     @Transactional()
     public void etsyUpdateItem(EtsyItem updatedEtsyItem, String listing_id) {
         System.out.println("IN DAO UPDATE");
-        EtsyItem dbEtsyItem = (EtsyItem) sessionFactory.getCurrentSession().load(EtsyItem.class,listing_id);
+        EtsyItem dbEtsyItem = (EtsyItem) sessionFactory.getCurrentSession().load(EtsyItem.class, listing_id);
         System.out.println("DB ITEM IS -> " + dbEtsyItem);
 
         dbEtsyItem.setTitle(updatedEtsyItem.getTitle());

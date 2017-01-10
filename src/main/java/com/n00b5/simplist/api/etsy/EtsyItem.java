@@ -9,37 +9,37 @@ import javax.persistence.*;
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-@Table(name="ETSY_ITEM")
+@Table(name = "ETSY_ITEM")
 public class EtsyItem {
 
 
     @Id
-    @Column(name="LISTING_ID")
+    @Column(name = "LISTING_ID")
     private String listing_id;
-    @Column(name="QUANTITY")
+    @Column(name = "QUANTITY")
     @JsonProperty(value = "quantity")
     private int quantity;
-    @Column(name="TITLE")
+    @Column(name = "TITLE")
     @JsonProperty(value = "title")
     private String title;
-    @Column(name="DESCRPTIONS")
+    @Column(name = "DESCRPTIONS")
     @JsonProperty(value = "description")
     private String description;
-    @Column(name="PRICE")
+    @Column(name = "PRICE")
     @JsonProperty(value = "price")
     private double price;
-    @Column(name="STATE")
+    @Column(name = "STATE")
     @JsonProperty(value = "state")
     private String state; // needs to be enum
 
-    @Column(name="IS_SUPPLY")
+    @Column(name = "IS_SUPPLY")
     private boolean is_supply = true;
-    @Column(name="WHO_MADE")
+    @Column(name = "WHO_MADE")
     private String who_made = "i_did"; // needs to be enum
-    @Column(name="WHEN_MADE")
+    @Column(name = "WHEN_MADE")
     private String when_made = "made_to_order"; // needs to be enum
 
-    @Column(name="SHIPPING_TEMPLATE_ID")
+    @Column(name = "SHIPPING_TEMPLATE_ID")
     @JsonProperty(value = "shipping_template_id")
     private String shippingTemplate; // needs to be shippingTemplate obj
 
@@ -137,18 +137,17 @@ public class EtsyItem {
     }
 
 
-
-    public String toURL(){
+    public String toURL() {
         return
                 "quantity="+this.quantity+"&"+
-                        "title="+ this.title.replace(" ","%20")+"&"+
-                        "description="+ this.description.replace(" ","%20")+"&"+
-                        "price="+this.price+"&"+
-                        "state="+this.state+"&"+
-                        "is_supply="+this.is_supply+"&"+
-                        "who_made="+this.who_made+"&"+
-                        "when_made="+this.when_made+"&"+
-                        "shipping_template_id="+this.shippingTemplate;
+                        "title=" + this.title.replace(" ", "%20") + "&" +
+                        "description=" + this.description.replace(" ", "%20") + "&" +
+                        "price=" + this.price + "&" +
+                        "state=" + this.state + "&" +
+                        "is_supply=" + this.is_supply + "&" +
+                        "who_made=" + this.who_made + "&" +
+                        "when_made=" + this.when_made + "&" +
+                        "shipping_template_id=" + this.shippingTemplate;
     }
 
     @Override

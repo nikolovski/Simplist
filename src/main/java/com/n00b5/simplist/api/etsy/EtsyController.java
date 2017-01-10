@@ -91,14 +91,14 @@ public class EtsyController {
 
         EtsyItem etsyItem = new ObjectMapper().readValue(json, EtsyItem.class);
 
-        OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?"+etsyItem.toURL(), service);
+        OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?" + etsyItem.toURL(), service);
         service.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Added " + response.getBody());
 
 
-        JSONObject obj = new JSONObject( response.getBody().substring(22,response.getBody().lastIndexOf("]")));
+        JSONObject obj = new JSONObject(response.getBody().substring(22, response.getBody().lastIndexOf("]")));
         etsyItem.setListing_id(obj.getString("listing_id"));
 
         facade.etsyAddItem(etsyItem);
@@ -126,14 +126,14 @@ public class EtsyController {
     String getById(@RequestParam("itemID")String id) throws IOException {
 
         // --> THIS IS MY ONLY ACTIVE LISTING .... itemID = 488901146
-        OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/listings/"+id+scope, service);
+        OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/listings/" + id + scope, service);
         service.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
-        System.out.println("STATUS CODE " +response.getCode());
+        System.out.println("STATUS CODE " + response.getCode());
         System.out.println("Item by ID " +response.getBody());
 
         EtsyItem etsyItem = facade.etsyGetById(id);
-        System.out.println("RETURNING FROM DB - > "+ etsyItem.toString());
+        System.out.println("RETURNING FROM DB - > " + etsyItem.toString());
         return response.getBody().toString();
     }
 
@@ -160,13 +160,13 @@ public class EtsyController {
 
         EtsyItem etsyItem = new ObjectMapper().readValue(json,EtsyItem.class);
         etsyItem.setListing_id(id);
-        OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/"+id+"?"+etsyItem.toURL(), service);
+        OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/" + id + "?" + etsyItem.toURL(), service);
         service.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Updated item " + response.getBody());
 
-        facade.etsyUpdateItem(etsyItem,etsyItem.getListing_id());
+        facade.etsyUpdateItem(etsyItem, etsyItem.getListing_id());
         System.out.println("ALL DONE");
     }
 
@@ -182,7 +182,7 @@ public class EtsyController {
                 "primary_cost="+primary_cost+"&"+
                 "secondary_cost="+secondary_cost;
 
-        OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/shipping/templates?"+shippingItems , service);
+        OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/shipping/templates?" + shippingItems, service);
         service.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
         System.out.println("HTTP CODE " +response.getCode());
