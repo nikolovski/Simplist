@@ -56,7 +56,7 @@ public class EtsySelinium {
 
 
     public void deleteItem(){
-        driver.findElement(By.xpath("//*[@id=\"deleteId\"]")).sendKeys("490444146");
+        driver.findElement(By.xpath("//*[@id=\"deleteId\"]")).sendKeys("490699136");
         driver.findElement(By.xpath("//*[@id=\"deleteSubmit\"]")).click();
     }
 
