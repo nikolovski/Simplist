@@ -40,9 +40,9 @@ public class EtsySelinium {
     }
 
     public void addItem(){
-        driver.findElement(By.xpath("//*[@id=\"quantity\"]")).sendKeys("10");
-        driver.findElement(By.xpath("//*[@id=\"title\"]")).sendKeys("Taco flavored gum");
-        driver.findElement(By.xpath("//*[@id=\"description\"]")).sendKeys("This gum is for vegetarians who are craving tacos");
+        driver.findElement(By.xpath("//*[@id=\"quantity\"]")).sendKeys("3");
+        driver.findElement(By.xpath("//*[@id=\"title\"]")).sendKeys("Yeezy 750s");
+        driver.findElement(By.xpath("//*[@id=\"description\"]")).sendKeys("These are the best shoes on the market!");
         driver.findElement(By.xpath("//*[@id=\"addSubmit\"]")).click();
     }
 

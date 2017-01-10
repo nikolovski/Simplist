@@ -41,13 +41,13 @@
           class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sf" />
     </bean>
-    <!-- DAO bean -->
-    <bean name="dao" class="com.n00b5.simplist.data.DAO">
+    <!-- EtsyDAO bean -->
+    <bean name="EtsyDAO" class="com.n00b5.simplist.data.EtsyDAO">
         <property name="sessionFactory" ref="sf" />
     </bean>
 
     <!-- Facade bean -->
     <bean name="facade" class="com.n00b5.simplist.data.Facade">
-        <property name="dao" ref="dao" />
+        <property name="etsyDAO" ref="EtsyDAO" />
     </bean>
 </beans>

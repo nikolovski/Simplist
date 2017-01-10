@@ -1,7 +1,7 @@
 package com.n00b5.simplist.ContextualSessionsTest;
 
 import com.n00b5.simplist.beans.User;
-import com.n00b5.simplist.data.DAO;
+import com.n00b5.simplist.data.EtsyDAO;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -21,7 +21,7 @@ public class ContextualSessionsTest {
 
     @Test
     public void create(){
-        contxt.getBean(DAO.class).insert(new User("Shehar","Yar","syar0052@gmail.com","hmmmmm"));
+        contxt.getBean(EtsyDAO.class).insert(new User("Shehar","Yar","syar0052@gmail.com","hmmmmm"));
         System.out.println("Success!");
     }
 

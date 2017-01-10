@@ -8,29 +8,34 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class Facade {
 
-    public DAO dao;
-    public void setDao(DAO dao) { this.dao = dao;}
+    private EtsyDAO etsyDAO;
+
+    public void setDao(EtsyDAO etsyDAO) { this.etsyDAO = etsyDAO;}
 
 
     @Transactional(isolation= Isolation.READ_COMMITTED,
             rollbackFor=Exception.class,
             propagation= Propagation.REQUIRES_NEW)
     public void etsyAddItem(EtsyItem etsyItem) {
-            dao.etsyAddItem(etsyItem);
+        etsyDAO.etsyAddItem(etsyItem);
     }
 
     public void etsyDeleteItem(String listing_id) {
         System.out.println("IN FACADE DELETE");
-        dao.etsyDeleteItem(listing_id);
+        etsyDAO.etsyDeleteItem(listing_id);
     }
 
     public EtsyItem etsyGetById(String id) {
         System.out.println("IN FACADE GET BY ID");
-        return dao.etsyGetById(id);
+        return etsyDAO.etsyGetById(id);
     }
 
     public void etsyUpdateItem(EtsyItem etsyItem, String listing_id) {
         System.out.println("IN FACADE UPDATE");
-        dao.etsyUpdateItem(etsyItem,listing_id);
+        etsyDAO.etsyUpdateItem(etsyItem,listing_id);
+    }
+
+    public void setEtsyDAO(EtsyDAO etsyDAO) {
+        this.etsyDAO = etsyDAO;
     }
 }

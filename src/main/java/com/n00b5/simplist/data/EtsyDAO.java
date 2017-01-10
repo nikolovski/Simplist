@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public class DAO {
+public class EtsyDAO {
 
 
     private SessionFactory sessionFactory;
