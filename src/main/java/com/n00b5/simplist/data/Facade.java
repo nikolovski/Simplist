@@ -38,4 +38,9 @@ public class Facade {
     public void setEtsyDAO(EtsyDAO etsyDAO) {
         this.etsyDAO = etsyDAO;
     }
+
+    public void etsyGetAll() {
+        System.out.println("IN FACADE GET ALL");
+        etsyDAO.getAll();
+    }
 }

@@ -149,6 +149,7 @@ public class EtsyController {
         System.out.println("STATUS CODE" +response.getCode());
         System.out.println("All draft items " +response.getBody());
 
+        facade.etsyGetAll();
 
         return response.getBody();
 

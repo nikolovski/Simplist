@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public class EtsyDAO {
 
 
@@ -59,9 +61,11 @@ public class EtsyDAO {
     }
 
 
-    public void insert(Object obj){
-        sessionFactory.getCurrentSession().save(obj);
-    }
+    @Transactional()
+    public void getAll() {
+        List<EtsyItem> list = sessionFactory.getCurrentSession().createCriteria(EtsyItem.class).list();
 
+
+    }
 }
 
