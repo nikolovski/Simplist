@@ -16,7 +16,10 @@ public class BusinessDelegate {
     }
 
     public boolean registerUser(User user) {
-
         return userService.registerUser(user);
+    }
+
+    public User loginUser(String username, String password){
+        return userService.loginUser(username,password);
     }
 }

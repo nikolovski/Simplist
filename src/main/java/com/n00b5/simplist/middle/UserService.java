@@ -11,7 +11,7 @@ import com.n00b5.simplist.data.Facade;
  * @author d4k1d23
  * @date 1/10/17
  */
-public class UserService implements Helper {
+public class UserService {
     private Facade facade;
 
     public void setFacade(Facade facade) {
@@ -27,5 +27,13 @@ public class UserService implements Helper {
         }
         return false;
 
+    }
+
+    public User loginUser(String username, String password) {
+        User existing = facade.getUserByEmail(username);
+        System.out.println(existing);
+        if(existing == null) return null;
+        return  Authentication.validatePassword(password,existing.getPassword())?
+                existing: null;
     }
 }

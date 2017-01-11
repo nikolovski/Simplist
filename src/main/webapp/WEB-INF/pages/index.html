@@ -11,19 +11,18 @@
     <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="../resources/css/style.css">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 
 <body>
-
-<!-- Mixins-->
-<!-- Pen Title-->
+<div id="message"></div>
 <div class="pen-title">
     <h1>Simplist</h1><span>Listing made simple</span>
 </div>
@@ -31,7 +30,7 @@
     <div class="card"></div>
     <div class="card">
         <h1 class="title">Login</h1>
-        <form id="login" action="/dashboard" method="post">
+        <form id="login">
             <div class="input-container">
                 <input type="email" id="email" required="required"/>
                 <label for="email">Email</label>
@@ -55,22 +54,22 @@
         </h1>
         <form id="register">
             <div class="input-container">
-                <input type="text" id="first_name" name="first_name" required="required"/>
+                <input type="text" id="first_name" required="required"/>
                 <label for="first_name">First Name</label>
                 <div class="bar"></div>
             </div>
             <div class="input-container">
-                <input type="text" id="last_name" name="last_name" required="required"/>
+                <input type="text" id="last_name" required="required"/>
                 <label for="last_name">Last Name</label>
                 <div class="bar"></div>
             </div>
             <div class="input-container">
-                <input type="email" id="new_email" name="new_email" required="required"/>
+                <input type="email" id="new_email" required="required"/>
                 <label for="new_email">Email</label>
                 <div class="bar"></div>
             </div>
             <div class="input-container">
-                <input type="password" id="new_password" name="new_password" required="required"/>
+                <input type="password" id="new_password" required="required"/>
                 <label for="new_password">Password</label>
                 <div class="bar"></div>
             </div>
@@ -80,9 +79,6 @@
         </form>
     </div>
 </div>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-<script src="../resources/js/index.js"></script>
 <script>
     $(document).ready(function () {
             $("#register").submit(function (event) {
@@ -94,39 +90,63 @@
                     email: $("#new_email").val(),
                     password: $("#new_password").val()
                 };
-                console.log(newUser);
                 $.ajax({
                     type: "POST",
-                    contentType:"application/json",
+                    contentType: "application/json",
                     url: url + "login",
                     cache: false,
                     dataType: "json",
                     data: JSON.stringify(newUser),
                     success: function (response) {
-                        if(response.title == "success"){
-                            $("body").remove("#message");
-                            $("body").prepend(
-                                "<div id='message' class='alert alert-success' style='position: fixed; top: 0; right: 0;z-index: 5;'>" +
-                                response.description+
-                                "</div>"
-                            );
-                            $("#message").delay(2000).fadeOut(2000);
-                        }
-                        else if(response.title == "failure"){
-                            $("body").remove("#message");
-                            $("body").prepend(
-                                "<div id='message' class='alert alert-danger' style='position: fixed; top: 0; right: 0;z-index: 5;'>" +
-                                response.description+
-                                "</div>"
-                            );
+                        $("#message").addClass("alert alert-warning");
+                        $("#message").text(response.responseText);
+                        $("#message").delay(2000).fadeOut(2000, function () {
+                            $("#message").removeAttr("style")
+                                .removeAttr("class")
+                                .text("");
+                        })
 
-                            $("#message").delay(2000).fadeOut(2000);
-                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $("#message").addClass("alert alert-warning");
+                        $("#message").text(error.responseText);
+                        $("#message").delay(2000).fadeOut(2000, function () {
+                            $("#message").removeAttr("style")
+                                .removeAttr("class")
+                                .text("");
+                        });
                     }
                 })
+            });
+
+            $("#login").submit(function (event) {
+                event.preventDefault();
+                var url = "http://localhost:8080/";
+                var email = $("#email").val();
+                var password = $("#password").val();
+                $.ajax({
+                    type: "POST",
+                    url: url + "dashboard",
+                    cache: false,
+                    data: {
+                        "email": email,
+                        "password": password
+                    },
+                    success: function (response) {
+                        console.log(response);
+                    }
+                });
             });
         }
     )
 </script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script src="../resources/js/index.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>
