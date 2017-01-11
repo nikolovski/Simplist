@@ -59,6 +59,9 @@ public class Facade {
     public User getUserById(int id) throws InterruptedException {
         return userDAO.getById(id);
     }
+    public User getUserByEmail(String email){
+        return userDAO.getByEmail(email);
+    }
 
     /**
      *

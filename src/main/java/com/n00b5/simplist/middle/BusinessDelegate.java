@@ -15,7 +15,8 @@ public class BusinessDelegate {
         this.userService = userService;
     }
 
-    public void registerUser(User user) {
-        userService.registerUser(user);
+    public boolean registerUser(User user) {
+
+        return userService.registerUser(user);
     }
 }

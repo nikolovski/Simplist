@@ -30,7 +30,8 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST,
     consumes = "application/json")
     public Message register(@RequestBody @Valid User user) {
-        businessDelegate.registerUser(user);
-        return new Message("Success", "Registration successful!");
+        if(businessDelegate.registerUser(user))
+            return new Message("success", "Registration successful!");
+        else return new Message("failure", "Already existing user!");
     }
 }
