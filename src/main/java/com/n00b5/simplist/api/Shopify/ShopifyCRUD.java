@@ -1,5 +1,6 @@
 package com.n00b5.simplist.api.Shopify;
 
+import com.n00b5.simplist.data.Facade;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -9,6 +10,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -27,6 +29,8 @@ import java.io.IOException;
 @PropertySource("classpath:dev_shopify.properties")
 public class ShopifyCRUD{
 
+    @Autowired
+    Facade facade;
 
 
     public String productID(String response){
@@ -49,6 +53,7 @@ public class ShopifyCRUD{
             request.setEntity(params);
             HttpResponse response = httpClient.execute(request);
             item.setShopifyId(productID(response.toString()));
+            facade.addShopifyItem(item);
         } catch (Exception ex) {
             // handle exception here
         }

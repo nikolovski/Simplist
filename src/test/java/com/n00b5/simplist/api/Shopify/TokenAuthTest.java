@@ -16,10 +16,33 @@ import java.util.concurrent.TimeUnit;
  */
 public class TokenAuthTest {
     private WebDriver driver;
+    private String token;
 
+    public void setToken(String token){
+        this.token = token;
+    }
+
+    public String getToken(){
+        makeDriver();
+        TokenAuth page = new TokenAuth(driver);
+        page.setUsername("syar0052@gmail.com");
+        page.setPassword("Aa0607645");
+        sleep();
+        FindTokenPage findAuthPage = page.clickLoginButton();
+
+        String token = "";
+        List<WebElement> getToken = driver.findElements(By.tagName("body"));
+        for (WebElement body : getToken) {
+            token = body.getText();
+            System.out.println(token);
+        }
+        token = token.substring(17,49);
+
+        return token;
+    }
     @Before
     public void makeDriver(){
-        String PATH_TO_CHROME_DRIVER = "C:/selenium/chromedriver.exe";
+        String PATH_TO_CHROME_DRIVER = "/usr/local/Cellar/chromedriver/2.27/bin/chromedriver"; //"C:/selenium/chromedriver.exe";
         System.setProperty("webdriver.chrome.driver",
                 PATH_TO_CHROME_DRIVER);
         driver = new ChromeDriver();
@@ -37,7 +60,7 @@ public class TokenAuthTest {
     public void createItem(){
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                        page.setPassword("");
+                                                                                                                                                                                                        page.setPassword("Aa0607645");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
 
@@ -49,6 +72,7 @@ public class TokenAuthTest {
         }
         token = token.substring(17,49);
         System.out.println(token);
+        setToken(token);
         driver.get("https://paperss.myshopify.com/admin/products");
         sleep();
         SeleniumCRUD crud = new SeleniumCRUD(driver);

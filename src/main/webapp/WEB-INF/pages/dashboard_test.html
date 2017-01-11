@@ -29,42 +29,13 @@
 </div>
 
 
-
-<div id="updateItem">
-    <h5>Update</h5>
-    Item ID <input id="updateItemId" type="text"><br>
-    New Quantity <input id="updateQuantity" type="text"><br>
-    Title <input id="updateTitle" type="text"><br>
-    Description<input id="updateDescription" type="text"><br>
-    <input id="updateSubmit" type="submit" value="Update"><br>
-</div>
-
-
-<div id="deleteItem">
-    <h5>Delete</h5>
-    Enter item # to be deleted <input id="deleteId" type="text"><br>
-    <input id="deleteSubmit" type="submit" value="Delete"><br>
-</div>
-
-
-<div><br><br>
-    <header>Get By ID</header>
-    Enter ID of listing  <input type="text" id="getByID">
-    <input type="submit" id="getByIDSubmit" value="GET">
-</div>
-
-
-<div><br><br>
-    <header>Get All</header>
-    GET ALL LISTINGS ! <input type="submit" id="getAllListings" value="ALL">
-</div>
-
-<h1></h1>
 </body>
 
 
 <script type="text/javascript">
     $("#addSubmit").click(function(){
+
+        console.log("Button clicked ");
 
         /* Etsy */
         var etsyObj = {
@@ -77,14 +48,14 @@
             who_made: "i_did",
             when_made: "made_to_order",
             shipping_template_id: 35750756683
-        }
+        };
         $.ajax({
             method: "POST",
             dataType : 'json',
             contentType : 'application/json; charset=utf-8',
             url: "http://localhost:8080/etsy/add",
-            data: JSON.stringify(obj) // Note it is important
-        })
+            data: JSON.stringify(etsyObj)
+        });
 
         /* Shopify */
 
@@ -98,115 +69,23 @@
                 variants:[{
                     price: 0.20
                 }]
-            }
+            };
 
         $.ajax({
             type: "POST",
             contentType : 'application/json; charset=utf-8',
             dataType : 'json',
             url: "http://localhost:8080/shopify/createItem",
-            data: JSON.stringify(obj), // Note it is important
-            success :function(result) {
-                console.log("MAYBE ")
-            }
+            data: JSON.stringify(shopifyObj)
         });
 
 
-        /* Ebay */
-
-    })
-
-    $("#updateSubmit").click(function(){
-
-        var id = "itemID="+ $("#updateItemId").val();
-        var obj = {
-            title:   $("#updateTitle").val(),
-            quantity : $("#updateQuantity").val(),
-            description: $("#updateDescription").val(),
-            price: 0.20,
-            state: "draft",
-            is_supply: true,
-            who_made: "i_did",
-            when_made: "made_to_order",
-            shipping_template_id: 35750756683
-        }
-
-        $.ajax({
-            method: "PUT",
-            dataType : 'json',
-            contentType : 'application/json; charset=utf-8',
-            url: "http://localhost:8080/etsy/update?"+id,
-            data: JSON.stringify(obj) // Note it is important
-        })
-
-
-        /* Shopify */
-
-
-
-        /* Ebay */
-
-    })
-
-    $("#deleteSubmit").click(function(){
-
-        var id = "itemID="+ $("#deleteId").val();
-
-        console.log("IN DELETE " + id);
-        $.ajax({
-            method: "DELETE",
-            dataType : 'json',
-            contentType : 'application/json; charset=utf-8',
-            url: "http://localhost:8080/etsy/delete?"+id
-        })
-
-        /* Shopify */
-
-
-
-        /* Ebay */
-
-    })
-
-    $("#getAllListings").click(function(){
-
-        $.ajax({
-            method: "GET",
-            url: "http://localhost:8080/etsy/getAll",
-            dataType: "json",
-            success: function(resp){
-                console.log(resp);
-            }
-        })
-
-        /* Shopify */
-
-
-
-        /* Ebay */
-
-    })
-
-    $("#getByIDSubmit").click(function(){
-
-        var id = "itemID="+$("#getByID").val();
-        console.log("GET BY ID WAS CLICKED - > " + id);
-        $.ajax({
-            method: "GET",
-            url: "http://localhost:8080/etsy/getById?"+id,
-            dataType: "json",
-            success: function(resp){
-                console.log(resp);
-            }
-        })
-
-        /* Shopify */
-
-
-
+        console.log("Added : )");
         /* Ebay */
 
     });
+
+
 
 </script>
 
