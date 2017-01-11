@@ -1,8 +1,11 @@
 package com.n00b5.simplist.web;
 
+import com.n00b5.simplist.beans.User;
 import com.n00b5.simplist.middle.BusinessDelegate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 /**
@@ -23,13 +26,11 @@ public class UserController {
     public String loginPage() {
         return "index";
     }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String register(@RequestParam String first_name,
-                           @RequestParam String last_name,
-                           @RequestParam String new_email,
-                           @RequestParam String new_password) {
-        businessDelegate.registerUser(first_name, last_name, new_email, new_password);
-        return "redirect:/login";
+    @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST,
+    consumes = "application/json")
+    public Message register(@RequestBody @Valid User user) {
+        businessDelegate.registerUser(user);
+        return new Message("Success", "Registration successful!");
     }
 }

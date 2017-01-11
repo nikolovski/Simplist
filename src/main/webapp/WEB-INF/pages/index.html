@@ -45,7 +45,7 @@
         <h1 class="title">Register
             <div class="close"></div>
         </h1>
-        <form id="register" action="/login" method="post">
+        <form id="register">
             <div class="input-container">
                 <input type="text" id="first_name" name="first_name" required="required"/>
                 <label for="first_name">First Name</label>
@@ -75,5 +75,37 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 <script src="../resources/js/index.js"></script>
+<script>
+    $(document).ready(function () {
+            $("#register").submit(function (event) {
+                event.preventDefault();
+                var url = "http://localhost:8080/";
+                var newUser = {
+                    firstName: $("#first_name").val(),
+                    lastName: $("#last_name").val(),
+                    email: $("#new_email").val(),
+                    password: $("#new_password").val()
+                };
+                console.log(newUser);
+                $.ajax({
+                    type: "POST",
+                    contentType:"application/json",
+                    url: url + "login",
+                    cache: false,
+                    dataType: "json",
+                    data: JSON.stringify(newUser),
+                    success: function (response) {
+                        console.log(response.errors);
+                        console.log("yey")
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        console.log("nay");
+                    }
+                })
+            });
+        }
+    )
+</script>
 </body>
 </html>
