@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +20,7 @@ public class TokenAuthTest {
     private WebDriver driver;
     private String token;
 
+
     public void setToken(String token){
         this.token = token;
     }
@@ -25,8 +28,7 @@ public class TokenAuthTest {
     public String getToken(){
         makeDriver();
         TokenAuth page = new TokenAuth(driver);
-        page.setUsername("syar0052@gmail.com");
-        page.setPassword("Aa0607645");
+        page.setUsername("simplist");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
 
@@ -42,7 +44,7 @@ public class TokenAuthTest {
     }
     @Before
     public void makeDriver(){
-        String PATH_TO_CHROME_DRIVER = "/usr/local/Cellar/chromedriver/2.27/bin/chromedriver"; //"C:/selenium/chromedriver.exe";
+        String PATH_TO_CHROME_DRIVER = "C:/selenium/chromedriver.exe"; //"C:/selenium/chromedriver.exe";
         System.setProperty("webdriver.chrome.driver",
                 PATH_TO_CHROME_DRIVER);
         driver = new ChromeDriver();
@@ -59,8 +61,7 @@ public class TokenAuthTest {
     @Test
     public void createItem(){
         TokenAuth page = new TokenAuth(driver);
-        page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                        page.setPassword("Aa0607645");
+        page.setUsername("syar0052@gmail.com");page.setPassword("simplist");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
 
@@ -92,7 +93,7 @@ public class TokenAuthTest {
     public void updateItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                             page.setPassword("");
+        page.setPassword("simplist");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
@@ -126,7 +127,7 @@ public class TokenAuthTest {
     public void deleteItem() throws Exception {
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                             page.setPassword("");
+        page.setPassword("simplist");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
         String token = "";String updateID = "";
@@ -163,5 +164,10 @@ public class TokenAuthTest {
     @After
     public void quit(){
         driver.quit();
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }

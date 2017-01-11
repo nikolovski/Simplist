@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+
+  <title>
+
+    Icon nav &middot;
+
+  </title>
+
+  <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+
+
+  <link href="../resources/dashboard_resources/docs/assets/css/toolkit-light.css" rel="stylesheet">
+
+
+  <style>
+    /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+    /* this chunk of css is not part of the toolkit :) */
+    body {
+      width: 1px;
+      min-width: 100%;
+      *width: 100%;
+    }
+
+    .inverted {
+      filter: invert(100%);
+    }
+
+    .container{
+      padding-top: 100px;
+    }
+
+    .heading{
+      width: 50%;
+      margin: 0 auto;
+      padding-left: 350px;
+      padding-top: 50px;
+    }
+
+
+
+
+    * {
+      -webkit-box-sizing:border-box;
+      -moz-box-sizing:border-box;
+      box-sizing:border-box;
+    }
+
+    .post-container {
+      margin: 20px 20px 0 0;
+      overflow: auto
+    }
+    .post-thumb {
+      float: left
+    }
+    .post-thumb img {
+      display: block
+    }
+    .post-content {
+      margin-left: 210px
+    }
+    .post-title {
+      font-weight: bold;
+      font-size: 100%;
+      padding: 9px;
+    }
+
+    .icons{
+      padding-top: 10px;
+    }
+
+    .edit{
+      float: right;
+    }
+
+
+  </style>
+</head>
+
+
+<body>
+
+
+
+
+<div class="with-iconav">
+
+  <nav class="iconav">
+    <a class="iconav-brand" href="../index.html">
+      <span class="icon icon icon-scribd iconav-brand-icon"></span>
+    </a>
+    <div class="iconav-slider">
+      <ul class="nav nav-pills iconav-nav">
+        <li >
+          <a href="../pages/dashboard.html" title="Overview" data-toggle="tooltip" data-placement="right" data-container="body">
+            <span class="icon icon-home"></span>
+            <small class="iconav-nav-label visible-xs-block">Overview</small>
+          </a>
+        </li>
+        <li>
+          <a href="../pages/CreateItem.html" title="" data-toggle="tooltip" data-placement="right" data-container="body" data-original-title="Add Simplist Item">
+            <span class="icon icon-add-to-list"></span>
+            <small class="iconav-nav-label visible-xs-block">Add Simplist Item</small>
+          </a>
+        </li>
+        <li>
+          <a href="../index.html" title="" data-toggle="tooltip" data-placement="right" data-container="body" data-original-title="Connect Ebay">
+            <img class="inverted" src="../resources/svg/ebay.svg">
+            <small class="iconav-nav-label visible-xs-block">Connect Ebay</small>
+          </a>
+        </li>
+        <li>
+          <a href="/shopify/oauth" title="" data-toggle="tooltip" data-placement="right" data-container="body" data-original-title="Connect Shopify">
+            <img class="inverted" src="../resources/svg/shopify.svg">
+            <small class="iconav-nav-label visible-xs-block">Connect Shopify</small>
+          </a>
+        </li>
+        <li>
+          <a href="../index.html" title="" data-toggle="tooltip" data-placement="right" data-container="body" data-original-title="Connect Etsy">
+            <img class="inverted" src="../resources/svg/etsy.svg">
+            <small class="iconav-nav-label visible-xs-block">Connect Etsy</small>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <div>
+    <div class="heading">
+      <h4>Your Items</h4>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="list-group">
+
+      <a class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Product Name</h5>
+          <div class="post-container">
+            <div class="post-thumb img-thumbnail"><img src="https://www.zawwali.com/support/images/resource/accordiaon-image.jpg" /></div>
+            <div class="post-content">
+              <p>Description Description Description Description Description Description Description Description Description</p></div>
+          </div>
+        </div>
+        <div class="icons">
+          <img src="../resources/svg/ebay.svg" width="30px">
+          <img src="../resources/svg/shopify.svg" width="30px">
+          <img src="../resources/svg/etsy.svg" width="30px">
+          <div class="edit">
+            <img src="../resources/icons/editing-edit-icon.png" width="30px">
+          </div>
+        </div>
+
+
+
+
+      </a>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<script src="../resources/dashboard_resources/docs/assets/js/jquery.min.js"></script>
+<script src="../resources/dashboard_resources/docs/assets/js/tablesorter.min.js"></script>
+<script>
+    // execute/clear BS loaders for docs
+    $(function(){while(window.BS&&window.BS.loader&&window.BS.loader.length){(window.BS.loader.pop())()}})
+</script>
+</body>
+</html>
+
