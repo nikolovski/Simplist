@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 /**#
  * Created by Shehar on 1/3/2017.
@@ -27,6 +28,19 @@ public class ShopifyItem {
     @Column(name = "DESCRIPTION")
     @JsonProperty
     private String body_html;
+
+    @Override
+    public String toString() {
+        return "ShopifyItem{" +
+                "shopifyId='" + shopifyId + '\'' +
+                ", title='" + title + '\'' +
+                ", body_html='" + body_html + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", product_type='" + product_type + '\'' +
+                ", tags='" + tags + '\'' +
+                ", variants=" + Arrays.toString(variants) +
+                '}';
+    }
 
     @Column(name = "VENDOR")
     @JsonProperty

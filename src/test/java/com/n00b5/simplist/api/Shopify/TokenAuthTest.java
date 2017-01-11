@@ -37,7 +37,7 @@ public class TokenAuthTest {
     public void createItem(){
         TokenAuth page = new TokenAuth(driver);
         page.setUsername("syar0052@gmail.com");
-                                                                                                                                                                                                        page.setPassword("");
+                                                                                                                                                                                                        page.setPassword("Aa0607645");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
 

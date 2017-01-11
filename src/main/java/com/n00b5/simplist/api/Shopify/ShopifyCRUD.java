@@ -1,5 +1,6 @@
 package com.n00b5.simplist.api.Shopify;
 
+import com.n00b5.simplist.data.Facade;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -9,8 +10,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +30,7 @@ import java.io.IOException;
 @PropertySource("classpath:dev_shopify.properties")
 public class ShopifyCRUD{
 
-
+    private static ApplicationContext contxt = new ClassPathXmlApplicationContext("application-context.xml");;
 
     public String productID(String response){
         String id = response;
@@ -49,6 +52,8 @@ public class ShopifyCRUD{
             request.setEntity(params);
             HttpResponse response = httpClient.execute(request);
             item.setShopifyId(productID(response.toString()));
+            System.out.println("ITEM TO BE ADDED   " + item.toString());
+            contxt.getBean(Facade.class).addShopifyItem(item);
         } catch (Exception ex) {
             // handle exception here
         }
