@@ -18,13 +18,8 @@ public class UserService implements Helper {
         this.facade = facade;
     }
 
-    public void registerUser(String firstName, String lastName,
-                             String email, String password) {
-        User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setPassword(Authentication.hash(password));
+    public void registerUser(User user) {
+        user.setPassword(Authentication.hash(user.getPassword()));
         facade.insertUser(user);
     }
 }

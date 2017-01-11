@@ -1,5 +1,7 @@
 package com.n00b5.simplist.middle;
 
+import com.n00b5.simplist.beans.User;
+
 /**
  * Project: Simplist
  *
@@ -13,7 +15,7 @@ public class BusinessDelegate {
         this.userService = userService;
     }
 
-    public void registerUser(String first_name, String last_name, String new_email, String new_password) {
-        userService.registerUser(first_name, last_name, new_email, new_password);
+    public void registerUser(User user) {
+        userService.registerUser(user);
     }
 }

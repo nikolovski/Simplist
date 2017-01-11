@@ -22,14 +22,18 @@ public class EtsyTest {
     OAuth1AccessToken token;
     EtsySelinium etsy;
 
+    public OAuth1AccessToken getToken() {
+        return token;
+    }
+
 
     @Before
-    public void setUp() throws Exception {
+    public OAuth1AccessToken setUp() throws Exception {
         System.setProperty("webdriver.chrome.driver",
                chromedriver);
         driver = new ChromeDriver();
         etsy = new EtsySelinium(driver);
-        token = etsy.signin();
+        return etsy.signin();
     }
 
 
