@@ -13,6 +13,7 @@ import java.util.Arrays;
  * @date 1/7/17
  */
 public class InventoryLocation {
+
     @JsonProperty
     private String merchantLocationKey;
 

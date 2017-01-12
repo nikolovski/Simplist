@@ -12,28 +12,21 @@ import javax.persistence.*;
  * @author Martino Nikolovski
  * @date 1/4/17
  */
-@SuppressWarnings("JpaDataSourceORMInspection")
-@Entity
-@Table(name = "EBAY_TOKEN")
 @Component
 public class EbayToken {
 
     @JsonProperty(value = "access_token")
     private String accessToken;
 
-    @Column
     @JsonProperty(value = "token_type")
     private String tokenType;
 
-    @Column
     @JsonProperty(value = "expires_in")
     private long expiresIn;
 
-    @Column
     @JsonProperty(value = "refresh_token")
     private String refreshToken;
 
-    @Id
     @JsonProperty(value = "refresh_token_expires_in")
     private long refreshTokenExpiresIn;
 

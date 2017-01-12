@@ -44,7 +44,6 @@ public class EtsyController {
     private static OAuth10aService service;
     private static OAuth1RequestToken requestToken;
     static OAuth1AccessToken accessToken;
-    @Autowired
     private Facade facade;
 
 

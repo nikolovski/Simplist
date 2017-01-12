@@ -85,16 +85,14 @@ public class UserController {
         return "You can now close this window.";
     }
     @RequestMapping(value = "/saveEbayToken", method = RequestMethod.POST)
-    public ResponseEntity saveEbayToken(@RequestParam String token,
+    public void saveEbayToken(@RequestParam String token,
                                          @RequestParam String user) throws IOException {
         User userObj = new ObjectMapper().readValue(user,User.class);
         EbayToken tokenObj = new ObjectMapper().readValue(token,EbayToken.class);
-        businessDelegate.insertEbayToken(tokenObj);
+        System.out.println(tokenObj);
+        userObj.seteBayRefreshToken(tokenObj.getRefreshToken());
+        System.out.println(userObj);
         businessDelegate.updateUser(userObj);
-        if(user!=null){
-            return new ResponseEntity(user,HttpStatus.OK);
-        }
-        else return new ResponseEntity("Invalid username/password combination",HttpStatus.BAD_REQUEST);
     }
     @RequestMapping(value = "/saveEtsyToken", method = RequestMethod.POST)
     public ResponseEntity saveEtsyToken(@RequestParam String token,

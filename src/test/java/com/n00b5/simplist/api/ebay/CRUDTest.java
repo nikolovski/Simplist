@@ -65,11 +65,11 @@ public class CRUDTest {
         imageUrls[0] = "http://cdn2.jomashop.com/media/catalog/product/r/o/rolex-sea-dweller-4000-black-dial-stainless-steel-rolex-oyster-automatic-men_s-watch-116600bkso.jpg";
         imageUrls[1] = "https://sep.yimg.com/ay/yhst-92803816272180/rolex-114060-submariner-mens-automatic-watch-4.jpg";
 
-        product.setAspects(aspects);
+//        product.setAspects(aspects);
         product.setDescription("Although the Rolex GMT-Master was designed essentially for professional use, its combination of peerless functionality and rugged good looks has attracted a wider travelling public. As well as appreciating its ability to display different time zones, these travellers admire the robustness and versatile appearance that make the GMT-Master eminently suitable for globetrotting and, indeed, for any occasion.");
         product.setImageUrls(imageUrls);
         product.setBrand("Rolex");
-        product.setMpn("MPN123");
+        product.setMpn("MPN345");
 
         Dimension dimension = new Dimension();
         dimension.setHeight(15);
@@ -93,14 +93,14 @@ public class CRUDTest {
         inventoryItem.setCondition(ConditionEnum.NEW_OTHER.toString());
         inventoryItem.setConditionDescription("Brand new unused condition");
         inventoryItem.setPackageWeightAndSize(packageWeightAndSize);
-        inventoryItem.setSku("RSUB123");
+        inventoryItem.setSku("SomeItem2");
         HttpResponse response = new eBayAPI().createOrReplaceInventoryItem(inventoryItem, token);
         System.out.println(response);
         assertEquals(200, new eBayAPI().createOrReplaceInventoryItem(inventoryItem, token).getStatusLine().getStatusCode());
     }
     @Test
     public void getInventoryItemTest() throws IOException, URISyntaxException {
-        InventoryItem item = new eBayAPI().getInventoryItem("RSUB123", token);
+        InventoryItem item = new eBayAPI().getInventoryItem("SomeItem", token);
         System.out.println(item);
         assertNotNull(item);
     }
@@ -137,7 +137,7 @@ public class CRUDTest {
         inventoryLocation.setName("ShopName");
         inventoryLocation.setMerchantLocationStatus(StatusEnum.ENABLED.toString());
         inventoryLocation.setLocationTypes(new String[]{StoreTypeEnum.STORE.toString()});
-        inventoryLocation.setMerchantLocationKey("myFirstStore");
+        inventoryLocation.setMerchantLocationKey("myFirstStore2");
         HttpResponse response = new eBayAPI().createInventoryLocation(inventoryLocation, token);
         assertEquals(204, response.getStatusLine().getStatusCode());
     }
@@ -196,7 +196,7 @@ public class CRUDTest {
 
         Offer offer = new Offer(1, "31387", FormatTypeEnum.FIXED_PRICE.toString(),
                 "Some description of the offer", listingPolicies, "EBAY_US",
-                "myFirstStore", pricingSummary, "RSUB123");
+                "myFirstStore2", pricingSummary, "SomeItem");
         offer.setQuantityLimitPerBuyer(1);
         offer.setTax(tax);
 
@@ -208,7 +208,7 @@ public class CRUDTest {
 
     @Test
     public void getOffersTest() throws IOException, URISyntaxException {
-        Offers offers = new eBayAPI().getOffers("RSUB123", token);
+        Offers offers = new eBayAPI().getOffers("BRAC12", token);
         System.out.println(offers);
         assertNotNull(offers);
     }
@@ -222,13 +222,13 @@ public class CRUDTest {
 
     @Test
     public void publishOfferTest() throws IOException, JSONException {
-        String listingId = new eBayAPI().publishOffer("5006348010", token);
+        String listingId = new eBayAPI().publishOffer("5006492010", token);
         System.out.println(listingId);
     }
 
     @Test
     public void deleteOfferTest() throws IOException {
-        HttpResponse response = new eBayAPI().deleteOffer("5006347010", token);
+        HttpResponse response = new eBayAPI().deleteOffer("5006491010", token);
         System.out.println(response);
         assertEquals(204, response.getStatusLine().getStatusCode());
     }

@@ -92,6 +92,9 @@
     <bean name="userController" class="com.n00b5.simplist.web.UserController">
         <property name="businessDelegate" ref="businessDelegate"/>
     </bean>
+    <bean name="etsyController" class="com.n00b5.simplist.api.etsy.EtsyController">
+        <property name="facade" ref="facade"/>
+    </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/pages/"/>
