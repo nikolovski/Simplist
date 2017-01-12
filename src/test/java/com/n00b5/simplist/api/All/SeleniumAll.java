@@ -32,7 +32,7 @@ public class SeleniumAll {
     }
 
     public void deleteItems() {
-        driver.findElement(By.xpath("//*[@id=\"deleteid\"]")).sendKeys("107");
+        driver.findElement(By.xpath("//*[@id=\"deleteid\"]")).sendKeys("109");
         driver.findElement(By.xpath("//*[@id=\"deleteSubmit\"]")).click();
     }
 }

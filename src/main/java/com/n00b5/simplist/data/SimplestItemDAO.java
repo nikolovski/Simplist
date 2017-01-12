@@ -24,10 +24,10 @@ public class SimplestItemDAO {
     @Transactional
     public void deleteItem(String deleteId) {
         System.out.println("IN DAO FOR DELETE " + deleteId);
-        SimplistItem simplistItem = (SimplistItem) sessionFactory.getCurrentSession().load(SimplistItem.class, deleteId);
-        System.out.println("SIMPLEST ITEM " + simplistItem.toString());
-        sessionFactory.getCurrentSession().delete(simplistItem);
-        System.out.println("DELETED SIMPLIST ITEM");
+       SimplistItem simplistItem = (SimplistItem) sessionFactory.getCurrentSession().load(SimplistItem.class, Integer.parseInt(deleteId));
+//        System.out.println("SIMPLEST ITEM " + simplistItem.toString());
+       sessionFactory.getCurrentSession().delete(simplistItem);
+       System.out.println("DELETED SIMPLIST ITEM");
         //TODO get delete to work !
     }
 }
