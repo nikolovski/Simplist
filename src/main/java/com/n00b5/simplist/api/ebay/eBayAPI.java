@@ -61,7 +61,7 @@ public class eBayAPI {
         return ebayToken;
     }
 
-    EbayToken tokenFromRefreshToken(EbayToken token) throws IOException, JSONException {
+    public EbayToken tokenFromRefreshToken(EbayToken token) throws IOException, JSONException {
         String parameters = "grant_type=refresh_token" +
                 "&refresh_token=" + token.getRefreshToken() +
                 "&scope=" + URLEncoder.encode(scope, "UTF-8");

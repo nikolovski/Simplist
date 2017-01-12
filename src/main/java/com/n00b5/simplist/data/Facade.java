@@ -15,6 +15,7 @@ public class Facade {
     private ShopifyItemDAO shopifyDAO;
     private TokensDAO tokensDAO;
     private SimplestItemDAO simplestDAO;
+    private EbayDAO ebayDAO;
 
     public void setUser(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -143,5 +144,13 @@ public class Facade {
     public void simpliestDeleteItem(String deleteId) {
         System.out.println("IN THE SIMPLEST FACADE");
         simplestDAO.deleteItem(deleteId);
+    }
+
+    public void setEbayDAO(EbayDAO ebayDAO) {
+        this.ebayDAO = ebayDAO;
+    }
+
+    public EbayDAO getEbayDAO() {
+        return ebayDAO;
     }
 }

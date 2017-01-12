@@ -175,6 +175,7 @@ public class EbayItem {
         offerId = offers.getOffers()[0].getOfferId();
         status = offers.getOffers()[0].getStatus();
         listingId = new eBayAPI().publishOffer(offerId, token);
+        status = OfferStatusEnum.PUBLISHED.toString();
     }
 
     public void deleteOffer(String token) throws IOException {

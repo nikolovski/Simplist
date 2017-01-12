@@ -65,6 +65,9 @@
     <bean name="SimplestDAO" class="com.n00b5.simplist.data.SimplestItemDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean name="ebayDAO" class="com.n00b5.simplist.data.EbayDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <!-- Facade bean -->
     <bean name="facade" class="com.n00b5.simplist.data.Facade">
         <property name="user" ref="userDAO"/>
@@ -72,6 +75,7 @@
         <property name="shopifyDAO" ref="ShopifyDAO"/>
         <property name="tokensDAO" ref="tokensDAO"/>
         <property name="SimplestDAO" ref="SimplestDAO"></property>
+        <property name="ebayDAO" ref="ebayDAO"></property>
     </bean>
 
     <!--Business delegate bean-->
