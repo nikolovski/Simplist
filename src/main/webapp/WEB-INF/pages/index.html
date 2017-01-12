@@ -10,73 +10,228 @@
           href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
     <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="../resources/css/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+
+
+    <link href="../resources/css/toolkit-light.css" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
 </head>
 
 <body>
+<div id="loginPage">
+    <div id="message"></div>
+    <div class="pen-title">
+        <h1>Simplist</h1><span>Listing made simple</span>
+    </div>
+    <div class="container">
+        <div class="card"></div>
+        <div class="card">
+            <h1 class="title">Login</h1>
+            <form id="login">
+                <div class="input-container">
+                    <input type="email" id="email" required="required"/>
+                    <label for="email">Email</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container">
+                    <input type="password" id="password" required="required"/>
+                    <label for="password">Password</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="button-container">
+                    <button id="login_btn"><span>Go</span></button>
+                </div>
+            </form>
+            <!--<div class="footer"><a href="#">Forgot your password?</a></div>-->
+        </div>
+        <div class="card alt">
+            <div class="toggle"></div>
+            <h1 class="title">Register
+                <div class="close"></div>
+            </h1>
+            <form id="register">
+                <div class="input-container">
+                    <input type="text" id="first_name" required="required"/>
+                    <label for="first_name">First Name</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container">
+                    <input type="text" id="last_name" required="required"/>
+                    <label for="last_name">Last Name</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container">
+                    <input type="email" id="new_email" required="required"/>
+                    <label for="new_email">Email</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container">
+                    <input type="password" id="new_password" required="required"/>
+                    <label for="new_password">Password</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="button-container">
+                    <button type="submit" form="register" id="register_btn"><span>NEXT</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="dashboardPage">
+    <div class="with-iconav">
 
-<!-- Mixins-->
-<!-- Pen Title-->
-<div class="pen-title">
-    <h1>Simplist</h1><span>Listing made simple</span>
-</div>
-<div class="container">
-    <div class="card"></div>
-    <div class="card">
-        <h1 class="title">Login</h1>
-        <form id="login" action="/dashboard" method="post">
-            <div class="input-container">
-                <input type="email" id="email" required="required"/>
-                <label for="email">Email</label>
-                <div class="bar"></div>
+        <nav class="iconav">
+            <a class="iconav-brand" href="../index.html">
+                <span class="icon icon icon-scribd iconav-brand-icon"></span>
+            </a>
+            <div class="iconav-slider">
+                <ul class="nav nav-pills iconav-nav">
+                    <li>
+                        <a href="../pages/dashboard.html" title="Overview" data-toggle="tooltip" data-placement="right"
+                           data-container="body">
+                            <span class="icon icon-home"></span>
+                            <small class="iconav-nav-label visible-xs-block">Overview</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../pages/CreateItem.html" title="" data-toggle="tooltip" data-placement="right"
+                           data-container="body" data-original-title="Add Simplist Item">
+                            <span class="icon icon-add-to-list"></span>
+                            <small class="iconav-nav-label visible-xs-block">Add Simplist Item</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/ebay/oauth" id="ebayUrl" target="_blank" title="" data-toggle="tooltip" data-placement="right"
+                           data-container="body" data-original-title="Connect Ebay">
+                            <img class="inverted" src="../resources/svg/ebay.svg">
+                            <small class="iconav-nav-label visible-xs-block">Connect Ebay</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/shopify/oauth" target="_blank" title="" data-toggle="tooltip" data-placement="right"
+                           data-container="body" data-original-title="Connect Shopify">
+                            <img class="inverted" src="../resources/svg/shopify.svg">
+                            <small class="iconav-nav-label visible-xs-block">Connect Shopify</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/etsy/oauth" id="etsyUrl" target="_blank" title="" data-toggle="tooltip" data-placement="right"
+                           data-container="body" data-original-title="Connect Etsy">
+                            <img class="inverted" src="../resources/svg/etsy.svg">
+                            <small class="iconav-nav-label visible-xs-block">Connect Etsy</small>
+                        </a>
+                    </li>
+
+                </ul>
             </div>
-            <div class="input-container">
-                <input type="password" id="password" required="required"/>
-                <label for="password">Password</label>
-                <div class="bar"></div>
+        </nav>
+
+        <div>
+            <div class="heading">
+                <h4>Your Items</h4>
             </div>
-            <div class="button-container">
-                <button id="login_btn"><span>Go</span></button>
+        </div>
+
+        <div class="container">
+            <div class="list-group">
+
+                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Product Name</h5>
+                        <div class="post-container">
+                            <div class="post-thumb img-thumbnail"><img
+                                    src="https://www.zawwali.com/support/images/resource/accordiaon-image.jpg"/></div>
+                            <div class="post-content">
+                                <p>Description Description Description Description Description Description Description
+                                    Description Description</p></div>
+                        </div>
+                    </div>
+                    <div class="icons">
+                        <img src="../resources/svg/ebay.svg" width="30px">
+                        <img src="../resources/svg/shopify.svg" width="30px">
+                        <img src="../resources/svg/etsy.svg" width="30px">
+                        <div class="edit">
+                            <img src="../resources/icons/editing-edit-icon.png" width="30px">
+                        </div>
+                    </div>
+                </a>
             </div>
-        </form>
-        <!--<div class="footer"><a href="#">Forgot your password?</a></div>-->
+        </div>
     </div>
-    <div class="card alt">
-        <div class="toggle"></div>
-        <h1 class="title">Register
-            <div class="close"></div>
-        </h1>
-        <form id="register">
-            <div class="input-container">
-                <input type="text" id="first_name" name="first_name" required="required"/>
-                <label for="first_name">First Name</label>
-                <div class="bar"></div>
-            </div>
-            <div class="input-container">
-                <input type="text" id="last_name" name="last_name" required="required"/>
-                <label for="last_name">Last Name</label>
-                <div class="bar"></div>
-            </div>
-            <div class="input-container">
-                <input type="email" id="new_email" name="new_email" required="required"/>
-                <label for="new_email">Email</label>
-                <div class="bar"></div>
-            </div>
-            <div class="input-container">
-                <input type="password" id="new_password" name="new_password" required="required"/>
-                <label for="new_password">Password</label>
-                <div class="bar"></div>
-            </div>
-            <div class="button-container">
-                <button type="submit" form="register" id="register_btn"><span>NEXT</span></button>
-            </div>
-        </form>
-    </div>
 </div>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-<script src="../resources/js/index.js"></script>
+</body>
 <script>
     $(document).ready(function () {
+            if ($.cookie("user")) $("#loginPage").css("display", "none");
+            else $("#dashboardPage").css("display", "none");
+        var url = "http://localhost:8080/";
+
+            $("#ebayUrl").click(function (event) {
+                event.preventDefault();
+                $("#ebayUrl").click(function () {
+                    var url = $(this).attr('href');
+                    window.open(url, '_blank');
+                });
+                var interval = setInterval(function () {
+                    if($.cookie("eBayToken"))
+                        $.ajax({
+                            type: "POST",
+                            url: url + "saveEbayToken",
+                            cache: false,
+                            data:{
+                                user: $.cookie("user"),
+                                token: $.cookie("eBayToken")
+                            },
+                            success: function (response) {
+                                console.log(response)
+                                clearInterval(interval);
+                            },
+                            error: function (response) {
+                                console.log(response);
+                                clearInterval(interval);
+                            }
+                        })
+                },3000);
+            });
+            $("#etsyUrl").click(function (event) {
+                event.preventDefault();
+                $("#etsyUrl").click(function () {
+                    var url = $(this).attr('href');
+                    window.open(url, '_blank');
+                });
+                console.log($.cookie("etsyToken"))
+                var interval = setInterval(function () {
+                    if($.cookie("etsyToken"))
+                        $.ajax({
+                            type: "POST",
+                            url: url + "saveEtsyToken",
+                            cache: false,
+                            data:{
+                                user: $.cookie("user"),
+                                token: $.cookie("etsyToken")
+                            },
+                            success: function (response) {
+                                console.log(response)
+                                clearInterval(interval);
+                            },
+                            error: function (response) {
+                                console.log(response);
+                                clearInterval(interval);
+                            }
+                        })
+                },3000);
+            });
+
+
             $("#register").submit(function (event) {
                 event.preventDefault();
                 var url = "http://localhost:8080/";
@@ -84,28 +239,84 @@
                     firstName: $("#first_name").val(),
                     lastName: $("#last_name").val(),
                     email: $("#new_email").val(),
-                    password: $("#new_password").val()
+                    password: $("#new_password").val(),
+                    eBayRefreshToken: null,
+                    etsyToken: null,
+                    etsySecret: null,
+                    shopifyToken: null
                 };
-                console.log(newUser);
                 $.ajax({
                     type: "POST",
-                    contentType:"application/json",
+                    contentType: "application/json",
                     url: url + "login",
                     cache: false,
                     dataType: "json",
                     data: JSON.stringify(newUser),
                     success: function (response) {
-                        console.log(response.errors);
-                        console.log("yey")
+                        $("#message").addClass("alert alert-warning");
+                        $("#message").text(response.responseText);
+                        $("#message").delay(2000).fadeOut(2000, function () {
+                            $("#message").removeAttr("style")
+                                .removeAttr("class")
+                                .text("");
+                        })
+
                     },
                     error: function (error) {
                         console.log(error);
-                        console.log("nay");
+                        $("#message").addClass("alert alert-warning");
+                        $("#message").text(error.responseText);
+                        $("#message").delay(2000).fadeOut(2000, function () {
+                            $("#message").removeAttr("style")
+                                .removeAttr("class")
+                                .text("");
+                        });
                     }
                 })
+            });
+
+            $("#login").submit(function (event) {
+                event.preventDefault();
+                var url = "http://localhost:8080/";
+                var email = $("#email").val();
+                var password = $("#password").val();
+                $.ajax({
+                    type: "POST",
+                    url: url + "validate",
+                    cache: false,
+                    data: {
+                        "email": email,
+                        "password": password
+                    },
+                    success: function (response) {
+                        var url = "http://localhost:8080/";
+                        console.log("After validation");
+                        console.log(response);
+                        $("#loginPage").fadeOut(1000);
+                        $("#dashboardPage").fadeIn(1000);
+                    },
+                    error: function (response) {
+
+                    }
+
+                });
             });
         }
     )
 </script>
-</body>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script src="../resources/js/index.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script>
+    // execute/clear BS loaders for docs
+    $(function () {
+        while (window.BS && window.BS.loader && window.BS.loader.length) {
+            (window.BS.loader.pop())()
+        }
+    })
+</script>
 </html>

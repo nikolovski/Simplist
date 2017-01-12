@@ -59,6 +59,9 @@
     <bean name="ShopifyDAO" class="com.n00b5.simplist.data.ShopifyItemDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean name="tokensDAO" class="com.n00b5.simplist.data.TokensDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean name="SimplestDAO" class="com.n00b5.simplist.data.SimplestItemDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -67,17 +70,23 @@
         <property name="user" ref="userDAO"/>
         <property name="etsyDAO" ref="EtsyDAO"/>
         <property name="shopifyDAO" ref="ShopifyDAO"/>
+        <property name="tokensDAO" ref="tokensDAO"/>
         <property name="SimplestDAO" ref="SimplestDAO"></property>
     </bean>
 
     <!--Business delegate bean-->
     <bean name="businessDelegate" class="com.n00b5.simplist.middle.BusinessDelegate">
         <property name="userService" ref="userService"/>
+        <property name="tokenService" ref="tokenService"/>
     </bean>
     <!--Service beans-->
     <bean name="userService" class="com.n00b5.simplist.middle.UserService">
         <property name="facade" ref="facade"/>
     </bean>
+    <bean name="tokenService" class="com.n00b5.simplist.middle.TokenService">
+        <property name="facade" ref="facade"/>
+    </bean>
+
 
     <!--Controller beans-->
     <bean name="userController" class="com.n00b5.simplist.web.UserController">

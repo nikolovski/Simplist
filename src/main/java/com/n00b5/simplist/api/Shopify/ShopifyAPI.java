@@ -1,5 +1,7 @@
 package com.n00b5.simplist.api.Shopify;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -63,7 +68,7 @@ public class ShopifyAPI{
                 "&redirect_uri="+redirect_uri+
                 "&state="+nonce+
                 "&grant_options[]="+option;
-        return new ModelAndView("redirect:http://"+getCodeURL);
+        return new ModelAndView("redirect:"+getCodeURL);
     }
 
 
@@ -86,9 +91,9 @@ public class ShopifyAPI{
         return new ModelAndView("redirect:https://paperss.myshopify.com/admin/products.json");
     }
 
-    @RequestMapping(value="/shopify/token")
+    @RequestMapping(value="/shopifyToken")
     @ResponseBody
-    public String getToken() throws IOException { // BResult holds errors
+    public String getToken(HttpServletResponse servletResponse) throws IOException { // BResult holds errors
         System.out.println("In token");
         String tokenURL = accessTokenURL;
         URL obj = new URL(tokenURL);
@@ -119,7 +124,7 @@ public class ShopifyAPI{
         tokenKey = response.substring(17,response.indexOf(",")-1);
         System.out.println(tokenKey);
         System.out.println(response.toString());
-
+        servletResponse.addCookie(new Cookie("shopifyToken", response.toString()));
         return response.toString();
     }
 

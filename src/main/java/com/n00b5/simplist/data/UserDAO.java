@@ -41,17 +41,13 @@ public class UserDAO extends Authentication {
     }
 
 
-    @Transactional(isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRED,
-            rollbackFor = Exception.class)
+    @Transactional
     public User getById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return (User) session.get(User.class, id);
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRED,
-            rollbackFor = Exception.class)
+    @Transactional
     public User getByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
         return (User) session.createCriteria(User.class)

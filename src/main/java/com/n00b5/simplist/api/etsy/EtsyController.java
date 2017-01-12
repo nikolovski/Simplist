@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -25,7 +27,6 @@ import java.io.IOException;
  */
 
 @Controller
-@RequestMapping(value ="/etsy")
 @PropertySource("classpath:dev_etsy.properties")
 public class EtsyController {
 
@@ -47,7 +48,7 @@ public class EtsyController {
     private Facade facade;
 
 
-    @RequestMapping(value="/oauth")
+    @RequestMapping(value="/etsy/oauth")
     public ModelAndView etsy() throws IOException {
 
             service  = new ServiceBuilder()
@@ -68,19 +69,21 @@ public class EtsyController {
     }
 
 
-    @RequestMapping(value="/authorize")
+    @RequestMapping(value="/etsyToken")
     @ResponseBody
-    public String auth(@RequestParam(value="oauth_token") String token, @RequestParam(value="oauth_verifier")String verifier ) throws IOException {
+    public String auth(@RequestParam(value="oauth_token") String token,
+                       @RequestParam(value="oauth_verifier")String verifier,
+                        HttpServletResponse response) throws IOException {
 
         accessToken = service.getAccessToken(requestToken,verifier);
         OAuth1Converter converter = new OAuth1Converter(accessToken.getToken(),accessToken.getTokenSecret());
         String acToken = new ObjectMapper().writeValueAsString(converter);
+        response.addCookie(new Cookie("etsyToken", acToken));
         System.out.println("IN authorize " + acToken);
         return acToken;
     }
 
-
-    @RequestMapping(value="/add",method= RequestMethod.POST)
+    @RequestMapping(value="/etsy/add",method= RequestMethod.POST)
     public @ResponseBody EtsyItem addItem(@RequestBody EtsyItem etsyItem) throws IOException, JSONException {
 
         /*STEPS
@@ -116,8 +119,8 @@ public class EtsyController {
 
     }
 
-    @RequestMapping(value="/delete")
-    public String deleteItem(@RequestParam("itemID")String id)throws IOException {
+    @RequestMapping(value="/etsy/delete")
+    public void deleteItem(@RequestParam("itemID")String id)throws IOException {
 
         OAuthRequest request = new OAuthRequest(Verb.DELETE, "https://openapi.etsy.com/v2/listings/"+id, service);
         service.signRequest(accessToken, request); // the access token from step 4
@@ -125,14 +128,14 @@ public class EtsyController {
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Deleted " +response.getBody());
 
-        //facade.etsyDeleteItem(id);
+        facade.etsyDeleteItem(id);
 
         System.out.println("ALL DONE");
-        return id;
+
 
     }
 
-    @RequestMapping(value="/getById")
+    @RequestMapping(value="/etsy/getById")
     public @ResponseBody
     String getById(@RequestParam("itemID")String id) throws IOException {
 
@@ -148,7 +151,7 @@ public class EtsyController {
         return response.getBody().toString();
     }
 
-    @RequestMapping(value="/getAll")
+    @RequestMapping(value="/etsy/getAll")
     public @ResponseBody
     String getAllListings() throws IOException {
 
@@ -166,11 +169,10 @@ public class EtsyController {
 
     }
 
-    @RequestMapping(value="/update")
-    public void update(@RequestBody EtsyItem item, @RequestParam("itemID")String id) throws IOException {
+    @RequestMapping(value="/etsy/update")
+    public void update(@RequestBody String json, @RequestParam("itemID")String id) throws IOException {
 
-        EtsyItem etsyItem = item;
-        System.out.println("IN UPDATE ETSY ITEM " + etsyItem);
+        EtsyItem etsyItem = new ObjectMapper().readValue(json,EtsyItem.class);
         etsyItem.setListing_id(id);
         OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/" + id + "?" + etsyItem.toURL(), service);
         service.signRequest(accessToken, request); // the access token from step 4
@@ -178,6 +180,7 @@ public class EtsyController {
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Updated item " + response.getBody());
 
+        facade.etsyUpdateItem(etsyItem, etsyItem.getListing_id());
         System.out.println("ALL DONE");
     }
 

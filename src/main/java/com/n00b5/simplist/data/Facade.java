@@ -1,7 +1,9 @@
 package com.n00b5.simplist.data;
 
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
+import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.etsy.EtsyItem;
+import com.n00b5.simplist.api.etsy.EtsyToken;
 import com.n00b5.simplist.beans.SimplistItem;
 import com.n00b5.simplist.beans.User;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,8 +13,8 @@ public class Facade {
     private UserDAO userDAO;
     private EtsyDAO etsyDAO;
     private ShopifyItemDAO shopifyDAO;
+    private TokensDAO tokensDAO;
     private SimplestItemDAO simplestDAO;
-
 
     public void setUser(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -71,6 +73,9 @@ public class Facade {
     public User getUserById(int id) throws InterruptedException {
         return userDAO.getById(id);
     }
+    public User getUserByEmail(String email){
+        return userDAO.getByEmail(email);
+    }
 
     /**
      *
@@ -108,6 +113,24 @@ public class Facade {
         shopifyDAO.shopifyDeleteItem(shopifyId);
     }
 
+    public void updateUser(User user) {
+        userDAO.update(user);
+    }
+    public void insertEbayToken(EbayToken token) {
+        tokensDAO.insertEbayToken(token);
+    }
+
+    public void setTokensDAO(TokensDAO tokensDAO) {
+        this.tokensDAO = tokensDAO;
+    }
+
+    public TokensDAO getTokensDAO() {
+        return tokensDAO;
+    }
+
+    public void insertEtsyToken(EtsyToken token) {
+        tokensDAO.insertEtsyToken(token);
+    }
     //create
     @Transactional()
     public void simpliestCreateItem(SimplistItem simplistItem) {
@@ -115,23 +138,10 @@ public class Facade {
         simplestDAO.createItem(simplistItem);
     }
 
-    //delete
+    //create
     @Transactional()
-    public void simpliestDeleteItem(int deleteId) {
+    public void simpliestDeleteItem(String deleteId) {
         System.out.println("IN THE SIMPLEST FACADE");
         simplestDAO.deleteItem(deleteId);
     }
-
-    //getById (simplest Item)
-    @Transactional()
-    public SimplistItem getSimplestItemById(int id) {
-       return simplestDAO.getById(id);
-    }
-
-    //updateByid (simplest Item)
-    @Transactional()
-    public void updateSimplistItem(int id, EtsyItem item, ShopifyItem item2) {
-        simplestDAO.updateSimplistItem(id,item,item2);
-    }
-
 }

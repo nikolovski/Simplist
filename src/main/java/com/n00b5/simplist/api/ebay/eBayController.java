@@ -19,9 +19,4 @@ public class eBayController {
         return new ModelAndView("redirect:" + url);
     }
 
-    @RequestMapping(value = "/authorize", params = {"state", "code"})
-    @ResponseBody
-    public String getToken(String state, String code) throws IOException {
-        return new eBayAPI().getToken(code).toString();
-    }
 }

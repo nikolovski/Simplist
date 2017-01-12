@@ -51,7 +51,7 @@ public class eBayAPI {
                 "&scope=" + URLEncoder.encode(scope, "UTF-8");
     }
 
-    EbayToken getToken(String code) throws IOException {
+    public EbayToken getToken(String code) throws IOException {
         String parameters = "grant_type=authorization_code" +
                 "&code=" + URLEncoder.encode(code, "UTF-8") +
                 "&redirect_uri=" + redirectURI;
