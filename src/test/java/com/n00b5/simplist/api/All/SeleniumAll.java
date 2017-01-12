@@ -20,16 +20,19 @@ public class SeleniumAll {
 
     public void addItems() {
         driver.findElement(By.xpath("//*[@id=\"quantity\"]")).sendKeys("5");
-        driver.findElement(By.xpath("//*[@id=\"title\"]")).sendKeys("new item");
-        driver.findElement(By.xpath("//*[@id=\"description\"]")).sendKeys("new item");
+        driver.findElement(By.xpath("//*[@id=\"title\"]")).sendKeys("MAMA222");
+        driver.findElement(By.xpath("//*[@id=\"description\"]")).sendKeys("PAPA222");
 
 
         driver.findElement(By.xpath("//*[@id=\"company\"]")).sendKeys("Revature");
         driver.findElement(By.xpath("//*[@id=\"type\"]")).sendKeys("Typeyyyy");
         driver.findElement(By.xpath("//*[@id=\"tag\"]")).sendKeys("Taggy");
 
-
-
         driver.findElement(By.xpath("//*[@id=\"addSubmit\"]")).click();
+    }
+
+    public void deleteItems() {
+        driver.findElement(By.xpath("//*[@id=\"deleteid\"]")).sendKeys("107");
+        driver.findElement(By.xpath("//*[@id=\"deleteSubmit\"]")).click();
     }
 }

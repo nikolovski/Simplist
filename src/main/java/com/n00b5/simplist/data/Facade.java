@@ -44,6 +44,7 @@ public class Facade {
 
 
     public void etsyAddItem(EtsyItem etsyItem) {
+        System.out.println("IN ETSY FACADE");
         etsyDAO.etsyAddItem(etsyItem);
     }
 
@@ -112,6 +113,13 @@ public class Facade {
     public void simpliestCreateItem(SimplistItem simplistItem) {
         System.out.println("IN THE SIMPLEST FACADE");
         simplestDAO.createItem(simplistItem);
+    }
+
+    //create
+    @Transactional()
+    public void simpliestDeleteItem(String deleteId) {
+        System.out.println("IN THE SIMPLEST FACADE");
+        simplestDAO.deleteItem(deleteId);
     }
 
 }
