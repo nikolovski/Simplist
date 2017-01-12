@@ -115,11 +115,23 @@ public class Facade {
         simplestDAO.createItem(simplistItem);
     }
 
-    //create
+    //delete
     @Transactional()
-    public void simpliestDeleteItem(String deleteId) {
+    public void simpliestDeleteItem(int deleteId) {
         System.out.println("IN THE SIMPLEST FACADE");
         simplestDAO.deleteItem(deleteId);
+    }
+
+    //getById (simplest Item)
+    @Transactional()
+    public SimplistItem getSimplestItemById(int id) {
+       return simplestDAO.getById(id);
+    }
+
+    //updateByid (simplest Item)
+    @Transactional()
+    public void updateSimplistItem(int id, EtsyItem item, ShopifyItem item2) {
+        simplestDAO.updateSimplistItem(id,item,item2);
     }
 
 }

@@ -117,7 +117,7 @@ public class EtsyController {
     }
 
     @RequestMapping(value="/delete")
-    public void deleteItem(@RequestParam("itemID")String id)throws IOException {
+    public String deleteItem(@RequestParam("itemID")String id)throws IOException {
 
         OAuthRequest request = new OAuthRequest(Verb.DELETE, "https://openapi.etsy.com/v2/listings/"+id, service);
         service.signRequest(accessToken, request); // the access token from step 4
@@ -125,10 +125,10 @@ public class EtsyController {
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Deleted " +response.getBody());
 
-        facade.etsyDeleteItem(id);
+        //facade.etsyDeleteItem(id);
 
         System.out.println("ALL DONE");
-
+        return id;
 
     }
 
@@ -167,9 +167,10 @@ public class EtsyController {
     }
 
     @RequestMapping(value="/update")
-    public void update(@RequestBody String json, @RequestParam("itemID")String id) throws IOException {
+    public void update(@RequestBody EtsyItem item, @RequestParam("itemID")String id) throws IOException {
 
-        EtsyItem etsyItem = new ObjectMapper().readValue(json,EtsyItem.class);
+        EtsyItem etsyItem = item;
+        System.out.println("IN UPDATE ETSY ITEM " + etsyItem);
         etsyItem.setListing_id(id);
         OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/" + id + "?" + etsyItem.toURL(), service);
         service.signRequest(accessToken, request); // the access token from step 4
@@ -177,7 +178,6 @@ public class EtsyController {
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Updated item " + response.getBody());
 
-        facade.etsyUpdateItem(etsyItem, etsyItem.getListing_id());
         System.out.println("ALL DONE");
     }
 

@@ -91,6 +91,7 @@ public class ShopifyCRUD{
     @ResponseBody
     @RequestMapping(value = "shopify/delete/", method = RequestMethod.POST)
     public void deleteItem(@RequestBody String id) throws JSONException {
+
         JSONObject deleteID = new JSONObject(id);
         HttpClient httpClient = new DefaultHttpClient();
         try {

@@ -32,7 +32,21 @@ public class SeleniumAll {
     }
 
     public void deleteItems() {
-        driver.findElement(By.xpath("//*[@id=\"deleteid\"]")).sendKeys("109");
+        driver.findElement(By.xpath("//*[@id=\"deleteid\"]")).sendKeys("113");
         driver.findElement(By.xpath("//*[@id=\"deleteSubmit\"]")).click();
+    }
+
+    public void updateItems() {
+        driver.findElement(By.xpath("//*[@id=\"itemid\"]")).sendKeys("120");
+        driver.findElement(By.xpath("//*[@id=\"quantityid\"]")).sendKeys("5");
+        driver.findElement(By.xpath("//*[@id=\"titleid\"]")).sendKeys("RARA222");
+        driver.findElement(By.xpath("//*[@id=\"descriptionid\"]")).sendKeys("PAPA222");
+
+
+        driver.findElement(By.xpath("//*[@id=\"companyid\"]")).sendKeys("Revature");
+        driver.findElement(By.xpath("//*[@id=\"typeid\"]")).sendKeys("Typeyyyy");
+        driver.findElement(By.xpath("//*[@id=\"tagid\"]")).sendKeys("Taggy");
+
+        driver.findElement(By.xpath("//*[@id=\"addSubmitid\"]")).click();
     }
 }

@@ -52,4 +52,10 @@ public class TestAll {
         selenium.getView("http://localhost:8080/pages/dashboard_test.html");
         selenium.deleteItems();
     }
+
+    @Test
+    public void updateItems(){
+        selenium.getView("http://localhost:8080/pages/dashboard_test.html");
+        selenium.updateItems();
+    }
 }

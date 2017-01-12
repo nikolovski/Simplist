@@ -1,6 +1,5 @@
 package com.n00b5.simplist.web;
 
-import com.n00b5.simplist.api.Shopify.ShopifyAPI;
 import com.n00b5.simplist.api.Shopify.ShopifyCRUD;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyController;
@@ -67,9 +66,64 @@ public class SimplestController {
 
     @RequestMapping(value = "/delete" , method = RequestMethod.DELETE)
     public void add(@RequestParam("itemID")String id) {
+        System.out.println(id + " is the id that will be passed ");
+        SimplistItem item = facade.getSimplestItemById(Integer.parseInt(id));
+        System.out.println(item.getId());
+        String shopifyID = item.getShopifyItem().getShopifyId();
+        String etsyID = item.getEtsyItem().getListing_id();
+        System.out.println("DELETE SHOPIFY ITEM:" +shopifyID);
+        EtsyController etsy = new EtsyController();
+        ShopifyCRUD shopify = new ShopifyCRUD();
+        try {
+
+            shopify.deleteItem("{\"id\":\""+shopifyID+"\"}");
+            etsy.deleteItem(etsyID);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         System.out.println("ID IS " + id);
-        facade.simpliestDeleteItem(id);
+        facade.simpliestDeleteItem(Integer.parseInt(id));
     }
+
+
+    @RequestMapping(value = "/update" , method = RequestMethod.POST)
+    public void update(@RequestBody SimplistItem simplistItem) {
+        try {
+            int id = simplistItem.getId();//got the id
+            SimplistItem sItem = facade.getSimplestItemById(id); //load the simpest item
+
+            ShopifyItem shopifyitem = sItem.getShopifyItem();
+            shopifyitem = simplistItem.getShopifyItem();
+            shopifyitem.setShopifyId(sItem.getShopifyItem().getShopifyId());
+            sItem.setShopifyItem(shopifyitem);
+            ShopifyCRUD shopify = new ShopifyCRUD();
+            shopify.updateItem(shopifyitem); // now API & DB
+            facade.shopifyUpdateItem(shopifyitem,shopifyitem.getShopifyId());
+
+            EtsyItem etsyItem = sItem.getEtsyItem();
+            etsyItem = simplistItem.getEtsyItem();
+            etsyItem.setListing_id(sItem.getEtsyItem().getListing_id());
+            sItem.setEtsyItem(etsyItem);
+            EtsyController eController = new EtsyController();
+            eController.update(etsyItem,sItem.getEtsyItem().getListing_id()); // now API & DB
+            facade.etsyUpdateItem(etsyItem,etsyItem.getListing_id());
+
+            facade.updateSimplistItem(id,sItem.getEtsyItem(),sItem.getShopifyItem());
+
+
+            //facade.updateSimplistItem(id,etsyItem,shopifyitem);
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 
 

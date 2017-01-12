@@ -16,6 +16,7 @@ public class SimplistItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty
     private int id;
 
     @OneToOne(cascade = CascadeType.REMOVE)
@@ -25,6 +26,7 @@ public class SimplistItem {
     @OneToOne(cascade = CascadeType.REMOVE)
     @JsonProperty
     private EtsyItem etsyItem;
+
 
 
     public SimplistItem() {
