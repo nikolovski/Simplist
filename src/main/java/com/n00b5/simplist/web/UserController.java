@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.ebay.eBayAPI;
+import com.n00b5.simplist.api.etsy.EtsyToken;
 import com.n00b5.simplist.api.etsy.OAuth1Converter;
 import com.n00b5.simplist.beans.User;
 import com.n00b5.simplist.middle.BusinessDelegate;
@@ -51,7 +52,9 @@ public class UserController {
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
     public ResponseEntity<User> validate(@RequestParam String email,
                         @RequestParam String password, HttpServletResponse response) throws JsonProcessingException {
+
         User user = businessDelegate.loginUser(email,password);
+        System.out.println(user);
         if(user!=null){
             user.setPassword(null);
             response.addCookie(new Cookie("user",new ObjectMapper().writeValueAsString(user)));
@@ -80,5 +83,31 @@ public class UserController {
         EbayToken token = new eBayAPI().getToken(code);
         response.addCookie(new Cookie("eBayToken", new ObjectMapper().writeValueAsString(token)));
         return "You can now close this window.";
+    }
+    @RequestMapping(value = "/saveEbayToken", method = RequestMethod.POST)
+    public ResponseEntity saveEbayToken(@RequestParam String token,
+                                         @RequestParam String user) throws IOException {
+        User userObj = new ObjectMapper().readValue(user,User.class);
+        EbayToken tokenObj = new ObjectMapper().readValue(token,EbayToken.class);
+        businessDelegate.insertEbayToken(tokenObj);
+        businessDelegate.updateUser(userObj);
+        if(user!=null){
+            return new ResponseEntity(user,HttpStatus.OK);
+        }
+        else return new ResponseEntity("Invalid username/password combination",HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/saveEtsyToken", method = RequestMethod.POST)
+    public ResponseEntity saveEtsyToken(@RequestParam String token,
+                                         @RequestParam String user) throws IOException {
+        User userObj = new ObjectMapper().readValue(user,User.class);
+        EtsyToken tokenObj = new ObjectMapper().readValue(token,EtsyToken.class);
+        System.out.println(userObj);
+        System.out.println(tokenObj);
+        businessDelegate.insertEtsyToken(tokenObj);
+        businessDelegate.updateUser(userObj);
+        if(user!=null){
+            return new ResponseEntity(user,HttpStatus.OK);
+        }
+        else return new ResponseEntity("Invalid username/password combination",HttpStatus.BAD_REQUEST);
     }
 }

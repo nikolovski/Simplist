@@ -33,7 +33,7 @@ public class UserDAOTest {
     @Test
     public void insertUser() throws Exception {
         String password = Authentication.hash("123");
-        contxt.getBean(UserDAO.class).insert(new User("Louis", "Lopez", "louis@simplist.com", password));
+        contxt.getBean(UserDAO.class).insert(new User("Louis", "Lopez", "louis@simplist.com", password,null,null,null,null));
     }
 
     @Test

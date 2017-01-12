@@ -22,6 +22,7 @@
 
     <link href="../resources/css/toolkit-light.css" rel="stylesheet">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 </head>
 
@@ -109,7 +110,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/ebay/oauth" target="_blank" title="" data-toggle="tooltip" data-placement="right"
+                        <a href="/ebay/oauth" id="ebayUrl" target="_blank" title="" data-toggle="tooltip" data-placement="right"
                            data-container="body" data-original-title="Connect Ebay">
                             <img class="inverted" src="../resources/svg/ebay.svg">
                             <small class="iconav-nav-label visible-xs-block">Connect Ebay</small>
@@ -123,7 +124,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/etsy/oauth" target="_blank" title="" data-toggle="tooltip" data-placement="right"
+                        <a href="/etsy/oauth" id="etsyUrl" target="_blank" title="" data-toggle="tooltip" data-placement="right"
                            data-container="body" data-original-title="Connect Etsy">
                             <img class="inverted" src="../resources/svg/etsy.svg">
                             <small class="iconav-nav-label visible-xs-block">Connect Etsy</small>
@@ -162,20 +163,75 @@
                             <img src="../resources/icons/editing-edit-icon.png" width="30px">
                         </div>
                     </div>
-
                 </a>
-
             </div>
         </div>
-
-
     </div>
 </div>
 </body>
 <script>
     $(document).ready(function () {
-            $("#dashboardPage").css("display","none");
-//            $("#loginPage").css("display", "none");
+            if ($.cookie("user")) $("#loginPage").css("display", "none");
+            else $("#dashboardPage").css("display", "none");
+        var url = "http://localhost:8080/";
+
+            $("#ebayUrl").click(function (event) {
+                event.preventDefault();
+                $("#ebayUrl").click(function () {
+                    var url = $(this).attr('href');
+                    window.open(url, '_blank');
+                });
+                var interval = setInterval(function () {
+                    if($.cookie("eBayToken"))
+                        $.ajax({
+                            type: "POST",
+                            url: url + "saveEbayToken",
+                            cache: false,
+                            data:{
+                                user: $.cookie("user"),
+                                token: $.cookie("eBayToken")
+                            },
+                            success: function (response) {
+                                console.log(response)
+                                clearInterval(interval);
+                            },
+                            error: function (response) {
+                                console.log(response);
+                                clearInterval(interval);
+                            }
+                        })
+                },3000);
+            });
+            $("#etsyUrl").click(function (event) {
+                event.preventDefault();
+                $("#etsyUrl").click(function () {
+                    var url = $(this).attr('href');
+                    window.open(url, '_blank');
+                });
+                console.log($.cookie("etsyToken"))
+                var interval = setInterval(function () {
+                    if($.cookie("etsyToken"))
+                        $.ajax({
+                            type: "POST",
+                            url: url + "saveEtsyToken",
+                            cache: false,
+                            data:{
+                                user: $.cookie("user"),
+                                token: $.cookie("etsyToken")
+                            },
+                            success: function (response) {
+                                console.log(response)
+                                clearInterval(interval);
+                            },
+                            error: function (response) {
+                                console.log(response);
+                                clearInterval(interval);
+                            }
+                        })
+                },3000);
+            });
+
+
             $("#register").submit(function (event) {
                 event.preventDefault();
                 var url = "http://localhost:8080/";
@@ -183,7 +239,11 @@
                     firstName: $("#first_name").val(),
                     lastName: $("#last_name").val(),
                     email: $("#new_email").val(),
-                    password: $("#new_password").val()
+                    password: $("#new_password").val(),
+                    eBayRefreshToken: null,
+                    etsyToken: null,
+                    etsySecret: null,
+                    shopifyToken: null
                 };
                 $.ajax({
                     type: "POST",
@@ -253,10 +313,10 @@
         crossorigin="anonymous"></script>
 <script>
     // execute/clear BS loaders for docs
-        $(function () {
-            while (window.BS && window.BS.loader && window.BS.loader.length) {
-                (window.BS.loader.pop())()
-            }
-        })
+    $(function () {
+        while (window.BS && window.BS.loader && window.BS.loader.length) {
+            (window.BS.loader.pop())()
+        }
+    })
 </script>
 </html>

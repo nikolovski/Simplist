@@ -36,4 +36,8 @@ public class UserService {
         return  Authentication.validatePassword(password,existing.getPassword())?
                 existing: null;
     }
+
+    public void updateUser(User user) {
+        facade.updateUser(user);
+    }
 }
