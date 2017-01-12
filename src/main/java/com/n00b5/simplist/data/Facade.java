@@ -2,6 +2,7 @@ package com.n00b5.simplist.data;
 
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyItem;
+import com.n00b5.simplist.beans.SimplistItem;
 import com.n00b5.simplist.beans.User;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,8 @@ public class Facade {
     private UserDAO userDAO;
     private EtsyDAO etsyDAO;
     private ShopifyItemDAO shopifyDAO;
+    private SimplestItemDAO simplestDAO;
+
 
     public void setUser(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -29,6 +32,14 @@ public class Facade {
 
     public void setDao(EtsyDAO etsyDAO) {
         this.etsyDAO = etsyDAO;
+    }
+
+    public void setSimplestDAO(SimplestItemDAO SimplestDAO) {
+        simplestDAO = SimplestDAO;
+    }
+
+    public SimplestItemDAO getSimplestDAO() {
+        return simplestDAO;
     }
 
 
@@ -94,6 +105,13 @@ public class Facade {
     @Transactional()
     public void shopifyDeleteItem(String shopifyId) {
         shopifyDAO.shopifyDeleteItem(shopifyId);
+    }
+
+    //create
+    @Transactional()
+    public void simpliestCreateItem(SimplistItem simplistItem) {
+        System.out.println("IN THE SIMPLEST FACADE");
+        simplestDAO.createItem(simplistItem);
     }
 
 }

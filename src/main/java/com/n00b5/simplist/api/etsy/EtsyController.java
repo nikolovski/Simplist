@@ -81,7 +81,7 @@ public class EtsyController {
 
 
     @RequestMapping(value="/add",method= RequestMethod.POST)
-    public void addItem(@RequestBody String json) throws IOException, JSONException {
+    public EtsyItem addItem(@RequestBody EtsyItem etsyItem) throws IOException, JSONException {
 
         /*STEPS
             1. Add to Etsy
@@ -89,11 +89,15 @@ public class EtsyController {
                 else rollback
          */
 
-        EtsyItem etsyItem = new ObjectMapper().readValue(json, EtsyItem.class);
+
+
+        System.out.println("IN ETSY ADD "+etsyItem.toURL());
 
         OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?" + etsyItem.toURL(), service);
         service.signRequest(accessToken, request); // the access token from step 4
+        System.out.println("BEFORE SENDING TO API");
         Response response = request.send();
+        System.out.println("AFTER SENDING TO API");
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Added " + response.getBody());
 
@@ -102,6 +106,8 @@ public class EtsyController {
         etsyItem.setListing_id(obj.getString("listing_id"));
 
         facade.etsyAddItem(etsyItem);
+
+        return etsyItem;
 
     }
 

@@ -17,7 +17,6 @@ public class ShopifyItem {
 
 
     @Id
-    @Column(name = "ITEM_ID")
     @JsonProperty(value = "id")
     private String shopifyId;
 

@@ -59,11 +59,15 @@
     <bean name="ShopifyDAO" class="com.n00b5.simplist.data.ShopifyItemDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean name="SimplestDAO" class="com.n00b5.simplist.data.SimplestItemDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <!-- Facade bean -->
     <bean name="facade" class="com.n00b5.simplist.data.Facade">
         <property name="user" ref="userDAO"/>
         <property name="etsyDAO" ref="EtsyDAO"/>
         <property name="shopifyDAO" ref="ShopifyDAO"/>
+        <property name="SimplestDAO" ref="SimplestDAO"></property>
     </bean>
 
     <!--Business delegate bean-->

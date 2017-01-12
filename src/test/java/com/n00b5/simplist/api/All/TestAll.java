@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class TestAll {
 
-    private String chromedriver = "/usr/local/Cellar/chromedriver/2.27/bin/chromedriver"; //"C:\\Program Files/chromedriver.exe";
+    private String chromedriver = "/usr/local/Cellar/chromedriver/2.27/bin/chromedriver";
     private WebDriver driver;
     OAuth1AccessToken etsyToken;
     String shopifyToken;
