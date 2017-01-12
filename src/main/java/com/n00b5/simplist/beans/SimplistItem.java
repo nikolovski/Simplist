@@ -28,6 +28,17 @@ public class SimplistItem {
     private EtsyItem etsyItem;
 
 
+    @OneToOne
+    @JsonProperty
+    private User simplestuser;
+
+    public User getSimplestuser() {
+        return simplestuser;
+    }
+
+    public void setSimplestuser(User simplestuser) {
+        this.simplestuser = simplestuser;
+    }
 
     public SimplistItem() {
     }
@@ -68,6 +79,7 @@ public class SimplistItem {
                 "id=" + id +
                 ", shopifyItem=" + shopifyItem +
                 ", etsyItem=" + etsyItem +
+                ", simplestuser=" + simplestuser +
                 '}';
     }
 }

@@ -8,6 +8,8 @@ import com.n00b5.simplist.beans.SimplistItem;
 import com.n00b5.simplist.beans.User;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 public class Facade {
     private UserDAO userDAO;
@@ -15,6 +17,7 @@ public class Facade {
     private ShopifyItemDAO shopifyDAO;
     private TokensDAO tokensDAO;
     private SimplestItemDAO simplestDAO;
+
 
     public void setUser(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -138,10 +141,27 @@ public class Facade {
         simplestDAO.createItem(simplistItem);
     }
 
-    //create
+    //delete
     @Transactional()
-    public void simpliestDeleteItem(String deleteId) {
+    public void simpliestDeleteItem(int deleteId) {
         System.out.println("IN THE SIMPLEST FACADE");
         simplestDAO.deleteItem(deleteId);
+    }
+
+    //getById (simplest Item)
+    @Transactional()
+    public SimplistItem getSimplestItemById(int id) {
+        return simplestDAO.getById(id);
+    }
+
+    //updateByid (simplest Item)
+    @Transactional()
+    public void updateSimplistItem(int id, EtsyItem item, ShopifyItem item2) {
+        simplestDAO.updateSimplistItem(id,item,item2);
+    }
+
+    @Transactional()
+    public List<SimplistItem> getItemsByUserID(User user) {
+        return simplestDAO.getItemsByUserID(user);
     }
 }

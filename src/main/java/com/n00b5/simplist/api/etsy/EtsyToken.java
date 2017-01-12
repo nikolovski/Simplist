@@ -19,11 +19,11 @@ import javax.persistence.Table;
 public class EtsyToken {
 
     @Id
-    @JsonProperty
+    @JsonProperty(value = "oauth_token")
     private String accessToken;
 
-    @JsonProperty
     @Column
+    @JsonProperty(value= "oauth_token_secret")
     private String clientSecret;
 
     public String getAccessToken() {

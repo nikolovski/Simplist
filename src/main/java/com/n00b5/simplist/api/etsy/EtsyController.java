@@ -118,9 +118,8 @@ public class EtsyController {
         return etsyItem;
 
     }
-
-    @RequestMapping(value="/etsy/delete")
-    public void deleteItem(@RequestParam("itemID")String id)throws IOException {
+    @RequestMapping(value="/delete")
+    public String deleteItem(@RequestParam("itemID")String id)throws IOException {
 
         OAuthRequest request = new OAuthRequest(Verb.DELETE, "https://openapi.etsy.com/v2/listings/"+id, service);
         service.signRequest(accessToken, request); // the access token from step 4
@@ -128,14 +127,14 @@ public class EtsyController {
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Deleted " +response.getBody());
 
-        facade.etsyDeleteItem(id);
+        //facade.etsyDeleteItem(id);
 
         System.out.println("ALL DONE");
-
+        return id;
 
     }
 
-    @RequestMapping(value="/etsy/getById")
+    @RequestMapping(value="/getById")
     public @ResponseBody
     String getById(@RequestParam("itemID")String id) throws IOException {
 
@@ -151,7 +150,7 @@ public class EtsyController {
         return response.getBody().toString();
     }
 
-    @RequestMapping(value="/etsy/getAll")
+    @RequestMapping(value="/getAll")
     public @ResponseBody
     String getAllListings() throws IOException {
 
@@ -169,10 +168,11 @@ public class EtsyController {
 
     }
 
-    @RequestMapping(value="/etsy/update")
-    public void update(@RequestBody String json, @RequestParam("itemID")String id) throws IOException {
+    @RequestMapping(value="/update")
+    public void update(@RequestBody EtsyItem item, @RequestParam("itemID")String id) throws IOException {
 
-        EtsyItem etsyItem = new ObjectMapper().readValue(json,EtsyItem.class);
+        EtsyItem etsyItem = item;
+        System.out.println("IN UPDATE ETSY ITEM " + etsyItem);
         etsyItem.setListing_id(id);
         OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/" + id + "?" + etsyItem.toURL(), service);
         service.signRequest(accessToken, request); // the access token from step 4
@@ -180,7 +180,6 @@ public class EtsyController {
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Updated item " + response.getBody());
 
-        facade.etsyUpdateItem(etsyItem, etsyItem.getListing_id());
         System.out.println("ALL DONE");
     }
 

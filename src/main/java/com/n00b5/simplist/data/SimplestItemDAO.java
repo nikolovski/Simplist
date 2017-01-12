@@ -3,8 +3,13 @@ package com.n00b5.simplist.data;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyItem;
 import com.n00b5.simplist.beans.SimplistItem;
+import com.n00b5.simplist.beans.User;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by louislopez on 1/11/17.
@@ -51,6 +56,24 @@ public class SimplestItemDAO {
         sessionFactory.getCurrentSession().update(item);
         System.out.println("Simoplist Item: " + item.toString());
         System.out.println("ADDED TO THE DB SIMPLIST ITEM UPDATED");
+    }
+
+    @Transactional()
+    public List<SimplistItem> getItemsByUserID(User user) {
+        System.out.println(user.getId());
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SimplistItem.class);
+        System.out.println("passed criteria");
+        List<SimplistItem> list = criteria.list();
+        System.out.println(list.get(0));
+        criteria.add(Restrictions.eq("simplestuser", user));
+        list = criteria.list();
+        System.out.println("passed list");
+        /*
+        criteria.add(Restrictions.eq("SIMPLIST_USER", user.getId()));
+        System.out.println("passed restriction");
+        List<SimplistItem> list = criteria.list();
+        System.out.println("passed list");*/
+        return list;
     }
 
 

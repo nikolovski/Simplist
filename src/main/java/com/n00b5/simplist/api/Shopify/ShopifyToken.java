@@ -15,22 +15,22 @@ import javax.persistence.*;
 @Table(name = "SHOPIFY_TOKEN")
 public class ShopifyToken {
     @Id
-    @JsonProperty
+    @JsonProperty("access_token")
     private String accessToken;
     @Column
     @JsonProperty
     private String scope;
 
     @Column
-    @JsonProperty
+    @JsonProperty("expires_in")
     private long expiresIn;
 
     @Column
-    @JsonProperty
+    @JsonProperty("associated_user_scope")
     private String associatedUserScope;
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JsonProperty
+    @JsonProperty("associated_user")
     private ShopifyUser shopifyUser;
 
     @Override

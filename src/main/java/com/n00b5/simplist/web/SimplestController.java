@@ -1,10 +1,14 @@
 package com.n00b5.simplist.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.n00b5.simplist.api.Shopify.ShopifyCRUD;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
+import com.n00b5.simplist.api.Shopify.ShopifyToken;
 import com.n00b5.simplist.api.etsy.EtsyController;
 import com.n00b5.simplist.api.etsy.EtsyItem;
+import com.n00b5.simplist.api.etsy.EtsyToken;
 import com.n00b5.simplist.beans.SimplistItem;
+import com.n00b5.simplist.beans.User;
 import com.n00b5.simplist.data.Facade;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by louislopez on 1/11/17.
  */
 @Controller
-@RequestMapping(value = "/simplest")
+@RequestMapping(value = "/simplist")
 public class SimplestController {
 
     @Autowired
@@ -121,6 +126,30 @@ public class SimplestController {
             e.printStackTrace();
         }
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getMyItems")
+    public void getMyItems(@CookieValue("user") String u,
+                           @CookieValue("shopifyToken") String s,
+                           @CookieValue("etsyToken") String e) throws IOException, JSONException {
+
+//@CookieValue(value="user") User user
+        //s System.out.println("USER COOKIE - > " + u);
+
+        //OAuth1Converter converter = new ObjectMapper().readValue(x, OAuth1Converter.class);
+
+
+
+
+
+        User user = new ObjectMapper().readValue(u,User.class);
+
+        EtsyToken etsyToken = new ObjectMapper().readValue(e, EtsyToken.class); // not token
+        ShopifyToken shopifyToken = new ObjectMapper().readValue(s, ShopifyToken.class);
+
+        List<SimplistItem> list = facade.getItemsByUserID(user);
+        System.out.println(list.get(0));
     }
 
 
