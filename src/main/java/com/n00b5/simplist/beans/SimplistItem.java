@@ -1,5 +1,6 @@
 package com.n00b5.simplist.beans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyItem;
 
@@ -18,22 +19,20 @@ public class SimplistItem {
     private int id;
 
     @OneToOne
+    @JsonProperty
     private ShopifyItem shopifyItem;
 
     @OneToOne
+    @JsonProperty
     private EtsyItem etsyItem;
-
-    @OneToOne
-    private User user;
 
 
     public SimplistItem() {
     }
 
-    public SimplistItem(ShopifyItem shopifyItem, EtsyItem etsyItem, User user) {
+    public SimplistItem(ShopifyItem shopifyItem, EtsyItem etsyItem) {
         this.shopifyItem = shopifyItem;
         this.etsyItem = etsyItem;
-        this.user = user;
     }
 
     public int getId() {
@@ -60,13 +59,6 @@ public class SimplistItem {
         this.etsyItem = etsyItem;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @Override
     public String toString() {
@@ -74,7 +66,6 @@ public class SimplistItem {
                 "id=" + id +
                 ", shopifyItem=" + shopifyItem +
                 ", etsyItem=" + etsyItem +
-                ", user=" + user +
                 '}';
     }
 }
