@@ -2,18 +2,16 @@ package com.n00b5.simplist.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.ebay.eBayAPI;
+import com.n00b5.simplist.api.etsy.OAuth1Converter;
 import com.n00b5.simplist.beans.User;
 import com.n00b5.simplist.middle.BusinessDelegate;
-import org.apache.http.HttpResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;

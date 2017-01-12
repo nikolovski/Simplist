@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -25,7 +27,6 @@ import java.io.IOException;
  */
 
 @Controller
-@RequestMapping(value ="/etsy")
 @PropertySource("classpath:dev_etsy.properties")
 public class EtsyController {
 
@@ -47,7 +48,7 @@ public class EtsyController {
     private Facade facade;
 
 
-    @RequestMapping(value="/oauth")
+    @RequestMapping(value="/etsy/oauth")
     public ModelAndView etsy() throws IOException {
 
             service  = new ServiceBuilder()
@@ -68,19 +69,22 @@ public class EtsyController {
     }
 
 
-    @RequestMapping(value="/authorize")
+    @RequestMapping(value="/etsyToken")
     @ResponseBody
-    public String auth(@RequestParam(value="oauth_token") String token, @RequestParam(value="oauth_verifier")String verifier ) throws IOException {
+    public String auth(@RequestParam(value="oauth_token") String token,
+                       @RequestParam(value="oauth_verifier")String verifier,
+                        HttpServletResponse response) throws IOException {
 
         accessToken = service.getAccessToken(requestToken,verifier);
         OAuth1Converter converter = new OAuth1Converter(accessToken.getToken(),accessToken.getTokenSecret());
         String acToken = new ObjectMapper().writeValueAsString(converter);
+        response.addCookie(new Cookie("etsyToken", acToken));
         System.out.println("IN authorize " + acToken);
         return acToken;
     }
 
 
-    @RequestMapping(value="/add",method= RequestMethod.POST)
+    @RequestMapping(value="/etsy/add",method= RequestMethod.POST)
     public void addItem(@RequestBody String json) throws IOException, JSONException {
 
         /*STEPS
@@ -105,7 +109,7 @@ public class EtsyController {
 
     }
 
-    @RequestMapping(value="/delete")
+    @RequestMapping(value="/etsy/delete")
     public void deleteItem(@RequestParam("itemID")String id)throws IOException {
 
         OAuthRequest request = new OAuthRequest(Verb.DELETE, "https://openapi.etsy.com/v2/listings/"+id, service);
@@ -121,7 +125,7 @@ public class EtsyController {
 
     }
 
-    @RequestMapping(value="/getById")
+    @RequestMapping(value="/etsy/getById")
     public @ResponseBody
     String getById(@RequestParam("itemID")String id) throws IOException {
 
@@ -137,7 +141,7 @@ public class EtsyController {
         return response.getBody().toString();
     }
 
-    @RequestMapping(value="/getAll")
+    @RequestMapping(value="/etsy/getAll")
     public @ResponseBody
     String getAllListings() throws IOException {
 
@@ -155,7 +159,7 @@ public class EtsyController {
 
     }
 
-    @RequestMapping(value="/update")
+    @RequestMapping(value="/etsy/update")
     public void update(@RequestBody String json, @RequestParam("itemID")String id) throws IOException {
 
         EtsyItem etsyItem = new ObjectMapper().readValue(json,EtsyItem.class);
