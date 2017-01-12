@@ -1,7 +1,12 @@
 package com.n00b5.simplist.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.n00b5.simplist.api.ebay.EbayToken;
+import com.n00b5.simplist.api.ebay.eBayAPI;
 import com.n00b5.simplist.beans.User;
 import com.n00b5.simplist.middle.BusinessDelegate;
+import org.apache.http.HttpResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +15,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 
 /**
@@ -44,26 +52,35 @@ public class UserController {
     }
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
     public ResponseEntity<User> validate(@RequestParam String email,
-                        @RequestParam String password) {
+                        @RequestParam String password, HttpServletResponse response) throws JsonProcessingException {
         User user = businessDelegate.loginUser(email,password);
-        System.out.println("In validation");
-        System.out.println(user);
         if(user!=null){
             user.setPassword(null);
+            response.addCookie(new Cookie("user",new ObjectMapper().writeValueAsString(user)));
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }
         else return new ResponseEntity("Invalid username/password combination",HttpStatus.BAD_REQUEST);
     }
-    @RequestMapping(value = "/dashboard", method = RequestMethod.POST)
-    public ModelAndView login(@RequestBody User user){
-        System.out.println("In controller");
-        System.out.println(user);
-        return new ModelAndView("forward:dashboard","userData",user);
-    }
+
     @RequestMapping(value = "/{other}")
     @ResponseBody
     public Message notFound(@PathVariable String other){
         return new Message("failure","Page Not Found!");
     }
 
+    /**
+     * Request mapping for the callback url of the eBay API
+     * @param state
+     * @param code
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/ebayToken", params = {"state", "code"})
+    @ResponseBody
+    public String getToken(String state, String code, HttpServletResponse response) throws IOException {
+        EbayToken token = new eBayAPI().getToken(code);
+        response.addCookie(new Cookie("eBayToken", new ObjectMapper().writeValueAsString(token)));
+        return "You can now close this window.";
+    }
 }

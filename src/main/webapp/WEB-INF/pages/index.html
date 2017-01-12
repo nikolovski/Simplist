@@ -109,7 +109,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../index.html" title="" data-toggle="tooltip" data-placement="right"
+                        <a href="/ebay/oauth" target="_blank" title="" data-toggle="tooltip" data-placement="right"
                            data-container="body" data-original-title="Connect Ebay">
                             <img class="inverted" src="../resources/svg/ebay.svg">
                             <small class="iconav-nav-label visible-xs-block">Connect Ebay</small>
@@ -232,19 +232,6 @@
                         var url = "http://localhost:8080/";
                         console.log("After validation");
                         console.log(response);
-//                        $.ajax({
-//                            type: "POST",
-//                            contentType: "application/json",
-//                            url: url + "dashboard",
-//                            dataType: "json",
-//                            data: JSON.stringify(response),
-//                            success: function (response) {
-//                                console.log(response)
-//                            },
-//                            error: function (response) {
-//
-//                            }
-//                        })
                         $("#loginPage").fadeOut(1000);
                         $("#dashboardPage").fadeIn(1000);
                     },
