@@ -18,7 +18,7 @@ public class EtsyTest {
 
 
     private WebDriver driver;
-    private String chromedriver = "/usr/local/Cellar/chromedriver/2.27/bin/chromedriver"; //"C:\\Program Files/chromedriver.exe";
+    private String chromedriver = "C:/selenium/chromedriver.exe"; //"C:\\Program Files/chromedriver.exe";
     OAuth1AccessToken token;
     EtsySelinium etsy;
 

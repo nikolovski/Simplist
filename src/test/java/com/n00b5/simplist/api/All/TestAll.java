@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class TestAll {
 
-    private String chromedriver = "/usr/local/Cellar/chromedriver/2.27/bin/chromedriver"; //"C:\\Program Files/chromedriver.exe";
+    private String chromedriver = "C:/selenium/chromedriver.exe";
     private WebDriver driver;
     OAuth1AccessToken etsyToken;
     String shopifyToken;
@@ -44,5 +44,12 @@ public class TestAll {
     public void addItems(){
         selenium.getView("http://localhost:8080/pages/dashboard_test.html");
         selenium.addItems();
+    }
+
+
+    @Test
+    public void deleteItems(){
+        selenium.getView("http://localhost:8080/pages/dashboard_test.html");
+        selenium.deleteItems();
     }
 }

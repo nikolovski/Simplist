@@ -29,10 +29,32 @@
 </div>
 
 
+
+
+<div id="deleteItem">
+    <h5>Add Items</h5>
+    Delete id: <input id="deleteid" type="text"><br>
+    <input id="deleteSubmit" type="submit" value="Add">
+</div>
+
+
 </body>
 
 
 <script type="text/javascript">
+
+    $("#deleteSubmit").click(function(){
+
+        console.log("DELETE CLICKED")
+        var id =  $("#deleteid").val();
+        $.ajax({
+                method: "DELETE",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: "http://localhost:8080/simplest/delete?itemID="+id
+            });
+    });
+
     $("#addSubmit").click(function(){
 
         console.log("Button clicked ");
@@ -49,34 +71,31 @@
             when_made: "made_to_order",
             shipping_template_id: 35750756683
         };
-        $.ajax({
-            method: "POST",
-            dataType : 'json',
-            contentType : 'application/json; charset=utf-8',
-            url: "http://localhost:8080/etsy/add",
-            data: JSON.stringify(etsyObj)
-        });
 
         /* Shopify */
-
-
         var shopifyObj = {
-                title: $("#title").val(),
-                body_html:  $("#description").val(),
-                vendor: $("#company").val(),
-                product_type: $("#type").val(),
-                tags: $("#tag").val(),
-                variants:[{
-                    price: 0.20
-                }]
-            };
+            title: $("#title").val(),
+            body_html:  $("#description").val(),
+            vendor: $("#company").val(),
+            product_type: $("#type").val(),
+            tags: $("#tag").val(),
+            variants:[{
+                price: 0.20
+            }]
+        };
+
+        var simplestItem = {
+            shopifyItem:  shopifyObj, etsyItem: etsyObj
+        }
+
 
         $.ajax({
-            type: "POST",
-            contentType : 'application/json; charset=utf-8',
-            dataType : 'json',
-            url: "http://localhost:8080/shopify/createItem",
-            data: JSON.stringify(shopifyObj)
+            method: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: "http://localhost:8080/simplest/add",
+            data:
+                JSON.stringify({shopifyItem: shopifyObj, etsyItem: etsyObj})
         });
 
 

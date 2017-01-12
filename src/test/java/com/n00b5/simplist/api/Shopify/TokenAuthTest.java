@@ -28,7 +28,8 @@ public class TokenAuthTest {
     public String getToken(){
         makeDriver();
         TokenAuth page = new TokenAuth(driver);
-        page.setUsername("simplist");
+        page.setUsername("syar0052@gmail.com");
+        page.setPassword("simplist");
         sleep();
         FindTokenPage findAuthPage = page.clickLoginButton();
 
@@ -44,7 +45,7 @@ public class TokenAuthTest {
     }
     @Before
     public void makeDriver(){
-        String PATH_TO_CHROME_DRIVER = "C:/selenium/chromedriver.exe"; //"C:/selenium/chromedriver.exe";
+        String PATH_TO_CHROME_DRIVER = "C:/selenium/chromedriver.exe"; //"C:/selenium/chromedriver.exe"; //"C:/selenium/chromedriver.exe";
         System.setProperty("webdriver.chrome.driver",
                 PATH_TO_CHROME_DRIVER);
         driver = new ChromeDriver();

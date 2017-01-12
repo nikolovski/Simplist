@@ -47,13 +47,18 @@ public class ShopifyCRUD{
         //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpClient httpClient = new DefaultHttpClient();
         try {
+            System.out.println("IN SHOP FINALLy");
             HttpPost request = new HttpPost(uri);
             StringEntity params = new StringEntity(item.getJSONItem().toString());
             request.addHeader("Content-Type", "application/json;; charset=UTF-8");request.addHeader("Accept", "application/json;; charset=UTF-8");
             request.setEntity(params);
             HttpResponse response = httpClient.execute(request);
             item.setShopifyId(productID(response.toString()));
-            facade.addShopifyItem(item);
+
+            System.out.println("IN SHOP NEW SHOP " + item);
+
+            System.out.println("added.....");
+            return item;
         } catch (Exception ex) {
             // handle exception here
         }
@@ -62,7 +67,7 @@ public class ShopifyCRUD{
 //
 //            httpClient.close();
 //        }
-        return new ShopifyItem();
+        return null;
     }
 
     @ResponseBody

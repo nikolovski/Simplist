@@ -41,9 +41,9 @@ public class EtsyController {
     @Value("${scope}")
     private String scope;
 
-    private OAuth10aService service;
-    private OAuth1RequestToken requestToken;
-    OAuth1AccessToken accessToken;
+    private static OAuth10aService service;
+    private static OAuth1RequestToken requestToken;
+    static OAuth1AccessToken accessToken;
     @Autowired
     private Facade facade;
 
@@ -83,9 +83,8 @@ public class EtsyController {
         return acToken;
     }
 
-
     @RequestMapping(value="/etsy/add",method= RequestMethod.POST)
-    public void addItem(@RequestBody String json) throws IOException, JSONException {
+    public @ResponseBody EtsyItem addItem(@RequestBody EtsyItem etsyItem) throws IOException, JSONException {
 
         /*STEPS
             1. Add to Etsy
@@ -93,11 +92,18 @@ public class EtsyController {
                 else rollback
          */
 
-        EtsyItem etsyItem = new ObjectMapper().readValue(json, EtsyItem.class);
+        System.out.println("ETSY IteM IS " + etsyItem.toString());
+
+        System.out.println(etsyItem);
+        System.out.println("IN ETSY ADD "+etsyItem.toURL());
 
         OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?" + etsyItem.toURL(), service);
+        System.out.println("STILL IN REQUEST " + accessToken);
+        System.out.println("STILL IN REQUEST " + request);
         service.signRequest(accessToken, request); // the access token from step 4
+        System.out.println("BEFORE SENDING TO API");
         Response response = request.send();
+        System.out.println("AFTER SENDING TO API");
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Added " + response.getBody());
 
@@ -105,7 +111,11 @@ public class EtsyController {
         JSONObject obj = new JSONObject(response.getBody().substring(22, response.getBody().lastIndexOf("]")));
         etsyItem.setListing_id(obj.getString("listing_id"));
 
-        facade.etsyAddItem(etsyItem);
+        System.out.println("GO TO FACADE -> "+ etsyItem);
+
+//        facade.etsyAddItem(etsyItem);
+
+        return etsyItem;
 
     }
 

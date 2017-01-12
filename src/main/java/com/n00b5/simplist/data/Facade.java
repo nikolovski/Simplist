@@ -4,6 +4,7 @@ import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.etsy.EtsyItem;
 import com.n00b5.simplist.api.etsy.EtsyToken;
+import com.n00b5.simplist.beans.SimplistItem;
 import com.n00b5.simplist.beans.User;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ public class Facade {
     private EtsyDAO etsyDAO;
     private ShopifyItemDAO shopifyDAO;
     private TokensDAO tokensDAO;
+    private SimplestItemDAO simplestDAO;
 
     public void setUser(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -34,8 +36,17 @@ public class Facade {
         this.etsyDAO = etsyDAO;
     }
 
+    public void setSimplestDAO(SimplestItemDAO SimplestDAO) {
+        simplestDAO = SimplestDAO;
+    }
+
+    public SimplestItemDAO getSimplestDAO() {
+        return simplestDAO;
+    }
+
 
     public void etsyAddItem(EtsyItem etsyItem) {
+        System.out.println("IN ETSY FACADE");
         etsyDAO.etsyAddItem(etsyItem);
     }
 
@@ -102,7 +113,6 @@ public class Facade {
         shopifyDAO.shopifyDeleteItem(shopifyId);
     }
 
-
     public void updateUser(User user) {
         userDAO.update(user);
     }
@@ -120,5 +130,18 @@ public class Facade {
 
     public void insertEtsyToken(EtsyToken token) {
         tokensDAO.insertEtsyToken(token);
+    }
+    //create
+    @Transactional()
+    public void simpliestCreateItem(SimplistItem simplistItem) {
+        System.out.println("IN THE SIMPLEST FACADE");
+        simplestDAO.createItem(simplistItem);
+    }
+
+    //create
+    @Transactional()
+    public void simpliestDeleteItem(String deleteId) {
+        System.out.println("IN THE SIMPLEST FACADE");
+        simplestDAO.deleteItem(deleteId);
     }
 }

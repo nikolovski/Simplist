@@ -28,18 +28,7 @@ public class ShopifyItem {
     @JsonProperty
     private String body_html;
 
-    @Override
-    public String toString() {
-        return "ShopifyItem{" +
-                "shopifyId='" + shopifyId + '\'' +
-                ", title='" + title + '\'' +
-                ", body_html='" + body_html + '\'' +
-                ", vendor='" + vendor + '\'' +
-                ", product_type='" + product_type + '\'' +
-                ", tags='" + tags + '\'' +
-                ", variants=" + Arrays.toString(variants) +
-                '}';
-    }
+
 
     @Column(name = "VENDOR")
     @JsonProperty
@@ -53,6 +42,8 @@ public class ShopifyItem {
     @JsonProperty
     private String tags;
 
+    @Column(name = "PRICE")
+    private String price;
 
     @Transient
     @JsonProperty
@@ -69,6 +60,8 @@ public class ShopifyItem {
         this.vendor = vendor;
         this.product_type = product_type;
         this.tags = tags;
+        System.out.println(variants[0].getPrice());//testing
+
     }
 
     public String getShopifyId() {
@@ -164,15 +157,19 @@ public class ShopifyItem {
         product.put("product",productTags);
         System.out.println(product.toString());
 
-/*
-        JSONObject updateItem = new JSONObject("{\n  \"product\": " +
-                "{\n    \"id\": \""+this.getId()+"\"," +
-                "\n    \"title\": \""+this.getTitle()+"\"," +
-                "\n    \"body_html\": \"<strong>"+this.getBody_html()+"<\\/strong>\"," +
-                "\n    \"vendor\": \""+this.getVendor()+"\"," +
-                "\n    \"product_type\": \""+this.getProduct_type()+"\"," +
-                "\n    \"tags\": \""+this.getTags()+"\"\n  }\n}");
-                */
         return product;
+    }
+
+    @Override
+    public String toString() {
+        return "ShopifyItem{" +
+                "shopifyId='" + shopifyId + '\'' +
+                ", title='" + title + '\'' +
+                ", body_html='" + body_html + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", product_type='" + product_type + '\'' +
+                ", tags='" + tags + '\'' +
+                ", variants=" + Arrays.toString(variants) +
+                '}';
     }
 }
