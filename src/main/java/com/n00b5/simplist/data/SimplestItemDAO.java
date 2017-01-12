@@ -28,5 +28,6 @@ public class SimplestItemDAO {
         System.out.println("SIMPLEST ITEM " + simplistItem.toString());
         sessionFactory.getCurrentSession().delete(simplistItem);
         System.out.println("DELETED SIMPLIST ITEM");
+        //TODO get delete to work !
     }
 }
