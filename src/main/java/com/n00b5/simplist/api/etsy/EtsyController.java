@@ -81,7 +81,7 @@ public class EtsyController {
 
 
     @RequestMapping(value="/add",method= RequestMethod.POST)
-    public EtsyItem addItem(@RequestBody EtsyItem etsyItem) throws IOException, JSONException {
+    public @ResponseBody EtsyItem addItem(@RequestBody EtsyItem etsyItem) throws IOException, JSONException {
 
         /*STEPS
             1. Add to Etsy
@@ -90,7 +90,7 @@ public class EtsyController {
          */
 
 
-
+        System.out.println(etsyItem);
         System.out.println("IN ETSY ADD "+etsyItem.toURL());
 
         OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?" + etsyItem.toURL(), service);

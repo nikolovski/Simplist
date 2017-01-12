@@ -45,7 +45,7 @@ public class TokenAuthTest {
     }
     @Before
     public void makeDriver(){
-        String PATH_TO_CHROME_DRIVER = "/usr/local/Cellar/chromedriver/2.27/bin/chromedriver"; //"C:/selenium/chromedriver.exe"; //"C:/selenium/chromedriver.exe";
+        String PATH_TO_CHROME_DRIVER = "C:/selenium/chromedriver.exe"; //"C:/selenium/chromedriver.exe"; //"C:/selenium/chromedriver.exe";
         System.setProperty("webdriver.chrome.driver",
                 PATH_TO_CHROME_DRIVER);
         driver = new ChromeDriver();

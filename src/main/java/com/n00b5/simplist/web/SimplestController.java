@@ -1,6 +1,5 @@
 package com.n00b5.simplist.web;
 
-import com.n00b5.simplist.api.Shopify.ShopifyAPI;
 import com.n00b5.simplist.api.Shopify.ShopifyCRUD;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyController;
@@ -45,12 +44,15 @@ public class SimplestController {
             ShopifyCRUD shopify = new ShopifyCRUD();
             ShopifyItem shopifyNewItem = shopify.createItem(shopifyitem); // now API & DB
             System.out.println("NEW SHOPIFY ITEM " + shopifyNewItem.toString());
+            facade.addShopifyItem(shopifyNewItem);
+            System.out.println("added");
 
 
-//
-//            EtsyController etsy = new EtsyController();
-//            EtsyItem etsyNewItem = etsy.addItem(etsyItem); // now in DB & API
-//            System.out.println("new etsy item " + etsyNewItem.toString());
+            EtsyController etsy = new EtsyController();
+            EtsyItem etsyNewItem = etsy.addItem(etsyItem); // now in DB & API
+            System.out.println("new etsy item " + etsyNewItem.toString());
+            facade.etsyAddItem(etsyNewItem);
+            System.out.println("added etsy");
 
 
 
