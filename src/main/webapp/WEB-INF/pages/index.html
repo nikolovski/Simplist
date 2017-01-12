@@ -127,15 +127,35 @@
                 var password = $("#password").val();
                 $.ajax({
                     type: "POST",
-                    url: url + "dashboard",
+                    url: url + "validate",
                     cache: false,
                     data: {
                         "email": email,
                         "password": password
                     },
                     success: function (response) {
+                        var url = "http://localhost:8080/";
+                        console.log("After validation");
                         console.log(response);
+//                        $.ajax({
+//                            type: "POST",
+//                            contentType: "application/json",
+//                            url: url + "dashboard",
+//                            dataType: "json",
+//                            data: JSON.stringify(response),
+//                            success: function (response) {
+//                                console.log(response)
+//                            },
+//                            error: function (response) {
+//
+//                            }
+//                        })
+                        $("body").fadeOut(2000);
+                    },
+                    error: function (response) {
+
                     }
+
                 });
             });
         }

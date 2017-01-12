@@ -3,9 +3,12 @@ package com.n00b5.simplist.web;
 import com.n00b5.simplist.beans.User;
 import com.n00b5.simplist.middle.BusinessDelegate;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -39,16 +42,23 @@ public class UserController {
         else return new ResponseEntity("Email already exists! Please login.",
                 HttpStatus.CONFLICT);
     }
-    @RequestMapping(value = "/dashboard", method = RequestMethod.POST)
-    public String login(@RequestParam String email,
+    @RequestMapping(value = "/validate", method = RequestMethod.POST)
+    public ResponseEntity<User> validate(@RequestParam String email,
                         @RequestParam String password) {
-        System.out.println(email);
-        System.out.println(password);
         User user = businessDelegate.loginUser(email,password);
+        System.out.println("In validation");
         System.out.println(user);
-        if(user!=null)
-            return ("dashboard");
-        return ("index");
+        if(user!=null){
+            user.setPassword(null);
+            return new ResponseEntity<User>(user,HttpStatus.OK);
+        }
+        else return new ResponseEntity("Invalid username/password combination",HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/dashboard", method = RequestMethod.POST)
+    public ModelAndView login(@RequestBody User user){
+        System.out.println("In controller");
+        System.out.println(user);
+        return new ModelAndView("forward:dashboard","userData",user);
     }
     @RequestMapping(value = "/{other}")
     @ResponseBody
