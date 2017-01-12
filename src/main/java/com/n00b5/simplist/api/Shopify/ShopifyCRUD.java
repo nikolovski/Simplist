@@ -65,6 +65,12 @@ public class ShopifyCRUD{
         return new ShopifyItem();
     }
 
+    public void asda(){
+
+
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "shopify/update/", method = RequestMethod.POST)
     public void updateItem(@RequestBody ShopifyItem item){
