@@ -63,7 +63,7 @@ public class ShopifyAPI{
                 "&redirect_uri="+redirect_uri+
                 "&state="+nonce+
                 "&grant_options[]="+option;
-        return new ModelAndView("redirect:"+getCodeURL);
+        return new ModelAndView("redirect:http://"+getCodeURL);
     }
 
 
