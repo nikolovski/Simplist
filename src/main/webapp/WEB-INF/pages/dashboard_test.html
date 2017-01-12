@@ -29,15 +29,35 @@
 </div>
 
 
+
+
+<div id="deleteItem">
+    <h5>Add Items</h5>
+    Delete id: <input id="deleteid" type="text"><br>
+    <input id="deleteSubmit" type="submit" value="Add">
+</div>
+
+
 </body>
 
 
 <script type="text/javascript">
+
+    $("#deleteSubmit").click(function(){
+
+        console.log("DELETE CLICKED")
+        var id =  $("#deleteid").val();
+        $.ajax({
+                method: "DELETE",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: "http://localhost:8080/simplest/delete?itemID="+id
+            });
+    });
+
     $("#addSubmit").click(function(){
 
         console.log("Button clicked ");
-
-
 
         /* Etsy */
         var etsyObj = {
@@ -76,9 +96,7 @@
             url: "http://localhost:8080/simplest/add",
             data:
                 JSON.stringify({shopifyItem: shopifyObj, etsyItem: etsyObj})
-        }
-
-        );
+        });
 
 
         console.log("Added : )");

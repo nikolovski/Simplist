@@ -1,5 +1,6 @@
 package com.n00b5.simplist.web;
 
+import com.n00b5.simplist.api.Shopify.ShopifyAPI;
 import com.n00b5.simplist.api.Shopify.ShopifyCRUD;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyController;
@@ -9,9 +10,7 @@ import com.n00b5.simplist.data.Facade;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -41,26 +40,19 @@ public class SimplestController {
 
 
 
-            ShopifyCRUD shopify = new ShopifyCRUD();
-            ShopifyItem shopifyNewItem = shopify.createItem(shopifyitem); // now API & DB
-            System.out.println("NEW SHOPIFY ITEM " + shopifyNewItem.toString());
-            facade.addShopifyItem(shopifyNewItem);
-            System.out.println("added");
-
 
             EtsyController etsy = new EtsyController();
             EtsyItem etsyNewItem = etsy.addItem(etsyItem); // now in DB & API
-            System.out.println("new etsy item " + etsyNewItem.toString());
             facade.etsyAddItem(etsyNewItem);
-            System.out.println("added etsy");
 
+            System.out.println("added");
 
+            ShopifyCRUD shopify = new ShopifyCRUD();
+            ShopifyItem shopifyNewItem = shopify.createItem(shopifyitem); // now API & DB
+            facade.addShopifyItem(shopifyNewItem);
+            System.out.println("NEW SHOPIFY ITEM " + shopifyNewItem.toString());
 
-
-
-            System.out.println("SHOPIFY ITEM ID" + shopifyNewItem.getShopifyId());
-
-            //facade.simpliestCreateItem(new SimplistItem(shopifyNewItem,etsyNewItem));
+            facade.simpliestCreateItem(new SimplistItem(shopifyNewItem,etsyNewItem));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,6 +61,16 @@ public class SimplestController {
         }
 
         }
+
+        //item to delete 106
+
+
+    @RequestMapping(value = "/delete" , method = RequestMethod.DELETE)
+    public void add(@RequestParam("itemID")String id) {
+        System.out.println("ID IS " + id);
+        facade.simpliestDeleteItem(id);
+    }
+
 
 
 }

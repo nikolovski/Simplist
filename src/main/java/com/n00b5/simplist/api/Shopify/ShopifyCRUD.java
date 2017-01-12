@@ -56,7 +56,7 @@ public class ShopifyCRUD{
             item.setShopifyId(productID(response.toString()));
 
             System.out.println("IN SHOP NEW SHOP " + item);
-           // facade.addShopifyItem(item);
+
             System.out.println("added.....");
             return item;
         } catch (Exception ex) {
@@ -69,12 +69,6 @@ public class ShopifyCRUD{
 //        }
         return null;
     }
-
-    public void asda(){
-
-
-    }
-
 
     @ResponseBody
     @RequestMapping(value = "shopify/update/", method = RequestMethod.POST)

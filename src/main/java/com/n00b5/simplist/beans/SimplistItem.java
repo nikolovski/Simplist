@@ -18,11 +18,11 @@ public class SimplistItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JsonProperty
     private ShopifyItem shopifyItem;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JsonProperty
     private EtsyItem etsyItem;
 
