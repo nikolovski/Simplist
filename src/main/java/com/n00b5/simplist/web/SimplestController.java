@@ -130,7 +130,7 @@ public class SimplestController {
 
     @ResponseBody
     @RequestMapping(value = "/getMyItems")
-    public void getMyItems(@CookieValue("user") String u,
+    public List<SimplistItem> getMyItems(@CookieValue("user") String u,
                            @CookieValue("shopifyToken") String s,
                            @CookieValue("etsyToken") String e) throws IOException, JSONException {
 
@@ -149,7 +149,7 @@ public class SimplestController {
         ShopifyToken shopifyToken = new ObjectMapper().readValue(s, ShopifyToken.class);
 
         List<SimplistItem> list = facade.getItemsByUserID(user);
-        System.out.println(list.get(0));
+        return list;
     }
 
 
