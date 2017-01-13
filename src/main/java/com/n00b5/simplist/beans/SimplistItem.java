@@ -1,6 +1,7 @@
 package com.n00b5.simplist.beans;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.ebay.EbayItem;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "SIMPLIST_ITEM")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SimplistItem {
 
     @Id

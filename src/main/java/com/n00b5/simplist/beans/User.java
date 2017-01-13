@@ -1,5 +1,6 @@
 package com.n00b5.simplist.beans;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.n00b5.simplist.api.Shopify.ShopifyToken;
 import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.etsy.EtsyToken;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Size;
 @Entity
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Table(name = "SIMPLIST_USER")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

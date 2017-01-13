@@ -1,5 +1,7 @@
 package com.n00b5.simplist.api.Shopify;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +15,7 @@ import java.util.Arrays;
  */
 @Entity
 @Table(name="SHOPIFY_ITEM")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShopifyItem {
 
 

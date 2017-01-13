@@ -103,14 +103,14 @@
             <div class="iconav-slider">
                 <ul class="nav nav-pills iconav-nav">
                     <li>
-                        <a href="../pages/dashboard.html" title="Overview" data-toggle="tooltip" data-placement="right"
+                        <a href="#" id="getAllLink" title="Overview" data-toggle="tooltip" data-placement="right"
                            data-container="body">
                             <span class="icon icon-home"></span>
                             <small class="iconav-nav-label visible-xs-block">Overview</small>
                         </a>
                     </li>
                     <li>
-                        <a href="../pages/CreateItem.html" title="" data-toggle="tooltip" data-placement="right"
+                        <a href="#" id="crudLink" title="" data-toggle="tooltip" data-placement="right"
                            data-container="body" data-original-title="Add Simplist Item">
                             <span class="icon icon-add-to-list"></span>
                             <small class="iconav-nav-label visible-xs-block">Add Simplist Item</small>
@@ -148,7 +148,7 @@
     </div>
 
 
-    <div class="fields">
+    <div class="fields" id="crudPage">
         <br>
         <h3>Create Item</h3>
         <form>
@@ -257,8 +257,8 @@
             </div>
             <button type="submit" id="deleteSubmit" class="btn btn-primary">Submit</button>
         </form>
-
-
+    </div>
+    <div class="fields" id="getAllPage">
         <table id="allItems" class="table">
             <thead class="thead-inverse">
             <tr>
@@ -267,7 +267,6 @@
                 <th>Description</th>
                 <th>Company</th>
                 <th>Type</th>
-                <th>Tags</th>
                 <th>Price</th>
             </tr>
             </thead>
@@ -280,7 +279,7 @@
 </div>
 </body>
 <script>
-
+    var resp;
 
     $('#getAll').click(function () {
         $.ajax({
@@ -289,26 +288,38 @@
             dataType: "json",
             success: function (resp) {
                 console.log(resp);
-                var iterable = resp.shopify;
-                console.log(iterable);
-                console.log(iterable.title);
-                // $.each(iterable, function(i, item){
-                var myItem = "<tr>" +
-                    "<td>" + iterable.id + "</td>" +
-                    "<td>" + iterable.title + "</td>" +
-                    "<td>" + iterable.body_html + "</td>" +
-                    "<td>" + iterable.vendor + "</td>" +
-                    "<td>" + iterable.product_type + "</td>" +
-                    "<td>" + iterable.tags + "</td>" +
-                    "<td>" + iterable.price + "</td>" + "</tr>";
-                $(".table tbody").append(myItem);
-                // });
+                var i = 0;
+                while(resp[i]){
+                    var iterable = resp[i];
+                    console.log(iterable);
+                    // $.each(iterable, function(i, item){
+                    var myItem = "<tr>" +
+                        "<td>" + iterable.id + "</td>" +
+                        "<td>" + iterable.title + "</td>" +
+                        "<td>" + iterable.description + "</td>" +
+                        "<td>" + iterable.company + "</td>" +
+                        "<td>" + iterable.type + "</td>" +
+                        "<td>" + iterable.price + "</td>" + "</tr>";
+                    $(".table tbody").append(myItem);
+                    i++;
+                }
             },
             error: function (resp) {
                 console.log("ERROR " + resp.responseText + resp.statusText);
             }
         })
     });
+    $("#getAllLink").click(function (event) {
+        event.preventDefault();
+        $("#crudPage").fadeOut(1000);
+        $("#getAllPage").delay(500).fadeIn(1000);
+
+    });
+    $("#crudLink").click(function (event) {
+        event.preventDefault();
+        $("#getAllPage").fadeOut(1000);
+        $("#crudPage").delay(500).fadeIn(1000);
+    })
 
     $("#deleteSubmit").click(function () {
 

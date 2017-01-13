@@ -1,5 +1,6 @@
 package com.n00b5.simplist.api.etsy;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "ETSY_ITEM")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EtsyItem {
 
 

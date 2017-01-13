@@ -1,5 +1,7 @@
 package com.n00b5.simplist.api.ebay;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.ebay.enums.*;
 import com.n00b5.simplist.api.ebay.inventory.*;
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "EBAY_ITEM")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EbayItem {
     /**
      * Important properties

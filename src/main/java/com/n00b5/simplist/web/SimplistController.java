@@ -18,6 +18,8 @@ import com.n00b5.simplist.data.Facade;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -163,10 +165,10 @@ public class SimplistController {
 
 
     @RequestMapping(value = "/getMyItems", method = RequestMethod.GET, produces = {"application/json"})
-    public @ResponseBody
-    String getMyItems(@CookieValue("user") String u,
-                            @CookieValue("shopifyToken") String s,
-                            @CookieValue("etsyToken") String e) throws IOException, JSONException {
+    public @ResponseBody String getMyItems(@CookieValue("user") String u,
+                              @CookieValue("shopifyToken") String s,
+                              @CookieValue("etsyToken") String e,
+                              @CookieValue("eBayToken") String eBayToken) throws IOException, JSONException {
 
         //@CookieValue(value="user") User user
         //s System.out.println("USER COOKIE - > " + u);
@@ -181,47 +183,63 @@ public class SimplistController {
 
         EtsyToken etsyToken = new ObjectMapper().readValue(e, EtsyToken.class); // not token
         ShopifyToken shopifyToken = new ObjectMapper().readValue(s, ShopifyToken.class);
+        EbayToken ebayToken = new ObjectMapper().readValue(eBayToken, EbayToken.class);
+
 
         List<SimplistItem> list = facade.getItemsByUserID(user);
-        System.out.println("LIST " + list.get(0).toString());
-
-
-        JSONObject shopifyAtt = new JSONObject();
-        shopifyAtt.put("id",list.get(0).getShopifyItem().getShopifyId());
-        shopifyAtt.put("title",list.get(0).getShopifyItem().getTitle());
-        shopifyAtt.put("body_html",list.get(0).getShopifyItem().getBody_html());
-        shopifyAtt.put("vendor",list.get(0).getShopifyItem().getVendor());
-        shopifyAtt.put("product_type",list.get(0).getShopifyItem().getProduct_type());
-        shopifyAtt.put("tags",list.get(0).getShopifyItem().getTags());
-        shopifyAtt.put("variants",list.get(0).getShopifyItem().getVariants());
-        JSONObject shopify = new JSONObject();
-        shopify.put("shopifyItem",shopifyAtt);
-
+//        System.out.println("LIST " + list.get(0).toString());
+        for (SimplistItem item:list
+             ) {
+            System.out.println(item);
+        }
 
         JSONObject obj = new JSONObject();
-        obj.put("Title", list.get(0).getEtsyItem().getTitle());
-        obj.put("Description", list.get(0).getEtsyItem().getDescription());
-        obj.put("Price", list.get(0).getEtsyItem().getPrice());
-        obj.put("Quantity", list.get(0).getEtsyItem().getQuantity());
-        obj.put("Listing_Id", list.get(0).getEtsyItem().getListing_id());
-        obj.put("Listing_Id", list.get(0).getEtsyItem().getShippingTemplate());
+        JSONObject item = new JSONObject();
 
-        JSONObject etsyItem = new JSONObject();
-        etsyItem.put("Etsy" , obj);
+        for (int i = 0; i < list.size(); i++) {
+            obj.put("id",list.get(i).getId());
+            obj.put("title",list.get(i).getShopifyItem().getTitle());
+            obj.put("description",list.get(i).getShopifyItem().getBody_html());
+            obj.put("company",list.get(i).getShopifyItem().getVendor());
+            obj.put("type",list.get(i).getShopifyItem().getProduct_type());
+            obj.put("price",list.get(i).getEtsyItem().getPrice());
+            item.put(String.valueOf(i),obj);
+            obj = new JSONObject();
+        }
+//
+//        JSONObject simplistItem1 = new JSONObject();
+//        JSONObject simplistItem2 = new JSONObject();
+//        for(int i=0;i<list.size();i++) {
+//            JSONObject shopifyAtt = new JSONObject();
+//            shopifyAtt.put("id", list.get(i).getShopifyItem().getShopifyId());
+//            shopifyAtt.put("title", list.get(i).getShopifyItem().getTitle());
+//            shopifyAtt.put("body_html", list.get(i).getShopifyItem().getBody_html());
+//            shopifyAtt.put("vendor", list.get(i).getShopifyItem().getVendor());
+//            shopifyAtt.put("product_type", list.get(i).getShopifyItem().getProduct_type());
+//            shopifyAtt.put("tags", list.get(i).getShopifyItem().getTags());
+//            shopifyAtt.put("variants", list.get(i).getShopifyItem().getVariants());
+//            JSONObject shopify = new JSONObject();
+//            shopify.put("shopifyItem", shopifyAtt);
+//
+//
+//            JSONObject obj = new JSONObject();
+//            obj.put("Title", list.get(i).getEtsyItem().getTitle());
+//            obj.put("Description", list.get(i).getEtsyItem().getDescription());
+//            obj.put("Price", list.get(i).getEtsyItem().getPrice());
+//            obj.put("Quantity", list.get(i).getEtsyItem().getQuantity());
+//            obj.put("Listing_Id", list.get(i).getEtsyItem().getListing_id());
+//            obj.put("Listing_Id", list.get(i).getEtsyItem().getShippingTemplate());
+//            JSONObject etsyItem = new JSONObject();
+//            etsyItem.put("Etsy", obj);
+//
+//            simplistItem1.put("shopify",shopifyAtt);
+//            simplistItem1.put("etsy", obj);
+//
+//            simplistItem2.put("item"+i,simplistItem1);
+//        }
 
-        JSONObject simplistItem = new JSONObject();
-        simplistItem.put("shopify",shopifyAtt);
-        simplistItem.put("etsy", obj);
-
-
-
-        return simplistItem.toString();
-
+        return item.toString();
 
     }
-
-
-
-
 
 }
