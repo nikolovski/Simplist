@@ -36,12 +36,12 @@ public class SimplistController {
     Facade facade;
 
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
-    public void add(@RequestBody SimplistItem simplistItem, @CookieValue("shopifyToken") String s,
+    public void add(@RequestBody SimplistItem simplistItem,@CookieValue("user") String user, @CookieValue("shopifyToken") String s,
                     @CookieValue("etsyToken") String e, @CookieValue("eBayToken") String eBayToken) throws URISyntaxException {
 
 
         try {
-
+            User currentUser = new ObjectMapper().readValue(user,User.class);
             ShopifyToken shopifyToken = new ObjectMapper().readValue(s, ShopifyToken.class);
             System.out.println(shopifyToken.getAccessToken());
 
@@ -70,7 +70,7 @@ public class SimplistController {
             ebayItem.createSimpleList(ebayToken.getAccessToken());
             facade.insertEbayItem(ebayItem);
 
-            facade.simplistCreateItem(new SimplistItem(shopifyNewItem,etsyNewItem, ebayItem));
+            facade.simplistCreateItem(new SimplistItem(shopifyNewItem,etsyNewItem, ebayItem, currentUser));
 
 
         } catch (IOException ex) {

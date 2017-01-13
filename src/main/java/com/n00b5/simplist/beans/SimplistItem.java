@@ -49,10 +49,11 @@ public class SimplistItem {
     public SimplistItem() {
     }
 
-    public SimplistItem(ShopifyItem shopifyItem, EtsyItem etsyItem, EbayItem ebayItem) {
+    public SimplistItem(ShopifyItem shopifyItem, EtsyItem etsyItem, EbayItem ebayItem, User currentUser) {
         this.shopifyItem = shopifyItem;
         this.etsyItem = etsyItem;
         this.ebayItem = ebayItem;
+        this.simplestuser = currentUser;
     }
 
     public EbayItem getEbayItem() {
