@@ -63,17 +63,16 @@ public class SimplestItemDAO {
         System.out.println(user.getId());
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SimplistItem.class);
         System.out.println("passed criteria");
-        List<SimplistItem> list = criteria.list();
-        System.out.println(list.get(0));
-        criteria.add(Restrictions.eq("simplestuser", user));
-        list = criteria.list();
-        System.out.println("passed list");
+       return criteria.list();
+        //System.out.println("INDEX 0 " + list.get(0));
+        //criteria.add(Restrictions.eq("simplestuser", user));
+
         /*
         criteria.add(Restrictions.eq("SIMPLIST_USER", user.getId()));
         System.out.println("passed restriction");
         List<SimplistItem> list = criteria.list();
         System.out.println("passed list");*/
-        return list;
+        //return list;
     }
 
 

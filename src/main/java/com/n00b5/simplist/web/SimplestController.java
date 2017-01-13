@@ -128,28 +128,24 @@ public class SimplestController {
 
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/getMyItems")
-    public void getMyItems(@CookieValue("user") String u,
+
+    @RequestMapping(value = "/getMyItems", method = RequestMethod.GET)
+    public @ResponseBody List<SimplistItem> getMyItems(@CookieValue("user") String u,
                            @CookieValue("shopifyToken") String s,
                            @CookieValue("etsyToken") String e) throws IOException, JSONException {
 
-//@CookieValue(value="user") User user
-        //s System.out.println("USER COOKIE - > " + u);
 
-        //OAuth1Converter converter = new ObjectMapper().readValue(x, OAuth1Converter.class);
-
-
-
-
+        System.out.println("IN CONTROLLER");
 
         User user = new ObjectMapper().readValue(u,User.class);
 
         EtsyToken etsyToken = new ObjectMapper().readValue(e, EtsyToken.class); // not token
         ShopifyToken shopifyToken = new ObjectMapper().readValue(s, ShopifyToken.class);
 
-        List<SimplistItem> list = facade.getItemsByUserID(user);
-        System.out.println(list.get(0));
+
+
+        return facade.getItemsByUserID(user);
+
     }
 
 

@@ -8,7 +8,10 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="">
-
+  <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
   <title>
 
     Icon nav &middot;
@@ -137,6 +140,8 @@
   <div>
     <div class="heading">
       <h4>Your Items</h4>
+      get all: <input type="submit" id="get">
+
     </div>
   </div>
 
@@ -176,6 +181,19 @@
 <script>
     // execute/clear BS loaders for docs
     $(function(){while(window.BS&&window.BS.loader&&window.BS.loader.length){(window.BS.loader.pop())()}})
+
+    $("#get").click(function(){
+        $.ajax({
+            method: "GET",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: "http://localhost:8080/simplist/getAll",
+            success: function (resp) {
+                console.log(resp);
+            }
+        })
+    });
+
 </script>
 </body>
 </html>
