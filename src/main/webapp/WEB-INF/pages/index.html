@@ -279,7 +279,6 @@
 </div>
 </body>
 <script>
-    var resp;
 
     $('#getAll').click(function () {
         $.ajax({
@@ -319,11 +318,11 @@
         event.preventDefault();
         $("#getAllPage").fadeOut(1000);
         $("#crudPage").delay(500).fadeIn(1000);
-    })
+    });
 
     $("#deleteSubmit").click(function () {
 
-        console.log("DELETE CLICKED")
+        console.log("DELETE CLICKED");
         var id = $("#deleteID").val();
         $.ajax({
             method: "DELETE",
@@ -426,7 +425,7 @@
 
         var simplestItem = {
             shopifyItem: shopifyObj, etsyItem: etsyObj
-        }
+        };
 
 
         $.ajax({
@@ -480,10 +479,10 @@
                     var url = $(this).attr('href');
                     window.open(url, '_blank');
                 });
-                console.log($.cookie("etsyToken"))
+                console.log($.cookie("etsyToken"));
                 var interval = setInterval(function () {
                     if ($.cookie("etsyToken"))
-                        $.cookie("user").eBayRefreshToken
+                        $.cookie("user").eBayRefreshToken;
                     $.ajax({
                         type: "POST",
                         url: url + "saveEtsyToken",
@@ -493,7 +492,7 @@
                             token: $.cookie("etsyToken")
                         },
                         success: function (response) {
-                            console.log(response)
+                            console.log(response);
                             clearInterval(interval);
                         },
                         error: function (response) {
