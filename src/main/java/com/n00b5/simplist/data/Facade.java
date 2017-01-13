@@ -1,5 +1,6 @@
 package com.n00b5.simplist.data;
 
+import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.ebay.EbayItem;
 import com.n00b5.simplist.api.ebay.EbayToken;
@@ -9,6 +10,8 @@ import com.n00b5.simplist.beans.SimplistItem;
 import com.n00b5.simplist.beans.User;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 public class Facade {
     private UserDAO userDAO;
@@ -17,6 +20,7 @@ public class Facade {
     private TokensDAO tokensDAO;
     private SimplistItemDAO simplistDAO;
     private EbayDAO ebayDAO;
+
 
     public void setUser(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -144,9 +148,9 @@ public class Facade {
         simplistDAO.createItem(simplistItem);
     }
 
-    //create
+    //delete
     @Transactional()
-    public void simpliestDeleteItem(String deleteId) {
+    public void simpliestDeleteItem(int deleteId) {
         System.out.println("IN THE SIMPLIST FACADE");
         simplistDAO.deleteItem(deleteId);
     }
@@ -157,5 +161,22 @@ public class Facade {
 
     public EbayDAO getEbayDAO() {
         return ebayDAO;
+    }
+
+    //getById (simplest Item)
+    @Transactional()
+    public SimplistItem getSimplestItemById(int id) {
+        return simplistDAO.getById(id);
+    }
+
+    //updateByid (simplest Item)
+    @Transactional()
+    public void updateSimplistItem(int id, EtsyItem item, ShopifyItem item2, OAuth1AccessToken x) {
+        simplistDAO.updateSimplistItem(id,item,item2);
+    }
+
+    @Transactional()
+    public List<SimplistItem> getItemsByUserID(User user) {
+        return simplistDAO.getItemsByUserID(user);
     }
 }

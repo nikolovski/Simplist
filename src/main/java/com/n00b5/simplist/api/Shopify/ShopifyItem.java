@@ -28,8 +28,6 @@ public class ShopifyItem {
     @JsonProperty
     private String body_html;
 
-
-
     @Column(name = "VENDOR")
     @JsonProperty
     private String vendor;
@@ -49,12 +47,13 @@ public class ShopifyItem {
     @JsonProperty
     private Variants[] variants;
 
+
     public ShopifyItem(){
 
     }
 
-    public ShopifyItem(String id, String title, String body_html, String vendor, String product_type, String tags) {
-        this.id = id;
+    public ShopifyItem(String shopifyId, String title, String body_html, String vendor, String product_type, String tags) {
+        this.id = shopifyId;
         this.title = title;
         this.body_html = body_html;
         this.vendor = vendor;
@@ -63,13 +62,21 @@ public class ShopifyItem {
         System.out.println(variants[0].getPrice());//testing
 
     }
+    public ShopifyItem(String title, String body_html, String vendor, String product_type, String tags) {
+        this.title = title;
+        this.body_html = body_html;
+        this.vendor = vendor;
+        this.product_type = product_type;
+        this.tags = tags;
 
-    public String getId() {
+    }
+
+    public String getShopifyId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setShopifyId(String shopifyId) {
+        this.id = shopifyId;
     }
 
 
@@ -146,7 +153,7 @@ public class ShopifyItem {
         JSONObject product = new JSONObject();
         JSONObject productTags = new JSONObject();
         JSONArray productVariants = new JSONArray();
-        productTags.put("shopifyId",this.getId());
+        productTags.put("id",this.getShopifyId());
         productTags.put("title",this.getTitle());
         productTags.put("body_html",this.getBody_html());
         productTags.put("vendor",this.getVendor());
@@ -162,8 +169,8 @@ public class ShopifyItem {
 
     @Override
     public String toString() {
-        return "ShopifyItem{" +
-                "shopifyId='" + id + '\'' +
+        return "{" +
+                "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", body_html='" + body_html + '\'' +
                 ", vendor='" + vendor + '\'' +

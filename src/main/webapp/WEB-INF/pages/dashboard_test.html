@@ -45,6 +45,23 @@
 </div>
 
 
+<div id="updateItem">
+    <h5>Update Items</h5>
+    Item ID <input id="itemid" type="text"><br>
+    Quantity <input id="quantityid" type="text"><br>
+    Title <input id="titleid" type="text"><br>
+    Description<input id="descriptionid" type="text"><br>
+
+    <!--These are fields for shopify-->
+
+    Company:<input id="companyid" type="text" name="Company"><br>
+    Type:<input id="typeid" type="text" name="Product Type"><br>
+    tags:<input id="tagid" type="text" name="tags"><br>
+    <input id="addSubmitid" type="submit" value="Add">
+
+</div>
+
+
 </body>
 
 
@@ -55,11 +72,11 @@
         console.log("DELETE CLICKED")
         var id = $("#deleteid").val();
         $.ajax({
-            method: "DELETE",
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            url: "http://localhost:8080/simplist/delete?itemID=" + id
-        });
+                method: "DELETE",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: "http://localhost:8080/simplist/delete?itemID="+id
+            });
     });
 
     $("#addSubmit").click(function () {
@@ -117,7 +134,55 @@
 
     });
 
+    $("#addSubmitid").click(function(){
 
+        console.log("Button clicked ");
+
+        var id =$("#itemid").val();
+        /* Etsy */
+        var etsyObj = {
+            quantity : $("#quantityid").val(),
+            title:  $("#titleid").val(),
+            description: $("#descriptionid").val(),
+            price: 0.20,
+            state: "draft",
+            is_supply: true,
+            who_made: "i_did",
+            when_made: "made_to_order",
+            shipping_template_id: 35750756683
+        };
+
+        /* Shopify */
+        var shopifyObj = {
+            title: $("#titleid").val(),
+            body_html:  $("#descriptionid").val(),
+            vendor: $("#companyid").val(),
+            product_type: $("#typeid").val(),
+            tags: $("#tagid").val(),
+            variants:[{
+                price: 0.20
+            }]
+        };
+
+        var simplestItem = {
+            shopifyItem:  shopifyObj, etsyItem: etsyObj
+        }
+
+
+        $.ajax({
+            method: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: "http://localhost:8080/simplist/update",
+            data:
+                JSON.stringify({id:id, shopifyItem: shopifyObj, etsyItem: etsyObj})
+        });
+
+
+        console.log("Added : )");
+        /* Ebay */
+
+    });
 </script>
 
 </html>

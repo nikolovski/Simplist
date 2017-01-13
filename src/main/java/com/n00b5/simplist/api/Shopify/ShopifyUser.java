@@ -15,17 +15,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "SHOPIFY_USER")
 public class ShopifyUser {
+
     @Id
     @JsonProperty
     private int id;
-
     @Column(name="FIRST_NAME")
     @JsonProperty
-    private String firstName;
+    private String first_name;
 
     @Column(name="LAST_NAME")
     @JsonProperty
-    private String lastName;
+    private String last_name;
 
     @Column(name="EMAIL")
     @Email
@@ -34,7 +34,7 @@ public class ShopifyUser {
 
     @Column(name="ACCOUNT_OWNER")
     @JsonProperty
-    private boolean accountOwner;
+    private boolean account_owner;
 
     public int getId() {
         return id;
@@ -44,20 +44,20 @@ public class ShopifyUser {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getEmail() {
@@ -68,22 +68,22 @@ public class ShopifyUser {
         this.email = email;
     }
 
-    public boolean isAccountOwner() {
-        return accountOwner;
+    public boolean isAccount_owner() {
+        return account_owner;
     }
 
-    public void setAccountOwner(boolean accountOwner) {
-        this.accountOwner = accountOwner;
+    public void setAccount_owner(boolean account_owner) {
+        this.account_owner = account_owner;
     }
 
     @Override
     public String toString() {
         return "ShopifyUser{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
                 ", email='" + email + '\'' +
-                ", accountOwner=" + accountOwner +
+                ", account_owner=" + account_owner +
                 '}';
     }
 }

@@ -24,6 +24,12 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
+    <style type="text/css">
+        .fields{
+            padding-left: 300px;
+            width:800px;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,6 +37,7 @@
     <div id="message"></div>
     <div class="pen-title">
         <h1>Simplist</h1><span>Listing made simple</span>
+
     </div>
     <div class="container">
         <div class="card"></div>
@@ -135,45 +142,289 @@
             </div>
         </nav>
 
-        <div>
-            <div class="heading">
-                <h4>Your Items</h4>
-            </div>
-        </div>
 
-        <div class="container">
-            <div class="list-group">
 
-                <a class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Product Name</h5>
-                        <div class="post-container">
-                            <div class="post-thumb img-thumbnail"><img
-                                    src="https://www.zawwali.com/support/images/resource/accordiaon-image.jpg"/></div>
-                            <div class="post-content">
-                                <p>Description Description Description Description Description Description Description
-                                    Description Description</p></div>
-                        </div>
-                    </div>
-                    <div class="icons">
-                        <img src="../resources/svg/ebay.svg" width="30px">
-                        <img src="../resources/svg/shopify.svg" width="30px">
-                        <img src="../resources/svg/etsy.svg" width="30px">
-                        <div class="edit">
-                            <img src="../resources/icons/editing-edit-icon.png" width="30px">
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+
+
     </div>
+
+
+    <div class="fields">
+        <br>
+        <h3>Create Item</h3>
+        <form>
+            <div class="form-group">
+                <label>Title</label>
+                <input  class="form-control" id="title"  placeholder="Enter Title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input  class="form-control" id="description"  placeholder="Enter Description">
+            </div>
+            <div class="form-group">
+                <label>Company</label>
+                <input  class="form-control" id="company"  placeholder="Enter Company">
+            </div>
+            <div class="form-group">
+                <label>Type</label>
+                <input  class="form-control" id="type"  placeholder="Enter Type">
+            </div>
+            <div class="form-group">
+                <label>Tags</label>
+                <input  class="form-control" id="tag"  placeholder="Enter Tags">
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input  class="form-control" id="quantity"  placeholder="Enter Quantity">
+            </div>
+            <div class="form-group">
+                <label>price</label>
+                <input  class="form-control" id="price"  placeholder="Enter Price">
+            </div>
+            <button type="submit" id="addSubmit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+        <hr>
+        <h3>Update Item</h3>
+        <form>
+            <div class="form-group">
+                <label><h3>Enter Product Id to update</h3></label>
+                <input  class="form-control" id="idU"  placeholder="Enter ID">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input  class="form-control" id="titleU"  placeholder="Enter Title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input  class="form-control" id="descU"  placeholder="Enter Description">
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input  class="form-control" id="quantityU"  placeholder="Enter Quantity">
+            </div>
+            <div class="form-group">
+                <label>Company</label>
+                <input  class="form-control" id="companyU"  placeholder="Enter Company">
+            </div>
+            <div class="form-group">
+                <label>Type</label>
+                <input  class="form-control" id="typeU"  placeholder="Enter Type">
+            </div>
+            <div class="form-group">
+                <label>Tags</label>
+                <input  class="form-control" id="tagU"  placeholder="Enter Tags">
+            </div>
+            <div class="form-group">
+                <label>price</label>
+                <input  class="form-control" id="priceU"  placeholder="Enter Price">
+            </div>
+            <button type="submit" id="addSubmitid" class="btn btn-primary">Submit</button>
+        </form>
+
+
+        <h3>Delete Item</h3>
+        <form>
+            <div class="form-group">
+                <label><h3>Enter Product Id to update</h3></label>
+                <input  class="form-control" id="deleteID"  placeholder="Enter ID">
+            </div>
+            <button type="submit" id="deleteSubmit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+
+        <table id="allItems" class="table">
+            <thead class="thead-inverse">
+            <tr>
+                <th>ID</th><th>Title</th><th>Description</th><th>Company</th><th>Type</th><th>Tags</th><th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <button id="getAll">Get all Items</button>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 </body>
 <script>
+
+
+
+    $('#getAll').click(function() {
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/simplist/getMyItems",
+            dataType: "json",
+            success: function(resp){
+                console.log(resp);
+                var iterable = resp.shopify;
+                console.log(iterable);
+                console.log(iterable.title);
+                // $.each(iterable, function(i, item){
+                var myItem = "<tr>"+
+                    "<td>"+iterable.id+"</td>"+
+                    "<td>"+iterable.title+"</td>"+
+                    "<td>"+iterable.body_html+"</td>"+
+                    "<td>"+iterable.vendor+"</td>"+
+                    "<td>"+iterable.product_type+"</td>"+
+                    "<td>"+iterable.tags+"</td>"+
+                    "<td>"+iterable.price+"</td>" + "</tr>";
+                $(".table tbody").append(myItem);
+                // });
+            },
+            error: function(resp){
+                console.log("ERROR " + resp.responseText + resp.statusText);
+            }
+        })
+    });
+
+    $("#deleteSubmit").click(function(){
+
+        console.log("DELETE CLICKED")
+        var id =  $("#deleteID").val();
+        $.ajax({
+            method: "DELETE",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: "http://localhost:8080/simplist/delete?itemID="+id
+        });
+    });
+
+    $("#addSubmit").click(function(){
+
+        console.log("Button clicked ");
+
+        /* Etsy */
+        var etsyObj = {
+            quantity : $("#quantity").val(),
+            title:  $("#title").val(),
+            description: $("#description").val(),
+            price: 0.20,
+            state: "draft",
+            is_supply: true,
+            who_made: "i_did",
+            when_made: "made_to_order",
+            shipping_template_id: 35750756683
+        };
+
+        /* Shopify */
+        var shopifyObj = {
+            title: $("#title").val(),
+            body_html:  $("#description").val(),
+            vendor: $("#company").val(),
+            product_type: $("#type").val(),
+            tags: $("#tag").val(),
+            variants:[{
+                price: 0.20
+            }]
+        };
+
+        var simplestItem = {
+            shopifyItem:  shopifyObj, etsyItem: etsyObj
+        }
+
+
+        $.ajax({
+            method: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: "http://localhost:8080/simplist/add",
+            data:
+                JSON.stringify({shopifyItem: shopifyObj, etsyItem: etsyObj})
+        });
+
+
+        console.log("Added : )");
+        /* Ebay */
+
+    });
+
+
+
+
+    $("#addSubmitid").click(function(){
+
+        console.log("Button clicked ");
+
+        var id =$("#idU").val();
+        /* Etsy */
+        var etsyObj = {
+            quantity : $("#quantityU").val(),
+            title:  $("#titleU").val(),
+            description: $("#descU").val(),
+            price: 0.20,
+            state: "draft",
+            is_supply: true,
+            who_made: "i_did",
+            when_made: "made_to_order",
+            shipping_template_id: 35750756683
+        };
+
+        /* Shopify */
+        var shopifyObj = {
+            title: $("#titleU").val(),
+            body_html:  $("#descU").val(),
+            vendor: $("#companyU").val(),
+            product_type: $("#typeU").val(),
+            tags: $("#tagU").val(),
+            variants:[{
+                price: 0.20
+            }]
+        };
+
+        var simplestItem = {
+            shopifyItem:  shopifyObj, etsyItem: etsyObj
+        }
+
+
+        $.ajax({
+            method: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: "http://localhost:8080/simplist/update",
+            data:
+                JSON.stringify({id:id, shopifyItem: shopifyObj, etsyItem: etsyObj})
+        });
+
+
+        console.log("Added : )");
+        /* Ebay */
+
+    });
+
+
+
+
+
+
+
+
     $(document).ready(function () {
             if ($.cookie("user")) $("#loginPage").css("display", "none");
             else $("#dashboardPage").css("display", "none");
-        var url = "http://localhost:8080/";
+            var url = "http://localhost:8080/";
 
             $("#ebayUrl").click(function (event) {
                 $("#ebayUrl").click(function () {

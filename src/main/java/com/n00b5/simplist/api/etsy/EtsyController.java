@@ -41,7 +41,9 @@ public class EtsyController {
     @Value("${scope}")
     private String scope;
 
-    private static OAuth10aService service;
+    public OAuth10aService service;
+
+
     private static OAuth1RequestToken requestToken;
     static OAuth1AccessToken accessToken;
     private Facade facade;
@@ -50,11 +52,13 @@ public class EtsyController {
     @RequestMapping(value="/etsy/oauth")
     public ModelAndView etsy() throws IOException {
 
-            service  = new ServiceBuilder()
-                .apiKey(keystring)
-                .apiSecret(sharedsecret)
-                .callback(redirect_uri_etsy)
-                .build(EtsyApi.instance());
+//        service = new ServiceBuilder()
+//                .apiKey(keystring)
+//                .apiSecret(sharedsecret)
+//                .callback(redirect_uri_etsy)
+//                .build(EtsyApi.instance());
+        service = new EtsyService().getService();
+
 
         //step 1 - Getting request token --> [request_token] [token_secret] [callback_confirmed]
         //{oauth_token=7a45b7fd57e7398e30958c7bf1fb13, oauth_token_secret=b634fb575e, oauth_callback_confirmed=true}
@@ -83,23 +87,22 @@ public class EtsyController {
     }
 
     @RequestMapping(value="/etsy/add",method= RequestMethod.POST)
-    public @ResponseBody EtsyItem addItem(@RequestBody EtsyItem etsyItem) throws IOException, JSONException {
+    public @ResponseBody EtsyItem addItem(@RequestBody EtsyItem etsyItem, OAuth1AccessToken etsyToken) throws IOException, JSONException {
+        System.out.println("PRINTING Out SERVICE " );
 
-        /*STEPS
-            1. Add to Etsy
-            2. If successful add to DB
-                else rollback
-         */
+        service = new EtsyService().getService();
 
         System.out.println("ETSY IteM IS " + etsyItem.toString());
 
         System.out.println(etsyItem);
         System.out.println("IN ETSY ADD "+etsyItem.toURL());
 
+
         OAuthRequest request = new OAuthRequest(Verb.POST, "https://openapi.etsy.com/v2/listings?" + etsyItem.toURL(), service);
-        System.out.println("STILL IN REQUEST " + accessToken);
-        System.out.println("STILL IN REQUEST " + request);
-        service.signRequest(accessToken, request); // the access token from step 4
+        System.out.println("STILL IN REQUEST access token" + etsyToken); //get access token from DB
+        System.out.println("STILL IN REQUEST request " + request);
+        System.out.println("STILL IN REQUEST service " +  service);
+        service.signRequest(etsyToken, request); // the access token from step 4
         System.out.println("BEFORE SENDING TO API");
         Response response = request.send();
         System.out.println("AFTER SENDING TO API");
@@ -117,26 +120,28 @@ public class EtsyController {
         return etsyItem;
 
     }
+    @RequestMapping(value="/delete")
+    public String deleteItem(@RequestParam("itemID") String id, OAuth1AccessToken x)throws IOException {
 
-    @RequestMapping(value="/etsy/delete")
-    public void deleteItem(@RequestParam("itemID")String id)throws IOException {
-
+        service = new EtsyService().getService();
         OAuthRequest request = new OAuthRequest(Verb.DELETE, "https://openapi.etsy.com/v2/listings/"+id, service);
-        service.signRequest(accessToken, request); // the access token from step 4
+        service.signRequest(x, request); // the access token from step 4
         Response response = request.send();
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Deleted " +response.getBody());
 
-        facade.etsyDeleteItem(id);
+        //facade.etsyDeleteItem(id);
 
         System.out.println("ALL DONE");
-
+        return id;
 
     }
 
-    @RequestMapping(value="/etsy/getById")
+    @RequestMapping(value="/getById")
     public @ResponseBody
     String getById(@RequestParam("itemID")String id) throws IOException {
+
+        service = new EtsyService().getService();
 
         // --> THIS IS MY ONLY ACTIVE LISTING .... itemID = 488901146
         OAuthRequest request = new OAuthRequest(Verb.GET, "https://openapi.etsy.com/v2/listings/" + id + scope, service);
@@ -150,9 +155,11 @@ public class EtsyController {
         return response.getBody().toString();
     }
 
-    @RequestMapping(value="/etsy/getAll")
+    @RequestMapping(value="/getAll")
     public @ResponseBody
     String getAllListings() throws IOException {
+
+        service = new EtsyService().getService();
 
         //This gets my listings
         ///shops/100857342/listings/draft
@@ -168,22 +175,26 @@ public class EtsyController {
 
     }
 
-    @RequestMapping(value="/etsy/update")
-    public void update(@RequestBody String json, @RequestParam("itemID")String id) throws IOException {
+    @RequestMapping(value="/update")
+    public void update(@RequestBody EtsyItem item, @RequestParam("itemID") String id, OAuth1AccessToken x) throws IOException {
 
-        EtsyItem etsyItem = new ObjectMapper().readValue(json,EtsyItem.class);
+        service = new EtsyService().getService();
+
+        EtsyItem etsyItem = item;
+        System.out.println("IN UPDATE ETSY ITEM " + etsyItem);
         etsyItem.setListing_id(id);
         OAuthRequest request = new OAuthRequest(Verb.PUT, "https://openapi.etsy.com/v2/listings/" + id + "?" + etsyItem.toURL(), service);
-        service.signRequest(accessToken, request); // the access token from step 4
+        service.signRequest(x, request); // the access token from step 4
         Response response = request.send();
         System.out.println("STATUS CODE " +response.getCode());
         System.out.println("Updated item " + response.getBody());
 
-        facade.etsyUpdateItem(etsyItem, etsyItem.getListing_id());
         System.out.println("ALL DONE");
     }
 
     public void createShippingTemplate() throws IOException {
+
+        service = new EtsyService().getService();
 
         String shippingTemplateTitle = "Standard_Shipping";
         int origin_country_id = 105;//105 = UK , 209 = US

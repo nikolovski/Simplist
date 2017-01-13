@@ -42,8 +42,8 @@ public class ShopifyCRUD{
     }
 
     @RequestMapping(value="/shopify/createItem",method=RequestMethod.POST)
-    public @ResponseBody ShopifyItem createItem(@RequestBody ShopifyItem item) throws IOException, JSONException {
-        String uri = "https://paperss.myshopify.com/admin/products.json?access_token="+ ShopifyAPI.getTokenKey();
+    public @ResponseBody ShopifyItem createItem(@RequestBody ShopifyItem item, ShopifyToken shopifyToken) throws IOException, JSONException {
+        String uri = "https://paperss.myshopify.com/admin/products.json?access_token="+ shopifyToken.getAccessToken();
         //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpClient httpClient = new DefaultHttpClient();
         try {
@@ -72,11 +72,11 @@ public class ShopifyCRUD{
 
     @ResponseBody
     @RequestMapping(value = "shopify/update/", method = RequestMethod.POST)
-    public void updateItem(@RequestBody ShopifyItem item){
-        System.out.println("IN Update ITEM " + item.getId());
+    public void updateItem(@RequestBody ShopifyItem item, ShopifyToken shopifyToken){
+        System.out.println("IN Update ITEM " + item.getShopifyId());
         HttpClient httpClient = new DefaultHttpClient();
         try {
-            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+item.getId()+".json?access_token="+ ShopifyAPI.getTokenKey());
+            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+item.getShopifyId()+".json?access_token="+ shopifyToken.getAccessToken());
             StringEntity params = new StringEntity(item.getUpdateJSONItem().toString());
             putRequest.addHeader("Content-Type", "application/json;; charset=UTF-8");putRequest.addHeader("Accept", "application/json;; charset=UTF-8");
             putRequest.setEntity(params);
@@ -90,11 +90,12 @@ public class ShopifyCRUD{
 
     @ResponseBody
     @RequestMapping(value = "shopify/delete/", method = RequestMethod.POST)
-    public void deleteItem(@RequestBody String id) throws JSONException {
+    public void deleteItem(@RequestBody String id, ShopifyToken shopifyToken) throws JSONException {
+
         JSONObject deleteID = new JSONObject(id);
         HttpClient httpClient = new DefaultHttpClient();
         try {
-            HttpDelete deleteRequest = new HttpDelete("https://paperss.myshopify.com/admin/products/"+deleteID.getString("id")+".json?access_token=" + ShopifyAPI.getTokenKey());
+            HttpDelete deleteRequest = new HttpDelete("https://paperss.myshopify.com/admin/products/"+deleteID.getString("id")+".json?access_token=" + shopifyToken.getAccessToken());
             HttpResponse response = httpClient.execute(deleteRequest);
             System.out.println(response.toString());
         } catch (Exception e) {
