@@ -152,7 +152,7 @@ public class EtsyItem {
 
     @Override
     public String toString() {
-        return "EtsyItem{" +
+        return "{" +
                 "listing_id='" + listing_id + '\'' +
                 ", quantity=" + quantity +
                 ", title='" + title + '\'' +

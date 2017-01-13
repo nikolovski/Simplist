@@ -63,7 +63,9 @@ public class SimplestItemDAO {
         System.out.println(user.getId());
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SimplistItem.class);
         System.out.println("passed criteria");
-       return criteria.list();
+        return criteria.list();
+
+
         //System.out.println("INDEX 0 " + list.get(0));
         //criteria.add(Restrictions.eq("simplestuser", user));
 

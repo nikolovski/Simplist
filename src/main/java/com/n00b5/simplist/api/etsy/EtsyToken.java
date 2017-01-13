@@ -1,6 +1,7 @@
 package com.n00b5.simplist.api.etsy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

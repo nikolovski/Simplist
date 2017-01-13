@@ -1,5 +1,6 @@
 package com.n00b5.simplist.data;
 
+import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.etsy.EtsyItem;
@@ -156,7 +157,7 @@ public class Facade {
 
     //updateByid (simplest Item)
     @Transactional()
-    public void updateSimplistItem(int id, EtsyItem item, ShopifyItem item2) {
+    public void updateSimplistItem(int id, EtsyItem item, ShopifyItem item2, OAuth1AccessToken x) {
         simplestDAO.updateSimplistItem(id,item,item2);
     }
 

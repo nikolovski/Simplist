@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class TestAll {
 
-    private String chromedriver = "C:/selenium/chromedriver.exe";
+    private String chromedriver = "/usr/local/bin/chromedriver";
     private WebDriver driver;
     OAuth1AccessToken etsyToken;
     String shopifyToken;
@@ -25,24 +25,29 @@ public class TestAll {
     @Test
     @Before
     public void setUp() throws Exception {
-
-        shopifyToken = new TokenAuthTest().getToken();
-        System.out.println("shopify token " + shopifyToken);
-
-        etsyToken = new EtsyTest().setUp();
-        System.out.println("etsy token " + etsyToken);
+//
+//        shopifyToken = new TokenAuthTest().getToken();
+//        System.out.println("shopify token " + shopifyToken);
+//
+//        etsyToken = new EtsyTest().setUp();
+//        System.out.println("etsy token " + etsyToken);
 
 
         System.setProperty("webdriver.chrome.driver",
                 chromedriver);
         driver = new ChromeDriver();
         selenium = new SeleniumAll(driver);
+
+
+        selenium.getView("http://localhost:8080/pages/index.html");
+        selenium.logIn();
     }
+
 
 
     @Test
     public void addItems(){
-        selenium.getView("http://localhost:8080/pages/dashboard_test.html");
+        selenium.getView("http://localhost:8080/pages/index.html");
         selenium.addItems();
     }
 

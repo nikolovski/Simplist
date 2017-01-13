@@ -170,7 +170,7 @@ public class ShopifyItem {
 
     @Override
     public String toString() {
-        return "ShopifyItem{" +
+        return "{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", body_html='" + body_html + '\'' +

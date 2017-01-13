@@ -68,7 +68,7 @@
                 method: "DELETE",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                url: "http://localhost:8080/simplest/delete?itemID="+id
+                url: "http://localhost:8080/simplist/delete?itemID="+id
             });
     });
 
@@ -110,7 +110,7 @@
             method: "POST",
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            url: "http://localhost:8080/simplest/add",
+            url: "http://localhost:8080/simplist/add",
             data:
                 JSON.stringify({shopifyItem: shopifyObj, etsyItem: etsyObj})
         });
@@ -163,7 +163,7 @@
             method: "POST",
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            url: "http://localhost:8080/simplest/update",
+            url: "http://localhost:8080/simplist/update",
             data:
                 JSON.stringify({id:id, shopifyItem: shopifyObj, etsyItem: etsyObj})
         });

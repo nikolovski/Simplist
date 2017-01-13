@@ -1,5 +1,6 @@
 package com.n00b5.simplist.beans;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
 import com.n00b5.simplist.api.etsy.EtsyItem;
@@ -75,7 +76,7 @@ public class SimplistItem {
 
     @Override
     public String toString() {
-        return "SimplistItem{" +
+        return "{" +
                 "id=" + id +
                 ", shopifyItem=" + shopifyItem +
                 ", etsyItem=" + etsyItem +
