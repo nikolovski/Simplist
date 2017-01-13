@@ -1,6 +1,7 @@
 package com.n00b5.simplist.data;
 
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
+import com.n00b5.simplist.api.ebay.EbayItem;
 import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.etsy.EtsyItem;
 import com.n00b5.simplist.api.etsy.EtsyToken;
@@ -14,7 +15,7 @@ public class Facade {
     private EtsyDAO etsyDAO;
     private ShopifyItemDAO shopifyDAO;
     private TokensDAO tokensDAO;
-    private SimplestItemDAO simplestDAO;
+    private SimplistItemDAO simplistDAO;
     private EbayDAO ebayDAO;
 
     public void setUser(UserDAO userDAO) {
@@ -37,12 +38,12 @@ public class Facade {
         this.etsyDAO = etsyDAO;
     }
 
-    public void setSimplestDAO(SimplestItemDAO SimplestDAO) {
-        simplestDAO = SimplestDAO;
+    public void setSimplistDAO(SimplistItemDAO SimplistDAO) {
+        simplistDAO = SimplistDAO;
     }
 
-    public SimplestItemDAO getSimplestDAO() {
-        return simplestDAO;
+    public SimplistItemDAO getSimplistDAO() {
+        return simplistDAO;
     }
 
 
@@ -125,6 +126,10 @@ public class Facade {
         this.tokensDAO = tokensDAO;
     }
 
+    public void insertEbayItem(EbayItem ebayItem){
+        ebayDAO.createEbayItem(ebayItem);
+    }
+
     public TokensDAO getTokensDAO() {
         return tokensDAO;
     }
@@ -134,16 +139,16 @@ public class Facade {
     }
     //create
     @Transactional()
-    public void simpliestCreateItem(SimplistItem simplistItem) {
-        System.out.println("IN THE SIMPLEST FACADE");
-        simplestDAO.createItem(simplistItem);
+    public void simplistCreateItem(SimplistItem simplistItem) {
+        System.out.println("IN THE SIMPLIST FACADE");
+        simplistDAO.createItem(simplistItem);
     }
 
     //create
     @Transactional()
     public void simpliestDeleteItem(String deleteId) {
-        System.out.println("IN THE SIMPLEST FACADE");
-        simplestDAO.deleteItem(deleteId);
+        System.out.println("IN THE SIMPLIST FACADE");
+        simplistDAO.deleteItem(deleteId);
     }
 
     public void setEbayDAO(EbayDAO ebayDAO) {

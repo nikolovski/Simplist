@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by louislopez on 1/11/17.
  */
-public class SimplestItemDAO {
+public class SimplistItemDAO {
 
 
     private SessionFactory sessionFactory;

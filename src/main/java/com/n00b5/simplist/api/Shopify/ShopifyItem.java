@@ -18,7 +18,7 @@ public class ShopifyItem {
 
     @Id
     @JsonProperty(value = "id")
-    private String shopifyId;
+    private String id;
 
     @Column(name = "TITLE")
     @JsonProperty
@@ -53,8 +53,8 @@ public class ShopifyItem {
 
     }
 
-    public ShopifyItem(String shopifyId, String title, String body_html, String vendor, String product_type, String tags) {
-        this.shopifyId = shopifyId;
+    public ShopifyItem(String id, String title, String body_html, String vendor, String product_type, String tags) {
+        this.id = id;
         this.title = title;
         this.body_html = body_html;
         this.vendor = vendor;
@@ -64,12 +64,12 @@ public class ShopifyItem {
 
     }
 
-    public String getShopifyId() {
-        return shopifyId;
+    public String getId() {
+        return id;
     }
 
-    public void setShopifyId(String shopifyId) {
-        this.shopifyId = shopifyId;
+    public void setId(String id) {
+        this.id = id;
     }
 
 
@@ -146,7 +146,7 @@ public class ShopifyItem {
         JSONObject product = new JSONObject();
         JSONObject productTags = new JSONObject();
         JSONArray productVariants = new JSONArray();
-        productTags.put("shopifyId",this.getShopifyId());
+        productTags.put("shopifyId",this.getId());
         productTags.put("title",this.getTitle());
         productTags.put("body_html",this.getBody_html());
         productTags.put("vendor",this.getVendor());
@@ -163,7 +163,7 @@ public class ShopifyItem {
     @Override
     public String toString() {
         return "ShopifyItem{" +
-                "shopifyId='" + shopifyId + '\'' +
+                "shopifyId='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", body_html='" + body_html + '\'' +
                 ", vendor='" + vendor + '\'' +

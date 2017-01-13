@@ -62,7 +62,7 @@
     <bean name="tokensDAO" class="com.n00b5.simplist.data.TokensDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean name="SimplestDAO" class="com.n00b5.simplist.data.SimplestItemDAO">
+    <bean name="SimplistDAO" class="com.n00b5.simplist.data.SimplistItemDAO">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <bean name="ebayDAO" class="com.n00b5.simplist.data.EbayDAO">
@@ -74,7 +74,7 @@
         <property name="etsyDAO" ref="EtsyDAO"/>
         <property name="shopifyDAO" ref="ShopifyDAO"/>
         <property name="tokensDAO" ref="tokensDAO"/>
-        <property name="SimplestDAO" ref="SimplestDAO"></property>
+        <property name="SimplistDAO" ref="SimplistDAO"></property>
         <property name="ebayDAO" ref="ebayDAO"></property>
     </bean>
 

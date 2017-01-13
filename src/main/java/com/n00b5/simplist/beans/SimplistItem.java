@@ -2,6 +2,7 @@ package com.n00b5.simplist.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
+import com.n00b5.simplist.api.ebay.EbayItem;
 import com.n00b5.simplist.api.etsy.EtsyItem;
 
 import javax.persistence.*;
@@ -26,13 +27,26 @@ public class SimplistItem {
     @JsonProperty
     private EtsyItem etsyItem;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JsonProperty
+    private EbayItem ebayItem;
+
 
     public SimplistItem() {
     }
 
-    public SimplistItem(ShopifyItem shopifyItem, EtsyItem etsyItem) {
+    public SimplistItem(ShopifyItem shopifyItem, EtsyItem etsyItem, EbayItem ebayItem) {
         this.shopifyItem = shopifyItem;
         this.etsyItem = etsyItem;
+        this.ebayItem = ebayItem;
+    }
+
+    public EbayItem getEbayItem() {
+        return ebayItem;
+    }
+
+    public void setEbayItem(EbayItem ebayItem) {
+        this.ebayItem = ebayItem;
     }
 
     public int getId() {
@@ -66,6 +80,7 @@ public class SimplistItem {
                 "id=" + id +
                 ", shopifyItem=" + shopifyItem +
                 ", etsyItem=" + etsyItem +
+                ", ebayItem=" + ebayItem +
                 '}';
     }
 }

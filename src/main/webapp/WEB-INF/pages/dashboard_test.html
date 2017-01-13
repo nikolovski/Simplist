@@ -24,11 +24,18 @@
     Company:<input id="company" type="text" name="Company"><br>
     Type:<input id="type" type="text" name="Product Type"><br>
     tags:<input id="tag" type="text" name="tags"><br>
+
+    Ebay specific required fields:<br>
+    SKU: <input type="text" id="sku"><br>
+    Brand:<input id="brand" type="text" name="Brand"><br>
+    Price:<input id="price" type="number" name="Price"><br>
+    MPN:<input id="mpn" type="text" name="MPN"><br>
+    Image 1 URL:<input id="image1url" type="text" name="image1"><br>
+    Image 2 URL:<input id="image2url" type="text" name="image2"><br>
+    Listing Description:<textarea id="listingDescription" name="image2"></textarea>
+
     <input id="addSubmit" type="submit" value="Add">
-
 </div>
-
-
 
 
 <div id="deleteItem">
@@ -43,26 +50,26 @@
 
 <script type="text/javascript">
 
-    $("#deleteSubmit").click(function(){
+    $("#deleteSubmit").click(function () {
 
         console.log("DELETE CLICKED")
-        var id =  $("#deleteid").val();
+        var id = $("#deleteid").val();
         $.ajax({
-                method: "DELETE",
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                url: "http://localhost:8080/simplest/delete?itemID="+id
-            });
+            method: "DELETE",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: "http://localhost:8080/simplist/delete?itemID=" + id
+        });
     });
 
-    $("#addSubmit").click(function(){
+    $("#addSubmit").click(function () {
 
         console.log("Button clicked ");
 
         /* Etsy */
         var etsyObj = {
-            quantity : $("#quantity").val(),
-            title:  $("#title").val(),
+            quantity: $("#quantity").val(),
+            title: $("#title").val(),
             description: $("#description").val(),
             price: 0.20,
             state: "draft",
@@ -75,27 +82,33 @@
         /* Shopify */
         var shopifyObj = {
             title: $("#title").val(),
-            body_html:  $("#description").val(),
+            body_html: $("#description").val(),
             vendor: $("#company").val(),
             product_type: $("#type").val(),
             tags: $("#tag").val(),
-            variants:[{
+            variants: [{
                 price: 0.20
             }]
         };
-
-        var simplestItem = {
-            shopifyItem:  shopifyObj, etsyItem: etsyObj
-        }
-
+        var ebayObj = {
+            productTitle: $("#title").val(),
+            productDescription: $("#description").val(),
+            productBrand: $("#brand").val(),
+            productMpn: $("#mpn").val(),
+            productImageUrls: [$("image1url").val(),$("image1url").val()],
+            sku: $("#sku").val(),
+            currencyValue: $("#price").val(),
+            listingDescription: $("#listingDescription").val()
+        };
 
         $.ajax({
             method: "POST",
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            url: "http://localhost:8080/simplest/add",
-            data:
-                JSON.stringify({shopifyItem: shopifyObj, etsyItem: etsyObj})
+            url: "http://localhost:8080/simplist/add",
+            data: JSON.stringify({
+                shopifyItem: shopifyObj, etsyItem: etsyObj, ebayItem: ebayObj
+            })
         });
 
 
@@ -103,7 +116,6 @@
         /* Ebay */
 
     });
-
 
 
 </script>

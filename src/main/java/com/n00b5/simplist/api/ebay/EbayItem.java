@@ -1,5 +1,6 @@
 package com.n00b5.simplist.api.ebay;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.n00b5.simplist.api.ebay.enums.*;
 import com.n00b5.simplist.api.ebay.inventory.*;
 import com.n00b5.simplist.api.ebay.offer.*;
@@ -27,6 +28,7 @@ public class EbayItem {
     /**
      * Important properties
      */
+    @JsonProperty
     @Column
     private String sku;
     @Column
@@ -39,16 +41,22 @@ public class EbayItem {
     private String listingId;
 
     //Mandatory fields
+    @JsonProperty
     @Column
     private String productTitle;
+    @JsonProperty
     @Column
     private String productDescription;
+    @JsonProperty
     @Column
     private double currencyValue;
+    @JsonProperty
     @Column
     private String productBrand;
+    @JsonProperty
     @Column
     private String[] productImageUrls;
+    @JsonProperty
     @Column
     private String productMpn;
     @Column
@@ -90,6 +98,7 @@ public class EbayItem {
     private String categoryId;
     @Column
     private String formatType;
+    @JsonProperty
     @Column
     private String listingDescription;
     @Column
@@ -170,7 +179,7 @@ public class EbayItem {
         offer.setSku(sku);
         offer.setQuantityLimitPerBuyer(1);
         offer.setTax(tax);
-        HttpResponse response = new eBayAPI().createOffer(offer, token);
+        new eBayAPI().createOffer(offer, token);
         Offers offers = new eBayAPI().getOffers(sku, token);
         offerId = offers.getOffers()[0].getOfferId();
         status = offers.getOffers()[0].getStatus();

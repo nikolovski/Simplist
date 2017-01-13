@@ -53,7 +53,7 @@ public class ShopifyCRUD{
             request.addHeader("Content-Type", "application/json;; charset=UTF-8");request.addHeader("Accept", "application/json;; charset=UTF-8");
             request.setEntity(params);
             HttpResponse response = httpClient.execute(request);
-            item.setShopifyId(productID(response.toString()));
+            item.setId(productID(response.toString()));
 
             System.out.println("IN SHOP NEW SHOP " + item);
 
@@ -73,10 +73,10 @@ public class ShopifyCRUD{
     @ResponseBody
     @RequestMapping(value = "shopify/update/", method = RequestMethod.POST)
     public void updateItem(@RequestBody ShopifyItem item){
-        System.out.println("IN Update ITEM " + item.getShopifyId());
+        System.out.println("IN Update ITEM " + item.getId());
         HttpClient httpClient = new DefaultHttpClient();
         try {
-            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+item.getShopifyId()+".json?access_token="+ ShopifyAPI.getTokenKey());
+            HttpPut putRequest = new HttpPut("https://paperss.myshopify.com/admin/products/"+item.getId()+".json?access_token="+ ShopifyAPI.getTokenKey());
             StringEntity params = new StringEntity(item.getUpdateJSONItem().toString());
             putRequest.addHeader("Content-Type", "application/json;; charset=UTF-8");putRequest.addHeader("Accept", "application/json;; charset=UTF-8");
             putRequest.setEntity(params);

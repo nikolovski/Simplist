@@ -1,8 +1,10 @@
 package com.n00b5.simplist.web;
 
-import com.n00b5.simplist.api.Shopify.ShopifyAPI;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.n00b5.simplist.api.Shopify.ShopifyCRUD;
 import com.n00b5.simplist.api.Shopify.ShopifyItem;
+import com.n00b5.simplist.api.ebay.EbayItem;
+import com.n00b5.simplist.api.ebay.EbayToken;
 import com.n00b5.simplist.api.etsy.EtsyController;
 import com.n00b5.simplist.api.etsy.EtsyItem;
 import com.n00b5.simplist.beans.SimplistItem;
@@ -13,27 +15,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Created by louislopez on 1/11/17.
  */
 @Controller
-@RequestMapping(value = "/simplest")
-public class SimplestController {
+@RequestMapping(value = "/simplist")
+public class SimplistController {
 
     @Autowired
     Facade facade;
 
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
-    public void add(@RequestBody SimplistItem simplistItem) {
-
-
+    public void add(@CookieValue("eBayToken") String eBayToken,
+                        @RequestBody SimplistItem simplistItem) throws URISyntaxException, IOException {
+        EbayToken ebayToken = new ObjectMapper().readValue(eBayToken,EbayToken.class);
+        System.out.println(ebayToken);
+        System.out.println(simplistItem);
         try {
 
-            System.out.println("SIMPLEST ITEM " + simplistItem.toString());
+            System.out.println("SIMPLIST ITEM " + simplistItem.toString());
 
             ShopifyItem shopifyitem = simplistItem.getShopifyItem();
             EtsyItem etsyItem = simplistItem.getEtsyItem();
+            EbayItem ebayItem = simplistItem.getEbayItem();
+
 
             System.out.println("Shopify ITem is " + shopifyitem);
             System.out.println("Etsy ITem is " + etsyItem);
@@ -52,7 +59,11 @@ public class SimplestController {
             facade.addShopifyItem(shopifyNewItem);
             System.out.println("NEW SHOPIFY ITEM " + shopifyNewItem.toString());
 
-            facade.simpliestCreateItem(new SimplistItem(shopifyNewItem,etsyNewItem));
+
+            ebayItem.createSimpleList(ebayToken.getAccessToken());
+            facade.insertEbayItem(ebayItem);
+
+            facade.simplistCreateItem(new SimplistItem(shopifyNewItem,etsyNewItem, ebayItem));
 
         } catch (IOException e) {
             e.printStackTrace();
