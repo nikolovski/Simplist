@@ -9,6 +9,7 @@ import com.n00b5.simplist.api.etsy.EtsyToken;
 import com.n00b5.simplist.api.etsy.OAuth1Converter;
 import com.n00b5.simplist.beans.User;
 import com.n00b5.simplist.middle.BusinessDelegate;
+import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,12 +52,16 @@ public class UserController {
     }
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
     public ResponseEntity<User> validate(@RequestParam String email,
-                        @RequestParam String password, HttpServletResponse response) throws JsonProcessingException {
-
+                        @RequestParam String password, HttpServletResponse response, @CookieValue("eBayToken") String ebayTokenJSON) throws IOException, JSONException {
         User user = businessDelegate.loginUser(email,password);
         System.out.println(user);
         if(user!=null){
             user.setPassword(null);
+            if(ebayTokenJSON!=null){
+                EbayToken ebayToken = new ObjectMapper().readValue(ebayTokenJSON,EbayToken.class);
+                EbayToken newToken = new eBayAPI().tokenFromRefreshToken(ebayToken);
+                response.addCookie(new Cookie("eBayToken",new ObjectMapper().writeValueAsString(newToken)));
+            }
             response.addCookie(new Cookie("user",new ObjectMapper().writeValueAsString(user)));
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }

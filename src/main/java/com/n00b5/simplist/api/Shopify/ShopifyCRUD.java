@@ -53,7 +53,7 @@ public class ShopifyCRUD{
             request.addHeader("Content-Type", "application/json;; charset=UTF-8");request.addHeader("Accept", "application/json;; charset=UTF-8");
             request.setEntity(params);
             HttpResponse response = httpClient.execute(request);
-            item.setId(productID(response.toString()));
+            item.setShopifyId(productID(response.toString()));
 
             System.out.println("IN SHOP NEW SHOP " + item);
 

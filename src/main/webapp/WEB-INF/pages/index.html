@@ -25,9 +25,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <style type="text/css">
-        .fields{
+        .fields {
             padding-left: 300px;
-            width:800px;
+            width: 800px;
         }
     </style>
 </head>
@@ -117,7 +117,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/ebay/oauth" id="ebayUrl" target="_blank" title="" data-toggle="tooltip" data-placement="right"
+                        <a href="/ebay/oauth" id="ebayUrl" target="_blank" title="" data-toggle="tooltip"
+                           data-placement="right"
                            data-container="body" data-original-title="Connect Ebay">
                             <img class="inverted" src="../resources/svg/ebay.svg">
                             <small class="iconav-nav-label visible-xs-block">Connect Ebay</small>
@@ -131,7 +132,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/etsy/oauth" id="etsyUrl" target="_blank" title="" data-toggle="tooltip" data-placement="right"
+                        <a href="/etsy/oauth" id="etsyUrl" target="_blank" title="" data-toggle="tooltip"
+                           data-placement="right"
                            data-container="body" data-original-title="Connect Etsy">
                             <img class="inverted" src="../resources/svg/etsy.svg">
                             <small class="iconav-nav-label visible-xs-block">Connect Etsy</small>
@@ -143,9 +145,6 @@
         </nav>
 
 
-
-
-
     </div>
 
 
@@ -155,32 +154,58 @@
         <form>
             <div class="form-group">
                 <label>Title</label>
-                <input  class="form-control" id="title"  placeholder="Enter Title">
+                <input class="form-control" id="title" placeholder="Enter Title">
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <input  class="form-control" id="description"  placeholder="Enter Description">
+                <textarea class="form-control" id="description" placeholder="Enter Description"></textarea>
             </div>
             <div class="form-group">
                 <label>Company</label>
-                <input  class="form-control" id="company"  placeholder="Enter Company">
+                <input class="form-control" id="company" placeholder="Enter Company">
             </div>
             <div class="form-group">
                 <label>Type</label>
-                <input  class="form-control" id="type"  placeholder="Enter Type">
+                <input class="form-control" id="type" placeholder="Enter Type">
             </div>
             <div class="form-group">
                 <label>Tags</label>
-                <input  class="form-control" id="tag"  placeholder="Enter Tags">
+                <input class="form-control" id="tag" placeholder="Enter Tags">
             </div>
             <div class="form-group">
                 <label>Quantity</label>
-                <input  class="form-control" id="quantity"  placeholder="Enter Quantity">
+                <input class="form-control" id="quantity" placeholder="Enter Quantity">
             </div>
             <div class="form-group">
                 <label>price</label>
-                <input  class="form-control" id="price"  placeholder="Enter Price">
+                <input class="form-control" id="price" placeholder="Enter Price">
             </div>
+            <label>eBay-specific properties</label>
+            <div class="form-group">
+                <label>SKU</label>
+                <input class="form-control" id="sku" placeholder="Enter SKU">
+            </div>
+            <div class="form-group">
+                <label>Brand</label>
+                <input class="form-control" id="brand" placeholder="Enter Brand">
+            </div>
+            <div class="form-group">
+                <label>MPN</label>
+                <input class="form-control" id="mpn" placeholder="Enter MPN">
+            </div>
+            <div class="form-group">
+                <label>Image 1 URL</label>
+                <input class="form-control" id="image1" placeholder="Enter Image 1 URL">
+            </div>
+            <div class="form-group">
+                <label>Image 2 URL</label>
+                <input class="form-control" id="image2" placeholder="Enter Image 2 URL">
+            </div>
+            <div class="form-group">
+                <label>Listing Description</label>
+                <textarea class="form-control" id="listingDescription" placeholder="Enter Listing Description"></textarea>
+            </div>
+
             <button type="submit" id="addSubmit" class="btn btn-primary">Submit</button>
         </form>
 
@@ -190,35 +215,35 @@
         <form>
             <div class="form-group">
                 <label><h3>Enter Product Id to update</h3></label>
-                <input  class="form-control" id="idU"  placeholder="Enter ID">
+                <input class="form-control" id="idU" placeholder="Enter ID">
             </div>
             <div class="form-group">
                 <label>Title</label>
-                <input  class="form-control" id="titleU"  placeholder="Enter Title">
+                <input class="form-control" id="titleU" placeholder="Enter Title">
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <input  class="form-control" id="descU"  placeholder="Enter Description">
+                <input class="form-control" id="descU" placeholder="Enter Description">
             </div>
             <div class="form-group">
                 <label>Quantity</label>
-                <input  class="form-control" id="quantityU"  placeholder="Enter Quantity">
+                <input class="form-control" id="quantityU" placeholder="Enter Quantity">
             </div>
             <div class="form-group">
                 <label>Company</label>
-                <input  class="form-control" id="companyU"  placeholder="Enter Company">
+                <input class="form-control" id="companyU" placeholder="Enter Company">
             </div>
             <div class="form-group">
                 <label>Type</label>
-                <input  class="form-control" id="typeU"  placeholder="Enter Type">
+                <input class="form-control" id="typeU" placeholder="Enter Type">
             </div>
             <div class="form-group">
                 <label>Tags</label>
-                <input  class="form-control" id="tagU"  placeholder="Enter Tags">
+                <input class="form-control" id="tagU" placeholder="Enter Tags">
             </div>
             <div class="form-group">
                 <label>price</label>
-                <input  class="form-control" id="priceU"  placeholder="Enter Price">
+                <input class="form-control" id="priceU" placeholder="Enter Price">
             </div>
             <button type="submit" id="addSubmitid" class="btn btn-primary">Submit</button>
         </form>
@@ -228,17 +253,22 @@
         <form>
             <div class="form-group">
                 <label><h3>Enter Product Id to update</h3></label>
-                <input  class="form-control" id="deleteID"  placeholder="Enter ID">
+                <input class="form-control" id="deleteID" placeholder="Enter ID">
             </div>
             <button type="submit" id="deleteSubmit" class="btn btn-primary">Submit</button>
         </form>
 
 
-
         <table id="allItems" class="table">
             <thead class="thead-inverse">
             <tr>
-                <th>ID</th><th>Title</th><th>Description</th><th>Company</th><th>Type</th><th>Tags</th><th>Price</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Company</th>
+                <th>Type</th>
+                <th>Tags</th>
+                <th>Price</th>
             </tr>
             </thead>
             <tbody>
@@ -246,80 +276,60 @@
             </tbody>
         </table>
         <button id="getAll">Get all Items</button>
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 </body>
 <script>
 
 
-
-    $('#getAll').click(function() {
+    $('#getAll').click(function () {
         $.ajax({
             method: "GET",
             url: "http://localhost:8080/simplist/getMyItems",
             dataType: "json",
-            success: function(resp){
+            success: function (resp) {
                 console.log(resp);
                 var iterable = resp.shopify;
                 console.log(iterable);
                 console.log(iterable.title);
                 // $.each(iterable, function(i, item){
-                var myItem = "<tr>"+
-                    "<td>"+iterable.id+"</td>"+
-                    "<td>"+iterable.title+"</td>"+
-                    "<td>"+iterable.body_html+"</td>"+
-                    "<td>"+iterable.vendor+"</td>"+
-                    "<td>"+iterable.product_type+"</td>"+
-                    "<td>"+iterable.tags+"</td>"+
-                    "<td>"+iterable.price+"</td>" + "</tr>";
+                var myItem = "<tr>" +
+                    "<td>" + iterable.id + "</td>" +
+                    "<td>" + iterable.title + "</td>" +
+                    "<td>" + iterable.body_html + "</td>" +
+                    "<td>" + iterable.vendor + "</td>" +
+                    "<td>" + iterable.product_type + "</td>" +
+                    "<td>" + iterable.tags + "</td>" +
+                    "<td>" + iterable.price + "</td>" + "</tr>";
                 $(".table tbody").append(myItem);
                 // });
             },
-            error: function(resp){
+            error: function (resp) {
                 console.log("ERROR " + resp.responseText + resp.statusText);
             }
         })
     });
 
-    $("#deleteSubmit").click(function(){
+    $("#deleteSubmit").click(function () {
 
         console.log("DELETE CLICKED")
-        var id =  $("#deleteID").val();
+        var id = $("#deleteID").val();
         $.ajax({
             method: "DELETE",
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            url: "http://localhost:8080/simplist/delete?itemID="+id
+            url: "http://localhost:8080/simplist/delete?itemID=" + id
         });
     });
 
-    $("#addSubmit").click(function(){
-
+    $("#addSubmit").click(function (event) {
+        event.preventDefault();
         console.log("Button clicked ");
 
         /* Etsy */
         var etsyObj = {
-            quantity : $("#quantity").val(),
-            title:  $("#title").val(),
+            quantity: $("#quantity").val(),
+            title: $("#title").val(),
             description: $("#description").val(),
             price: 0.20,
             state: "draft",
@@ -332,18 +342,30 @@
         /* Shopify */
         var shopifyObj = {
             title: $("#title").val(),
-            body_html:  $("#description").val(),
+            body_html: $("#description").val(),
             vendor: $("#company").val(),
             product_type: $("#type").val(),
             tags: $("#tag").val(),
-            variants:[{
+            variants: [{
                 price: 0.20
             }]
         };
+        var ebayObj = {
+            productTitle: $("#title").val(),
+            productDescription: $("#description").val(),
+            productBrand: $("#brand").val(),
+            productMpn: $("#mpn").val(),
+            productImageUrls: [$("#image1").val(),$("#image2").val()],
+            sku: $("#sku").val(),
+            currencyValue: $("#price").val(),
+            listingDescription: $("#listingDescription").val()
+        };
+
+
 
         var simplestItem = {
-            shopifyItem:  shopifyObj, etsyItem: etsyObj
-        }
+            shopifyItem: shopifyObj, etsyItem: etsyObj, ebayItem: ebayObj
+        };
 
 
         $.ajax({
@@ -351,8 +373,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             url: "http://localhost:8080/simplist/add",
-            data:
-                JSON.stringify({shopifyItem: shopifyObj, etsyItem: etsyObj})
+            data: JSON.stringify({shopifyItem: shopifyObj, etsyItem: etsyObj, ebayItem: ebayObj})
         });
 
 
@@ -362,17 +383,15 @@
     });
 
 
-
-
-    $("#addSubmitid").click(function(){
+    $("#addSubmitid").click(function () {
 
         console.log("Button clicked ");
 
-        var id =$("#idU").val();
+        var id = $("#idU").val();
         /* Etsy */
         var etsyObj = {
-            quantity : $("#quantityU").val(),
-            title:  $("#titleU").val(),
+            quantity: $("#quantityU").val(),
+            title: $("#titleU").val(),
             description: $("#descU").val(),
             price: 0.20,
             state: "draft",
@@ -385,17 +404,17 @@
         /* Shopify */
         var shopifyObj = {
             title: $("#titleU").val(),
-            body_html:  $("#descU").val(),
+            body_html: $("#descU").val(),
             vendor: $("#companyU").val(),
             product_type: $("#typeU").val(),
             tags: $("#tagU").val(),
-            variants:[{
+            variants: [{
                 price: 0.20
             }]
         };
 
         var simplestItem = {
-            shopifyItem:  shopifyObj, etsyItem: etsyObj
+            shopifyItem: shopifyObj, etsyItem: etsyObj
         }
 
 
@@ -404,8 +423,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             url: "http://localhost:8080/simplist/update",
-            data:
-                JSON.stringify({id:id, shopifyItem: shopifyObj, etsyItem: etsyObj})
+            data: JSON.stringify({id: id, shopifyItem: shopifyObj, etsyItem: etsyObj})
         });
 
 
@@ -413,12 +431,6 @@
         /* Ebay */
 
     });
-
-
-
-
-
-
 
 
     $(document).ready(function () {
@@ -432,12 +444,12 @@
                     window.open(url, '_blank');
                 });
                 var interval = setInterval(function () {
-                    if($.cookie("eBayToken"))
+                    if ($.cookie("eBayToken"))
                         $.ajax({
                             type: "POST",
                             url: url + "saveEbayToken",
                             cache: false,
-                            data:{
+                            data: {
                                 user: $.cookie("user"),
                                 token: $.cookie("eBayToken")
                             },
@@ -450,7 +462,7 @@
                                 clearInterval(interval);
                             }
                         })
-                },3000);
+                }, 3000);
             });
             $("#etsyUrl").click(function (event) {
                 $("#etsyUrl").click(function () {
@@ -459,26 +471,26 @@
                 });
                 console.log($.cookie("etsyToken"))
                 var interval = setInterval(function () {
-                    if($.cookie("etsyToken"))
+                    if ($.cookie("etsyToken"))
                         $.cookie("user").eBayRefreshToken
-                        $.ajax({
-                            type: "POST",
-                            url: url + "saveEtsyToken",
-                            cache: false,
-                            data:{
-                                user: $.cookie("user"),
-                                token: $.cookie("etsyToken")
-                            },
-                            success: function (response) {
-                                console.log(response)
-                                clearInterval(interval);
-                            },
-                            error: function (response) {
-                                console.log(response);
-                                clearInterval(interval);
-                            }
-                        })
-                },3000);
+                    $.ajax({
+                        type: "POST",
+                        url: url + "saveEtsyToken",
+                        cache: false,
+                        data: {
+                            user: $.cookie("user"),
+                            token: $.cookie("etsyToken")
+                        },
+                        success: function (response) {
+                            console.log(response)
+                            clearInterval(interval);
+                        },
+                        error: function (response) {
+                            console.log(response);
+                            clearInterval(interval);
+                        }
+                    })
+                }, 3000);
             });
 
 

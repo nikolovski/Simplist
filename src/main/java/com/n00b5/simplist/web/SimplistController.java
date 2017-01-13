@@ -49,7 +49,6 @@ public class SimplistController {
             ShopifyItem shopifyitem = simplistItem.getShopifyItem();
 
             EbayToken ebayToken = new ObjectMapper().readValue(eBayToken,EbayToken.class);
-            EbayItem ebayItem = simplistItem.getEbayItem();
 
             ShopifyCRUD shopify = new ShopifyCRUD();
             ShopifyItem shopifyNewItem = shopify.createItem(shopifyitem,shopifyToken); // now API & DB
@@ -67,6 +66,7 @@ public class SimplistController {
             EtsyItem etsyNewItem = etsy.addItem(etsyItem,x); // now in DB & API
             facade.etsyAddItem(etsyNewItem);
 
+            EbayItem ebayItem = simplistItem.getEbayItem();
             ebayItem.createSimpleList(ebayToken.getAccessToken());
             facade.insertEbayItem(ebayItem);
 
