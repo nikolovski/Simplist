@@ -139,6 +139,13 @@
                             <small class="iconav-nav-label visible-xs-block">Connect Etsy</small>
                         </a>
                     </li>
+                    <li>
+                        <a href="/logout" id="logout" title="Overview" data-toggle="tooltip" data-placement="right"
+                           data-container="body">
+                            <span class="icon icon-power-plug"></span>
+                            <small class="iconav-nav-label visible-xs-block">Overview</small>
+                        </a>
+                    </li>
 
                 </ul>
             </div>
@@ -279,7 +286,9 @@
 </div>
 </body>
 <script>
-
+    $("#logout").click(function () {
+        $.removeCookie('user', { path: '/' });
+    });
     $('#getAll').click(function () {
         $.ajax({
             method: "GET",

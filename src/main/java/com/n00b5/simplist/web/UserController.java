@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -52,13 +54,14 @@ public class UserController {
     }
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
     public ResponseEntity<User> validate(@RequestParam String email,
-                        @RequestParam String password, HttpServletResponse response, @CookieValue("eBayToken") String ebayTokenJSON) throws IOException, JSONException {
+                        @RequestParam String password, HttpServletResponse response) throws IOException, JSONException {
         User user = businessDelegate.loginUser(email,password);
         System.out.println(user);
         if(user!=null){
             user.setPassword(null);
-            if(ebayTokenJSON!=null){
-                EbayToken ebayToken = new ObjectMapper().readValue(ebayTokenJSON,EbayToken.class);
+            if(user.geteBayRefreshToken()!=null){
+                EbayToken ebayToken = new EbayToken();
+                ebayToken.setRefreshToken(user.geteBayRefreshToken());
                 EbayToken newToken = new eBayAPI().tokenFromRefreshToken(ebayToken);
                 response.addCookie(new Cookie("eBayToken",new ObjectMapper().writeValueAsString(newToken)));
             }
@@ -112,5 +115,10 @@ public class UserController {
             return new ResponseEntity(user,HttpStatus.OK);
         }
         else return new ResponseEntity("Invalid username/password combination",HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public String logout(HttpServletRequest request) throws IOException {
+        request.getSession().invalidate();
+        return "index";
     }
 }
